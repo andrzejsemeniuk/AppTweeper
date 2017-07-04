@@ -1,14 +1,90 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11134" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11106"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--View Controller For Screen Search-->
+        <scene sceneID="toR-vN-zde">
+            <objects>
+                <viewController id="9SB-gw-83Z" customClass="ViewControllerForScreenSearch" customModule="productTweeper" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="cVE-Z0-g7e"/>
+                        <viewControllerLayoutGuide type="bottom" id="wVc-bu-G6b"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="xeJ-Zx-rIe">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="t7g-Wu-k5h" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1412" y="-701"/>
+        </scene>
+        <!--View Controller For Screen Live Stream-->
+        <scene sceneID="Rgv-yo-FYO">
+            <objects>
+                <viewController id="2gn-r9-gQ3" customClass="ViewControllerForScreenLiveStream" customModule="productTweeper" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="rGI-XK-2tF"/>
+                        <viewControllerLayoutGuide type="bottom" id="CTN-NS-LPx"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Xkl-VZ-wU2">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="bvK-jb-pAn" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-279" y="-687"/>
+        </scene>
+        <!--View Controller For Screen Filter-->
+        <scene sceneID="bJc-GR-881">
+            <objects>
+                <viewController id="oWu-xZ-2M2" customClass="ViewControllerForScreenFilter" customModule="productTweeper" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="JcP-vR-Hzo"/>
+                        <viewControllerLayoutGuide type="bottom" id="kAM-Wo-g6K"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="dkt-i1-KkS">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ysz-eX-DIP" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="866" y="-694"/>
+        </scene>
+        <!--View Controller For Screen Preferences-->
+        <scene sceneID="CKM-bO-W97">
+            <objects>
+                <viewController id="Avt-4g-CgZ" customClass="ViewControllerForScreenPreferences" customModule="productTweeper" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="TQ3-kx-DaY"/>
+                        <viewControllerLayoutGuide type="bottom" id="ZnK-Ed-bSo"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="H6m-U8-8Nb">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="27l-KJ-PUF" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1993" y="-683"/>
+        </scene>
+        <!--View Controller For Screen Main-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewControllerForScreenMain" customModule="productTweeper" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -16,11 +92,68 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <subviews>
+                            <imageView opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Image-text-tweeper" translatesAutoresizingMaskIntoConstraints="NO" id="axr-4z-Hxh">
+                                <rect key="frame" x="67" y="129.5" width="240" height="106"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="image-text-copyright" translatesAutoresizingMaskIntoConstraints="NO" id="I0i-Ul-Tk5">
+                                <rect key="frame" x="67" y="409.5" width="240" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Cgb-Yl-mVs">
+                                <rect key="frame" x="136" y="273.5" width="103" height="120"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <button contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Szm-0V-Xn8">
+                                        <rect key="frame" x="0.0" y="0.0" width="103" height="30"/>
+                                        <state key="normal" title="SEARCH"/>
+                                        <connections>
+                                            <action selector="tapOnButtonSEARCH:" destination="BYZ-38-t0r" eventType="touchUpInside" id="kTV-Q2-MFU"/>
+                                            <segue destination="9SB-gw-83Z" kind="show" id="J0d-x4-ChU"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="COc-ya-r6e">
+                                        <rect key="frame" x="0.0" y="30" width="103" height="30"/>
+                                        <state key="normal" title="LIVE STREAM"/>
+                                        <connections>
+                                            <action selector="tapOnButtonLIVESTREAM:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Sgo-vL-HO9"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q2r-zD-bC7">
+                                        <rect key="frame" x="0.0" y="60" width="103" height="30"/>
+                                        <state key="normal" title="FILTER"/>
+                                        <connections>
+                                            <action selector="tapOnButtonFILTER:" destination="BYZ-38-t0r" eventType="touchUpInside" id="2Od-d7-9KH"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6sL-JT-URQ">
+                                        <rect key="frame" x="0.0" y="90" width="103" height="30"/>
+                                        <state key="normal" title="PREFERENCES"/>
+                                        <connections>
+                                            <action selector="tapOnButtonPREFERENCES:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Ha4-IZ-Khf"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
+                    <connections>
+                        <outlet property="buttonForFILTER" destination="q2r-zD-bC7" id="SIg-5f-XqJ"/>
+                        <outlet property="buttonForLIVESTREAM" destination="COc-ya-r6e" id="K5f-r4-x9Q"/>
+                        <outlet property="buttonForPREFERENCES" destination="6sL-JT-URQ" id="3Bp-h4-OUj"/>
+                        <outlet property="buttonForSEARCH" destination="Szm-0V-Xn8" id="H5h-pb-bgu"/>
+                        <outlet property="viewForImageBottom" destination="I0i-Ul-Tk5" id="ZdU-ba-N2Y"/>
+                        <outlet property="viewForImageTop" destination="axr-4z-Hxh" id="eJU-U9-UoM"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
         </scene>
     </scenes>
+    <resources>
+        <image name="Image-text-tweeper" width="161" height="37"/>
+        <image name="image-text-copyright" width="173" height="40"/>
+    </resources>
 </document>

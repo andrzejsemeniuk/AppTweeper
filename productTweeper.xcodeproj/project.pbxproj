@@ -7,8 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		570FC1BA1F0BE9DB00FEAC03 /* ViewControllerForScreenSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570FC1B91F0BE9DB00FEAC03 /* ViewControllerForScreenSearch.swift */; };
+		570FC1BC1F0BE9F900FEAC03 /* ViewControllerForScreenLiveStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570FC1BB1F0BE9F900FEAC03 /* ViewControllerForScreenLiveStream.swift */; };
+		570FC1BE1F0BEA1700FEAC03 /* ViewControllerForScreenFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570FC1BD1F0BEA1700FEAC03 /* ViewControllerForScreenFilter.swift */; };
+		570FC1C01F0BEA2900FEAC03 /* ViewControllerForScreenPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570FC1BF1F0BEA2900FEAC03 /* ViewControllerForScreenPreferences.swift */; };
+		570FC1C21F0BFDE100FEAC03 /* CAGradientRadialLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570FC1C11F0BFDE100FEAC03 /* CAGradientRadialLayer.swift */; };
 		576047F31F0AACC20066F1D0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576047F21F0AACC20066F1D0 /* AppDelegate.swift */; };
-		576047F51F0AACC20066F1D0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576047F41F0AACC20066F1D0 /* ViewController.swift */; };
+		576047F51F0AACC20066F1D0 /* ViewControllerForScreenMain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576047F41F0AACC20066F1D0 /* ViewControllerForScreenMain.swift */; };
 		576047F81F0AACC20066F1D0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 576047F61F0AACC20066F1D0 /* Main.storyboard */; };
 		576047FB1F0AACC20066F1D0 /* productTweeper.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 576047F91F0AACC20066F1D0 /* productTweeper.xcdatamodeld */; };
 		576047FD1F0AACC20066F1D0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 576047FC1F0AACC20066F1D0 /* Assets.xcassets */; };
@@ -35,9 +40,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		570FC1B91F0BE9DB00FEAC03 /* ViewControllerForScreenSearch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerForScreenSearch.swift; sourceTree = "<group>"; };
+		570FC1BB1F0BE9F900FEAC03 /* ViewControllerForScreenLiveStream.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerForScreenLiveStream.swift; sourceTree = "<group>"; };
+		570FC1BD1F0BEA1700FEAC03 /* ViewControllerForScreenFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerForScreenFilter.swift; sourceTree = "<group>"; };
+		570FC1BF1F0BEA2900FEAC03 /* ViewControllerForScreenPreferences.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerForScreenPreferences.swift; sourceTree = "<group>"; };
+		570FC1C11F0BFDE100FEAC03 /* CAGradientRadialLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CAGradientRadialLayer.swift; sourceTree = "<group>"; };
 		576047EF1F0AACC20066F1D0 /* productTweeper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = productTweeper.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		576047F21F0AACC20066F1D0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		576047F41F0AACC20066F1D0 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		576047F41F0AACC20066F1D0 /* ViewControllerForScreenMain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerForScreenMain.swift; sourceTree = "<group>"; };
 		576047F71F0AACC20066F1D0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		576047FA1F0AACC20066F1D0 /* productTweeper.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = productTweeper.xcdatamodel; sourceTree = "<group>"; };
 		576047FC1F0AACC20066F1D0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -100,12 +110,17 @@
 			isa = PBXGroup;
 			children = (
 				576047F21F0AACC20066F1D0 /* AppDelegate.swift */,
-				576047F41F0AACC20066F1D0 /* ViewController.swift */,
-				576047F61F0AACC20066F1D0 /* Main.storyboard */,
 				576047FC1F0AACC20066F1D0 /* Assets.xcassets */,
-				576047FE1F0AACC20066F1D0 /* LaunchScreen.storyboard */,
 				576048011F0AACC30066F1D0 /* Info.plist */,
+				576047FE1F0AACC20066F1D0 /* LaunchScreen.storyboard */,
+				576047F61F0AACC20066F1D0 /* Main.storyboard */,
 				576047F91F0AACC20066F1D0 /* productTweeper.xcdatamodeld */,
+				570FC1BD1F0BEA1700FEAC03 /* ViewControllerForScreenFilter.swift */,
+				570FC1BB1F0BE9F900FEAC03 /* ViewControllerForScreenLiveStream.swift */,
+				576047F41F0AACC20066F1D0 /* ViewControllerForScreenMain.swift */,
+				570FC1BF1F0BEA2900FEAC03 /* ViewControllerForScreenPreferences.swift */,
+				570FC1B91F0BE9DB00FEAC03 /* ViewControllerForScreenSearch.swift */,
+				570FC1C11F0BFDE100FEAC03 /* CAGradientRadialLayer.swift */,
 			);
 			path = productTweeper;
 			sourceTree = "<group>";
@@ -265,8 +280,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				570FC1BE1F0BEA1700FEAC03 /* ViewControllerForScreenFilter.swift in Sources */,
+				570FC1C01F0BEA2900FEAC03 /* ViewControllerForScreenPreferences.swift in Sources */,
+				570FC1C21F0BFDE100FEAC03 /* CAGradientRadialLayer.swift in Sources */,
 				576047FB1F0AACC20066F1D0 /* productTweeper.xcdatamodeld in Sources */,
-				576047F51F0AACC20066F1D0 /* ViewController.swift in Sources */,
+				576047F51F0AACC20066F1D0 /* ViewControllerForScreenMain.swift in Sources */,
+				570FC1BC1F0BE9F900FEAC03 /* ViewControllerForScreenLiveStream.swift in Sources */,
+				570FC1BA1F0BE9DB00FEAC03 /* ViewControllerForScreenSearch.swift in Sources */,
 				576047F31F0AACC20066F1D0 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -518,6 +538,7 @@
 				5760481C1F0AACC30066F1D0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		5760481D1F0AACC30066F1D0 /* Build configuration list for PBXNativeTarget "productTweeperTests" */ = {
 			isa = XCConfigurationList;
@@ -526,6 +547,7 @@
 				5760481F1F0AACC30066F1D0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		576048201F0AACC30066F1D0 /* Build configuration list for PBXNativeTarget "productTweeperUITests" */ = {
 			isa = XCConfigurationList;
@@ -534,6 +556,7 @@
 				576048221F0AACC30066F1D0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
