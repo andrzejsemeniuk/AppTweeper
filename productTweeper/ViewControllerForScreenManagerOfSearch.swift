@@ -19,7 +19,9 @@ class ViewControllerForScreenManagerOfSearch : UIViewController {
 
     @IBOutlet var table         : UITableView!
     
-    var entries                 : [Data.ModelForSearchEntry] = []
+    var entries                 : [Data.SearchEntry] = []
+    
+    var selected                : Int?
     
     static fileprivate let cellReuseIdentifier = "ViewForSearchEntry"
     
@@ -36,6 +38,7 @@ class ViewControllerForScreenManagerOfSearch : UIViewController {
         label.backgroundColor       = Preferences.current.colorOfScreenTitleBackground
         label.textColor             = .white
         
+        table.delegate              = self
         table.dataSource            = self
         table.separatorStyle        = .singleLineEtched
         table.separatorColor        = Preferences.current.colorOfScreenSearchListSeparator
@@ -49,7 +52,7 @@ class ViewControllerForScreenManagerOfSearch : UIViewController {
     }
     
     @IBAction func tapOnButtonAdd(_ sender: UIBarButtonItem) {
-        let newEntry = Data.ModelForSearchEntry(title:"NEW")
+        let newEntry = Data.SearchEntry(title:"NEW")
         Data.search(add: newEntry)
         entries = Data.searchGetAllEntries()
         table.reloadData()
@@ -59,7 +62,7 @@ class ViewControllerForScreenManagerOfSearch : UIViewController {
         if table.isEditing {
             table.setEditing(false, animated: true)
             self.buttonForEdit.title = "Edit"
-            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.0) {
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.75) {
                 self.table.reloadData()
             }
         }
@@ -84,14 +87,20 @@ extension ViewControllerForScreenManagerOfSearch : UITableViewDelegate {
                 entries = Data.searchGetAllEntries()
             }
         case .insert:
-            self.entries.insert(Data.ModelForSearchEntry(title:"??"), at: indexPath.item)
+            self.entries.insert(Data.SearchEntry(title:"??"), at: indexPath.item)
         case .none:
             break
         }
     }
-
-    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        
+    
+    func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
+        if var entry = entries[safe:indexPath.item] {
+            self.selected = indexPath.item
+//            entry.title += "?"
+//            Data.search(update:entry)
+//            entries = Data.searchGetAllEntries()
+//            table.reloadData()
+        }
     }
 }
 
@@ -105,15 +114,18 @@ extension ViewControllerForScreenManagerOfSearch : UITableViewDataSource {
 
         let item = indexPath.item
         
-        let entry = entries[item]
-        
         let cell = UITableViewCell(style: .subtitle, reuseIdentifier: nil)
         
+        if let entry = entries[safe:item] {
+            
+            cell.textLabel?.attributedText = entry.title | UIColor(white:170.0/255.0)
+            
+            let created = entry.created.components(separatedBy: ".")[safe:0] ?? entry.created
+            
+            cell.detailTextLabel?.attributedText = created | UIColor(white:210.0/255.0)
+        }
+        
         cell.backgroundColor = item.isOdd ? UIColor(white:0.97) : UIColor.white
-        
-        cell.textLabel?.attributedText = entry.title | UIColor(white:170.0/255.0)
-        
-        cell.detailTextLabel?.attributedText = entry.created | UIColor(white:210.0/255.0)
         
 //        cell.indentationLevel = item
         

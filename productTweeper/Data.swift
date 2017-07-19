@@ -11,7 +11,7 @@ import CoreData
 
 class Data {
     
-    struct ModelForSearchEntry {
+    struct SearchEntry {
         var title       : String
         var created     : String
         
@@ -28,7 +28,7 @@ class Data {
         }
     }
 
-    static func search(add entry:ModelForSearchEntry) {
+    static func search(add entry:SearchEntry) {
         do {
             let context = AppDelegate.instance.persistentContainer.viewContext
             
@@ -47,7 +47,38 @@ class Data {
         }
     }
     
-    static func search(remove entry:ModelForSearchEntry, save:Bool = true) -> Int {
+    static func search(update entry:SearchEntry, save:Bool = true) {
+        let context = AppDelegate.instance.persistentContainer.viewContext
+        
+        if let description = NSEntityDescription.entity(forEntityName: "SearchEntry", in: context) {
+            
+            let request         = NSFetchRequest<NSFetchRequestResult>()
+            
+            request.entity      = description
+            
+            request.predicate   = NSPredicate(format:"created == %@", entry.created)
+            
+            if let result       = try? context.fetch(request) {
+                
+                for object in result {
+                    if let object = object as? NSManagedObject {
+                        object.setValue(entry.title, forKey: "title")
+                        if save {
+                            do {
+                                try context.save()
+                            }
+                            catch let error {
+                                print(error)
+                            }
+                        }
+                        break
+                    }
+                }
+            }
+        }
+    }
+    
+    static func search(remove entry:SearchEntry, save:Bool = true) -> Int {
         let context = AppDelegate.instance.persistentContainer.viewContext
         
         if let description = NSEntityDescription.entity(forEntityName: "SearchEntry", in: context) {
@@ -86,9 +117,9 @@ class Data {
         return 0
     }
     
-    static func searchGetAllEntries() -> [ModelForSearchEntry] {
+    static func searchGetAllEntries() -> [SearchEntry] {
         
-        var results             : [ModelForSearchEntry] = []
+        var results             : [SearchEntry] = []
         
         let context             = AppDelegate.instance.persistentContainer.viewContext
         
@@ -98,13 +129,11 @@ class Data {
         
         request.entity          = description
         
-//        request.predicate       = NSPredicate() //format:"%K = %@", "category", category)
-        
         do {
             let result          = try context.fetch(request)
             //                    print(result)
             
-            var item            = ModelForSearchEntry(title:"")
+            var item            = SearchEntry(title:"")
             
             for object in result {
                 let object      = object as AnyObject
