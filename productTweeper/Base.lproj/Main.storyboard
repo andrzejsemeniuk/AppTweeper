@@ -9,10 +9,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller For Screen Search-->
+        <!--View Controller For Screen Manager Of Search-->
         <scene sceneID="toR-vN-zde">
             <objects>
-                <viewController id="9SB-gw-83Z" customClass="ViewControllerForScreenSearch" customModule="productTweeper" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="9SB-gw-83Z" customClass="ViewControllerForScreenManagerOfSearch" customModule="productTweeper" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="cVE-Z0-g7e"/>
                         <viewControllerLayoutGuide type="bottom" id="wVc-bu-G6b"/>
@@ -20,17 +20,79 @@
                     <view key="view" contentMode="scaleToFill" id="xeJ-Zx-rIe">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rJF-s7-0gK">
+                                <rect key="frame" x="0.0" y="46" width="375" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="hhi-rF-9Uy"/>
+                                </constraints>
+                                <items>
+                                    <barButtonItem title="back" style="plain" id="3og-au-8Wz">
+                                        <connections>
+                                            <segue destination="kx4-Ef-t9c" kind="unwind" unwindAction="unwindToScreenMainWithUnwindSegue:" id="vQC-Bp-cG0"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="4zx-GW-IR0"/>
+                                    <barButtonItem systemItem="add" id="YX9-CL-YCo">
+                                        <connections>
+                                            <action selector="tapOnButtonAdd:" destination="9SB-gw-83Z" id="4q2-iT-jDd"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="mqj-du-wcQ"/>
+                                    <barButtonItem title="Edit" id="otz-pt-MSK">
+                                        <connections>
+                                            <action selector="tapOnButtonEdit:" destination="9SB-gw-83Z" id="taW-M1-riH"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="suz-8t-zHJ">
+                                <rect key="frame" x="0.0" y="90" width="375" height="577"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SEARCH" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bw2-5u-pjr">
+                                <rect key="frame" x="0.0" y="20" width="375" height="26"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="26" id="5yn-zk-jEj"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="suz-8t-zHJ" secondAttribute="trailing" id="20V-VH-Gsz"/>
+                            <constraint firstItem="wVc-bu-G6b" firstAttribute="top" secondItem="suz-8t-zHJ" secondAttribute="bottom" id="6Na-qi-fsv"/>
+                            <constraint firstItem="suz-8t-zHJ" firstAttribute="centerX" secondItem="xeJ-Zx-rIe" secondAttribute="centerX" id="Am2-In-Prm"/>
+                            <constraint firstItem="Bw2-5u-pjr" firstAttribute="top" secondItem="cVE-Z0-g7e" secondAttribute="bottom" id="Ech-dB-frw"/>
+                            <constraint firstItem="rJF-s7-0gK" firstAttribute="leading" secondItem="xeJ-Zx-rIe" secondAttribute="leading" id="Esh-o3-2nM"/>
+                            <constraint firstItem="Bw2-5u-pjr" firstAttribute="leading" secondItem="xeJ-Zx-rIe" secondAttribute="leading" id="PDE-gM-fPa"/>
+                            <constraint firstItem="suz-8t-zHJ" firstAttribute="leading" secondItem="xeJ-Zx-rIe" secondAttribute="leading" id="Pin-et-iL6"/>
+                            <constraint firstAttribute="trailing" secondItem="Bw2-5u-pjr" secondAttribute="trailing" id="ULJ-Os-Awk"/>
+                            <constraint firstAttribute="trailing" secondItem="rJF-s7-0gK" secondAttribute="trailing" id="XFA-RG-v0X"/>
+                            <constraint firstItem="suz-8t-zHJ" firstAttribute="top" secondItem="rJF-s7-0gK" secondAttribute="bottom" id="XiG-Dp-dJo"/>
+                            <constraint firstItem="rJF-s7-0gK" firstAttribute="top" secondItem="Bw2-5u-pjr" secondAttribute="bottom" id="kyU-31-zhI"/>
+                            <constraint firstItem="Bw2-5u-pjr" firstAttribute="centerX" secondItem="xeJ-Zx-rIe" secondAttribute="centerX" id="sle-SW-8Zs"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="buttonForAdd" destination="YX9-CL-YCo" id="rQ6-1r-rk0"/>
+                        <outlet property="buttonForBack" destination="3og-au-8Wz" id="jtM-aW-In4"/>
+                        <outlet property="buttonForEdit" destination="otz-pt-MSK" id="O9e-18-I4C"/>
+                        <outlet property="label" destination="Bw2-5u-pjr" id="vsa-xK-eOM"/>
+                        <outlet property="table" destination="suz-8t-zHJ" id="MZf-em-g7z"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="t7g-Wu-k5h" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="kx4-Ef-t9c" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="-1412" y="-701"/>
+            <point key="canvasLocation" x="-1425" y="-688"/>
         </scene>
-        <!--View Controller For Screen Live Stream-->
+        <!--View Controller For Screen Manager Of Live Stream-->
         <scene sceneID="Rgv-yo-FYO">
             <objects>
-                <viewController id="2gn-r9-gQ3" customClass="ViewControllerForScreenLiveStream" customModule="productTweeper" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="2gn-r9-gQ3" customClass="ViewControllerForScreenManagerOfLiveStream" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="rGI-XK-2tF"/>
                         <viewControllerLayoutGuide type="bottom" id="CTN-NS-LPx"/>
@@ -102,36 +164,53 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Cgb-Yl-mVs">
-                                <rect key="frame" x="136" y="273.5" width="103" height="120"/>
+                                <rect key="frame" x="136" y="273.5" width="108" height="128"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <button contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Szm-0V-Xn8">
-                                        <rect key="frame" x="0.0" y="0.0" width="103" height="30"/>
-                                        <state key="normal" title="SEARCH"/>
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="COc-ya-r6e">
+                                        <rect key="frame" x="0.0" y="0.0" width="108" height="32"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                                        <state key="normal" title="LIVE STREAM">
+                                            <color key="titleColor" red="0.99659754639999998" green="1" blue="0.97176731949999995" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
                                         <connections>
-                                            <action selector="tapOnButtonSEARCH:" destination="BYZ-38-t0r" eventType="touchUpInside" id="kTV-Q2-MFU"/>
-                                            <segue destination="9SB-gw-83Z" kind="show" id="J0d-x4-ChU"/>
+                                            <action selector="tapOnButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ZVh-sR-05U"/>
+                                            <segue destination="2gn-r9-gQ3" kind="show" id="2Iw-ti-5Jy"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="COc-ya-r6e">
-                                        <rect key="frame" x="0.0" y="30" width="103" height="30"/>
-                                        <state key="normal" title="LIVE STREAM"/>
+                                    <button contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Szm-0V-Xn8">
+                                        <rect key="frame" x="0.0" y="32" width="108" height="32"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                                        <state key="normal" title="SEARCH">
+                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
                                         <connections>
-                                            <action selector="tapOnButtonLIVESTREAM:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Sgo-vL-HO9"/>
+                                            <action selector="tapOnButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="KrD-BY-GNU"/>
+                                            <segue destination="9SB-gw-83Z" kind="show" id="MVr-W3-QeX"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q2r-zD-bC7">
-                                        <rect key="frame" x="0.0" y="60" width="103" height="30"/>
-                                        <state key="normal" title="FILTER"/>
+                                        <rect key="frame" x="0.0" y="64" width="108" height="32"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                                        <state key="normal" title="FILTER">
+                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
                                         <connections>
-                                            <action selector="tapOnButtonFILTER:" destination="BYZ-38-t0r" eventType="touchUpInside" id="2Od-d7-9KH"/>
+                                            <action selector="tapOnButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="OTQ-4U-nAh"/>
+                                            <segue destination="oWu-xZ-2M2" kind="show" id="0ec-lM-9sM"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6sL-JT-URQ">
-                                        <rect key="frame" x="0.0" y="90" width="103" height="30"/>
-                                        <state key="normal" title="PREFERENCES"/>
+                                        <rect key="frame" x="0.0" y="96" width="108" height="32"/>
+                                        <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="17"/>
+                                        <state key="normal" title="PREFERENCES">
+                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
                                         <connections>
-                                            <action selector="tapOnButtonPREFERENCES:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Ha4-IZ-Khf"/>
+                                            <action selector="tapOnButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="vZN-Mt-3iV"/>
+                                            <segue destination="Avt-4g-CgZ" kind="popoverPresentation" popoverAnchorView="6sL-JT-URQ" id="i9C-i3-2aU">
+                                                <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
+                                            </segue>
                                         </connections>
                                     </button>
                                 </subviews>

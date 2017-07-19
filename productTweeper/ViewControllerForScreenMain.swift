@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ASToolkit
 
 class ViewControllerForScreenMain: UIViewController {
 
@@ -18,12 +19,24 @@ class ViewControllerForScreenMain: UIViewController {
     @IBOutlet var buttonForFILTER       : UIButton!
     @IBOutlet var buttonForPREFERENCES  : UIButton!
     
+    private var buttons                 : [UIButton] = []
+    private var gradient                : CAGradientRadialLayer!
+    private var stack                   : UIStackView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
+        self.stack = buttonForSEARCH.superview as! UIStackView
+        
+//        stack.translatesAutoresizingMaskIntoConstraints=false
+        stack.centerYAnchor.constraint(equalTo: self.view.centerYAnchor).isActive = true
+        stack.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
+        
         viewForImageTop.translatesAutoresizingMaskIntoConstraints=false
-        viewForImageTop.centerYAnchor.constraint(equalTo: self.view.centerYAnchor, constant: -self.view.frame.height/4.0).isActive=true
+        viewForImageTop.centerYAnchor.constraint(equalTo: self.view.centerYAnchor, constant: -self.view.frame.height/3.0).isActive=true
+//        viewForImageTop.bottomAnchor.constraint(equalTo: stack.topAnchor).isActive = true
+//        viewForImageTop.topAnchor.constraint(equalTo: self.view.topAnchor).isActive = true
         viewForImageTop.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive=true
 
 //        viewForImageTop.align(above:viewForMenu, constant:16)
@@ -40,31 +53,35 @@ class ViewControllerForScreenMain: UIViewController {
         viewForMenu.centerYAnchor.constraint(equalTo: self.view.centerYAnchor).isActive=true
         viewForMenu.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive=true
         
+        self.buttons = [
+            buttonForLIVESTREAM!, buttonForSEARCH!, buttonForFILTER!, buttonForPREFERENCES!
+        ]
         
+        let fontSize:CGFloat = 32
+        let font = UIFont.init(name: "Gill Sans", size: fontSize) ?? UIFont.systemFont(ofSize: fontSize)
         
-        for button in [buttonForSEARCH, buttonForFILTER, buttonForLIVESTREAM, buttonForPREFERENCES] {
-            guard let button = button else { continue }
-            buttonForSEARCH.translatesAutoresizingMaskIntoConstraints=true
-            button.frame.size.width = self.view.frame.width
-        }
-        
-        for button in [buttonForSEARCH, buttonForFILTER] {
-            guard let button = button else { continue }
-            button.setTitleColor(UIColor(white:1,alpha:1.0), for: .normal)
-            button.setTitleColor(UIColor.red, for: .selected)
+        for button in [buttonForLIVESTREAM!, buttonForFILTER!] {
+            button.setAttributedTitle((button.title(for: .normal) ?? "?") | font | UIColor.white, for: .normal)
+            button.setAttributedTitle((button.title(for: .disabled) ?? "?") | font | UIColor(white:1, alpha:0.6), for: .disabled)
             button.backgroundColor = UIColor(white: 1, alpha: 0.2)
+            button.sizeToFit()
         }
 
-        for button in [buttonForLIVESTREAM, buttonForPREFERENCES] {
-            guard let button = button else { continue }
-            button.setTitleColor(UIColor(white:1,alpha:0.95), for: .normal)
-            button.setTitleColor(UIColor.red, for: .selected)
+        for button in [buttonForSEARCH!, buttonForPREFERENCES!] {
+            button.setAttributedTitle((button.title(for: .normal) ?? "?") | font | UIColor(white:1, alpha:0.90), for: .normal)
+            button.setAttributedTitle((button.title(for: .disabled) ?? "?") | font | UIColor(white:1, alpha:0.6), for: .disabled)
             button.backgroundColor = UIColor(white: 1, alpha: 0.15)
+            button.sizeToFit()
         }
         
+        for button in buttons {
+            button.translatesAutoresizingMaskIntoConstraints=false
+            button.widthAnchor.constraint(equalTo: self.view.widthAnchor).isActive=true
+        }
+
         // "background gradient"
 
-        let gradient = CAGradientRadialLayer()
+        gradient = CAGradientRadialLayer()
         
         gradient.bounds = self.view.bounds
         gradient.colors = [
@@ -84,48 +101,20 @@ class ViewControllerForScreenMain: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
-    private var tapped = false
-    
-    @IBAction func tapOnButtonSEARCH        (_ sender:UIControl!) {
-        if !tapped {
-            tapped = true
-            sender.isSelected=true
-            print("SEARCH")
-        }
-    }
-    
-    @IBAction func tapOnButtonLIVESTREAM    (_ sender:UIControl!) {
-        if !tapped {
-            tapped = true
-            sender.isSelected=true
-            print("LIVE-STREAM")
-        }
-    }
-    
-    @IBAction func tapOnButtonFILTER        (_ sender:UIControl!) {
-        if !tapped {
-            tapped = true
-            sender.isSelected=true
-            print("FILTER")
-        }
-    }
-    
-    @IBAction func tapOnButtonPREFERENCES   (_ sender:UIControl!) {
-        if !tapped {
-            tapped = true
-            sender.isSelected=true
-            print("PREFERENCES")
-        }
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        self.tapped = false
-
-        for button in [buttonForSEARCH, buttonForFILTER, buttonForLIVESTREAM, buttonForPREFERENCES] {
-            guard let button = button else { continue }
+    @IBAction func tapOnButton              (_ sender:UIControl!) {
+        sender.isSelected=true
+        for button in buttons {
+            guard button != sender else { continue }
             button.isSelected = false
+            button.isEnabled = false
         }
-        
     }
     
+    @IBAction func unwindToScreenMain(unwindSegue: UIStoryboardSegue) {
+        for button in buttons {
+            button.isSelected = false
+            button.isEnabled = true
+        }
+    }
+
 }

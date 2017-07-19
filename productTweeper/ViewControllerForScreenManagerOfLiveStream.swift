@@ -1,5 +1,5 @@
 //
-//  ViewControllerForScreenLiveStream.swift
+//  ViewControllerForScreenManagerOfLiveStream.swift
 //  productTweeper
 //
 //  Created by andrzej semeniuk on 7/4/17.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewControllerForScreenLiveStream : UIViewController {
+class ViewControllerForScreenManagerOfLiveStream : UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
