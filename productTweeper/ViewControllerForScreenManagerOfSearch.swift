@@ -43,7 +43,7 @@ class ViewControllerForScreenManagerOfSearch : UIViewController {
         table.separatorStyle        = .singleLineEtched
         table.separatorColor        = Preferences.current.colorOfScreenSearchListSeparator
         
-        entries = Data.searchGetAllEntries()
+        entries = Data.getAllSearchEntries()
     }
     
     override func didReceiveMemoryWarning() {
@@ -53,9 +53,16 @@ class ViewControllerForScreenManagerOfSearch : UIViewController {
     
     @IBAction func tapOnButtonAdd(_ sender: UIBarButtonItem) {
         let newEntry = Data.SearchEntry(title:"NEW")
-        Data.search(add: newEntry)
-        entries = Data.searchGetAllEntries()
+        Data.add(entry:newEntry)
+        entries = Data.getAllSearchEntries()
         table.reloadData()
+        
+        if let search = self.storyboard?.instantiateViewController(withIdentifier: "ViewControllerForScreenSearch") as? ViewControllerForScreenSearch {
+            self.show(search, sender: sender)
+            
+            search.search.text = newEntry.title
+            search.handleRefresh()
+        }
     }
     
     @IBAction func tapOnButtonEdit(_ sender: UIBarButtonItem) {
@@ -79,12 +86,12 @@ extension ViewControllerForScreenManagerOfSearch : UITableViewDelegate {
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         switch editingStyle {
         case .delete:
-            if 1 == Data.search(remove:entries[indexPath.item]) {
-                entries = Data.searchGetAllEntries()
+            if 1 == Data.remove(entry:entries[indexPath.item]) {
+                entries = Data.getAllSearchEntries()
                 tableView.deleteRows(at: [indexPath], with: .left)
             }
             else {
-                entries = Data.searchGetAllEntries()
+                entries = Data.getAllSearchEntries()
             }
         case .insert:
             self.entries.insert(Data.SearchEntry(title:"??"), at: indexPath.item)
@@ -94,11 +101,11 @@ extension ViewControllerForScreenManagerOfSearch : UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
-        if var entry = entries[safe:indexPath.item] {
+        if let entry = entries[safe:indexPath.item] {
             self.selected = indexPath.item
 //            entry.title += "?"
-//            Data.search(update:entry)
-//            entries = Data.searchGetAllEntries()
+//            Data.update(entry:entry)
+//            entries = Data.getAll()
 //            table.reloadData()
         }
     }

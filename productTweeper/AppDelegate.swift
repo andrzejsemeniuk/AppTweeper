@@ -18,6 +18,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
+//        UINavigationBar.appearance().tintColor = UIColor.white
+//        UINavigationBar.appearance().backgroundColor = UIColor.blue
+//        UINavigationBar.appearance().barTintColor = UIColor.blue
+//        
+//        let navigationBarFont = UIFont(name:"Helvetica", size:UIFont.systemFontSize)
+//        let navigationBarFontAttributes = [NSFontAttributeName : navigationBarFont]
+//        
+//        UINavigationBar.appearance().titleTextAttributes = navigationBarFontAttributes as Any as! [String : Any]
+//        UINavigationBar.appearance().settitle
+        
+        Twitter.instance.loginForApplicationOnly { ok in
+            print("handler for loginForApplicationOnly, ok=\(ok)")
+        }
+
         return true
     }
 

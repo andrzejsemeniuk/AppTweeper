@@ -6,9 +6,65 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--View Controller For Screen Search-->
+        <scene sceneID="Hzc-Sm-eVZ">
+            <objects>
+                <viewController id="GNY-oR-wpW" customClass="ViewControllerForScreenSearch" customModule="productTweeper" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="dVP-6h-d6T"/>
+                        <viewControllerLayoutGuide type="bottom" id="VVy-TN-joO"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="U7g-xW-x2G">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="04n-y4-poU">
+                                <rect key="frame" x="0.0" y="46" width="375" height="44"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </searchBar>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="TI7-mT-87l">
+                                <rect key="frame" x="0.0" y="90" width="375" height="577"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SEARCH" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dsR-td-ah4">
+                                <rect key="frame" x="16" y="20" width="343" height="26"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="26" id="Rc5-BL-LpC"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="TI7-mT-87l" firstAttribute="top" secondItem="04n-y4-poU" secondAttribute="bottom" id="EBx-wc-YaI"/>
+                            <constraint firstItem="TI7-mT-87l" firstAttribute="leading" secondItem="U7g-xW-x2G" secondAttribute="leading" id="EEQ-bV-Ujg"/>
+                            <constraint firstItem="VVy-TN-joO" firstAttribute="top" secondItem="TI7-mT-87l" secondAttribute="bottom" id="ELJ-JU-gzt"/>
+                            <constraint firstItem="04n-y4-poU" firstAttribute="leading" secondItem="U7g-xW-x2G" secondAttribute="leading" id="cxd-t6-Fh4"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="dsR-td-ah4" secondAttribute="trailing" id="g9L-2a-1Sr"/>
+                            <constraint firstAttribute="trailing" secondItem="04n-y4-poU" secondAttribute="trailing" id="hZ4-Bx-Ga4"/>
+                            <constraint firstItem="dsR-td-ah4" firstAttribute="top" secondItem="dVP-6h-d6T" secondAttribute="bottom" id="kGu-f8-vbF"/>
+                            <constraint firstItem="dsR-td-ah4" firstAttribute="leading" secondItem="U7g-xW-x2G" secondAttribute="leadingMargin" id="sjv-nS-kOz"/>
+                            <constraint firstItem="04n-y4-poU" firstAttribute="top" secondItem="dsR-td-ah4" secondAttribute="bottom" id="vmV-CB-tBy"/>
+                            <constraint firstAttribute="trailing" secondItem="TI7-mT-87l" secondAttribute="trailing" id="wGr-DW-rVO"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="label" destination="dsR-td-ah4" id="CCj-Fn-HFQ"/>
+                        <outlet property="search" destination="04n-y4-poU" id="KRc-0n-T2R"/>
+                        <outlet property="table" destination="TI7-mT-87l" id="hCj-ow-KbO"/>
+                        <outlet property="title" destination="dsR-td-ah4" id="Jou-RZ-iNl"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="mme-DD-ZpV" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-564" y="-689.5052473763119"/>
+        </scene>
         <!--View Controller For Screen Manager Of Search-->
         <scene sceneID="toR-vN-zde">
             <objects>
@@ -73,7 +129,6 @@
                             <constraint firstAttribute="trailing" secondItem="rJF-s7-0gK" secondAttribute="trailing" id="XFA-RG-v0X"/>
                             <constraint firstItem="suz-8t-zHJ" firstAttribute="top" secondItem="rJF-s7-0gK" secondAttribute="bottom" id="XiG-Dp-dJo"/>
                             <constraint firstItem="rJF-s7-0gK" firstAttribute="top" secondItem="Bw2-5u-pjr" secondAttribute="bottom" id="kyU-31-zhI"/>
-                            <constraint firstItem="Bw2-5u-pjr" firstAttribute="centerX" secondItem="xeJ-Zx-rIe" secondAttribute="centerX" id="sle-SW-8Zs"/>
                         </constraints>
                     </view>
                     <connections>
@@ -105,7 +160,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bvK-jb-pAn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-279" y="-687"/>
+            <point key="canvasLocation" x="-1426" y="9"/>
         </scene>
         <!--View Controller For Screen Filter-->
         <scene sceneID="bJc-GR-881">
@@ -123,7 +178,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ysz-eX-DIP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="866" y="-694"/>
+            <point key="canvasLocation" x="-1426" y="723"/>
         </scene>
         <!--View Controller For Screen Preferences-->
         <scene sceneID="CKM-bO-W97">
@@ -141,7 +196,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="27l-KJ-PUF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1993" y="-683"/>
+            <point key="canvasLocation" x="-1426" y="1460"/>
         </scene>
         <!--View Controller For Screen Main-->
         <scene sceneID="tne-QT-ifu">
@@ -229,6 +284,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="-2258" y="284"/>
         </scene>
     </scenes>
     <resources>
