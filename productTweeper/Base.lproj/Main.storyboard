@@ -13,7 +13,7 @@
         <!--View Controller For Screen Search-->
         <scene sceneID="Hzc-Sm-eVZ">
             <objects>
-                <viewController id="GNY-oR-wpW" customClass="ViewControllerForScreenSearch" customModule="productTweeper" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ViewControllerForScreenSearch" id="GNY-oR-wpW" customClass="ViewControllerForScreenSearch" customModule="productTweeper" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="dVP-6h-d6T"/>
                         <viewControllerLayoutGuide type="bottom" id="VVy-TN-joO"/>
@@ -55,10 +55,9 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="label" destination="dsR-td-ah4" id="CCj-Fn-HFQ"/>
-                        <outlet property="search" destination="04n-y4-poU" id="KRc-0n-T2R"/>
-                        <outlet property="table" destination="TI7-mT-87l" id="hCj-ow-KbO"/>
-                        <outlet property="title" destination="dsR-td-ah4" id="Jou-RZ-iNl"/>
+                        <outlet property="label" destination="dsR-td-ah4" id="fbu-uc-KQD"/>
+                        <outlet property="search" destination="04n-y4-poU" id="Ej4-eO-bI0"/>
+                        <outlet property="table" destination="TI7-mT-87l" id="2H3-9y-Fmx"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mme-DD-ZpV" userLabel="First Responder" sceneMemberID="firstResponder"/>
