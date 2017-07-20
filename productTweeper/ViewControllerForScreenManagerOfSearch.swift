@@ -103,10 +103,11 @@ extension ViewControllerForScreenManagerOfSearch : UITableViewDelegate {
     func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
         if let entry = entries[safe:indexPath.item] {
             self.selected = indexPath.item
-//            entry.title += "?"
-//            Search.update(entry:entry)
-//            entries = Search.getAll()
-//            table.reloadData()
+            if let search = self.storyboard?.instantiateViewController(withIdentifier: "ViewControllerForScreenSearch") as? ViewControllerForScreenSearch {
+                self.show(search, sender: nil)
+                search.search.text = entry.title
+                search.handleRefresh()
+            }
         }
     }
 }

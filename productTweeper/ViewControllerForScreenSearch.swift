@@ -52,8 +52,6 @@ class ViewControllerForScreenSearch: UIViewController
         
         // Do any additional setup after loading the view, typically from a nib.
         
-        table.delegate              = self
-        table.dataSource            = self
         table.rowHeight             = UITableViewAutomaticDimension
         table.estimatedRowHeight    = 80
         
@@ -66,6 +64,8 @@ class ViewControllerForScreenSearch: UIViewController
         
         table.delegate              = self
         table.dataSource            = self
+        
+        table.register(UINib(nibName: "TweetView", bundle: nil), forCellReuseIdentifier: "TweetView")
     }
     
     
@@ -79,11 +79,11 @@ class ViewControllerForScreenSearch: UIViewController
         
         Twitter.instance.tweetsFromSearch(search.text!, count:40, handler: { freshTweets in
             
-            self.tweets = freshTweets! + self.tweets
-            
-            self.doRefresh()
+            if let tweets = freshTweets {
+                self.tweets = tweets + self.tweets
+                self.doRefresh()
+            }
         })
-        
         
         search.resignFirstResponder()
     }
@@ -239,9 +239,19 @@ extension ViewControllerForScreenSearch : UITableViewDataSource {
     }
     
     func tableView         (_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell                = table.dequeueReusableCell(withIdentifier: "TweetView") as! TweetView
         
-        cell.model              = tweets[indexPath.row]
+        let tweet = tweets[indexPath.row]
+        
+        if let cell = table.dequeueReusableCell(withIdentifier: "TweetView") as? TweetView {
+        
+            cell.model = tweet
+        
+            return cell
+        }
+        
+        let cell = UITableViewCell()
+        
+        cell.textLabel?.text = tweet.text
         
         return cell
     }

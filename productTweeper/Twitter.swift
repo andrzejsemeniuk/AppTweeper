@@ -210,7 +210,7 @@ class Twitter
         
         Alamofire.request(address, method: .get, parameters: parameters, headers: headers).responseJSON { response in
             
-            if let data = response.value as? Foundation.Data {
+            if let data = response.data {
                 
                 let json = JSON(data:data)
                 
