@@ -13,8 +13,9 @@
 		570FC1BC1F0BE9F900FEAC03 /* ViewControllerForScreenManagerOfLiveStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570FC1BB1F0BE9F900FEAC03 /* ViewControllerForScreenManagerOfLiveStream.swift */; };
 		570FC1BE1F0BEA1700FEAC03 /* ViewControllerForScreenFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570FC1BD1F0BEA1700FEAC03 /* ViewControllerForScreenFilter.swift */; };
 		570FC1C01F0BEA2900FEAC03 /* ViewControllerForScreenPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570FC1BF1F0BEA2900FEAC03 /* ViewControllerForScreenPreferences.swift */; };
+		5748C4931F21494C000D2111 /* AlamofireSwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5748C4921F21494C000D2111 /* AlamofireSwiftyJSON.swift */; };
 		575268881F1E868800F8D8B2 /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 575268871F1E868800F8D8B2 /* Preferences.swift */; };
-		5752688C1F1EF3BA00F8D8B2 /* SearchEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5752688B1F1EF3BA00F8D8B2 /* SearchEntry.swift */; };
+		5752688C1F1EF3BA00F8D8B2 /* Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5752688B1F1EF3BA00F8D8B2 /* Search.swift */; };
 		575268BA1F20451800F8D8B2 /* ViewControllerForScreenSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 575268B91F20451800F8D8B2 /* ViewControllerForScreenSearch.swift */; };
 		575268BC1F2045EB00F8D8B2 /* TweetModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 575268BB1F2045EB00F8D8B2 /* TweetModel.swift */; };
 		575268BE1F2045FB00F8D8B2 /* TweetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 575268BD1F2045FB00F8D8B2 /* TweetView.swift */; };
@@ -29,6 +30,7 @@
 		576048001F0AACC20066F1D0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 576047FE1F0AACC20066F1D0 /* LaunchScreen.storyboard */; };
 		5760480B1F0AACC30066F1D0 /* productTweeperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5760480A1F0AACC30066F1D0 /* productTweeperTests.swift */; };
 		576048161F0AACC30066F1D0 /* productTweeperUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576048151F0AACC30066F1D0 /* productTweeperUITests.swift */; };
+		579727B31F214E6C00C302E7 /* ExtensionForAlamofireImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579727B21F214E6C00C302E7 /* ExtensionForAlamofireImage.swift */; };
 		57A5354F1F2055170048BA8F /* TweetView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 57A5354E1F2055170048BA8F /* TweetView.xib */; };
 		57F624B91F1E54F500211673 /* ASToolkit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 579713011F1E5432001C4AE3 /* ASToolkit.framework */; };
 		57F624BA1F1E54F500211673 /* ASToolkit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 579713011F1E5432001C4AE3 /* ASToolkit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -97,8 +99,9 @@
 		570FC1BB1F0BE9F900FEAC03 /* ViewControllerForScreenManagerOfLiveStream.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerForScreenManagerOfLiveStream.swift; sourceTree = "<group>"; };
 		570FC1BD1F0BEA1700FEAC03 /* ViewControllerForScreenFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerForScreenFilter.swift; sourceTree = "<group>"; };
 		570FC1BF1F0BEA2900FEAC03 /* ViewControllerForScreenPreferences.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerForScreenPreferences.swift; sourceTree = "<group>"; };
+		5748C4921F21494C000D2111 /* AlamofireSwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlamofireSwiftyJSON.swift; sourceTree = "<group>"; };
 		575268871F1E868800F8D8B2 /* Preferences.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
-		5752688B1F1EF3BA00F8D8B2 /* SearchEntry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchEntry.swift; sourceTree = "<group>"; };
+		5752688B1F1EF3BA00F8D8B2 /* Search.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Search.swift; sourceTree = "<group>"; };
 		575268B91F20451800F8D8B2 /* ViewControllerForScreenSearch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerForScreenSearch.swift; sourceTree = "<group>"; };
 		575268BB1F2045EB00F8D8B2 /* TweetModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweetModel.swift; sourceTree = "<group>"; };
 		575268BD1F2045FB00F8D8B2 /* TweetView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweetView.swift; sourceTree = "<group>"; };
@@ -121,6 +124,7 @@
 		576048151F0AACC30066F1D0 /* productTweeperUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = productTweeperUITests.swift; sourceTree = "<group>"; };
 		576048171F0AACC30066F1D0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		579712FB1F1E5432001C4AE3 /* ASToolkit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ASToolkit.xcodeproj; path = ../ASToolkit/ASToolkit.xcodeproj; sourceTree = "<group>"; };
+		579727B21F214E6C00C302E7 /* ExtensionForAlamofireImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtensionForAlamofireImage.swift; sourceTree = "<group>"; };
 		57A5354E1F2055170048BA8F /* TweetView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TweetView.xib; sourceTree = "<group>"; };
 		C26E688D5DB409311CD6D148 /* Pods-productTweeperUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-productTweeperUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-productTweeperUITests/Pods-productTweeperUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		D022AD334CDEF5C8029F9060 /* Pods-productTweeper.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-productTweeper.release.xcconfig"; path = "Pods/Target Support Files/Pods-productTweeper/Pods-productTweeper.release.xcconfig"; sourceTree = "<group>"; };
@@ -185,10 +189,11 @@
 			children = (
 				575268C51F204BF200F8D8B2 /* Podfile */,
 				576048011F0AACC30066F1D0 /* Info.plist */,
+				5748C4921F21494C000D2111 /* AlamofireSwiftyJSON.swift */,
 				576047F21F0AACC20066F1D0 /* AppDelegate.swift */,
 				575268C31F20468400F8D8B2 /* Consumer.swift */,
 				575268871F1E868800F8D8B2 /* Preferences.swift */,
-				5752688B1F1EF3BA00F8D8B2 /* SearchEntry.swift */,
+				5752688B1F1EF3BA00F8D8B2 /* Search.swift */,
 				575268BB1F2045EB00F8D8B2 /* TweetModel.swift */,
 				575268BD1F2045FB00F8D8B2 /* TweetView.swift */,
 				575268BF1F20464800F8D8B2 /* Twitter.swift */,
@@ -199,10 +204,11 @@
 				570FC1B91F0BE9DB00FEAC03 /* ViewControllerForScreenManagerOfSearch.swift */,
 				570FC1BF1F0BEA2900FEAC03 /* ViewControllerForScreenPreferences.swift */,
 				575268B91F20451800F8D8B2 /* ViewControllerForScreenSearch.swift */,
+				579727B21F214E6C00C302E7 /* ExtensionForAlamofireImage.swift */,
 				576047FC1F0AACC20066F1D0 /* Assets.xcassets */,
+				57A5354E1F2055170048BA8F /* TweetView.xib */,
 				576047FE1F0AACC20066F1D0 /* LaunchScreen.storyboard */,
 				576047F61F0AACC20066F1D0 /* Main.storyboard */,
-				57A5354E1F2055170048BA8F /* TweetView.xib */,
 				576047F91F0AACC20066F1D0 /* productTweeper.xcdatamodeld */,
 			);
 			path = productTweeper;
@@ -571,7 +577,8 @@
 				575268C41F20468400F8D8B2 /* Consumer.swift in Sources */,
 				575268BA1F20451800F8D8B2 /* ViewControllerForScreenSearch.swift in Sources */,
 				570FC1BE1F0BEA1700FEAC03 /* ViewControllerForScreenFilter.swift in Sources */,
-				5752688C1F1EF3BA00F8D8B2 /* SearchEntry.swift in Sources */,
+				5752688C1F1EF3BA00F8D8B2 /* Search.swift in Sources */,
+				5748C4931F21494C000D2111 /* AlamofireSwiftyJSON.swift in Sources */,
 				570FC1C01F0BEA2900FEAC03 /* ViewControllerForScreenPreferences.swift in Sources */,
 				575268881F1E868800F8D8B2 /* Preferences.swift in Sources */,
 				576047FB1F0AACC20066F1D0 /* productTweeper.xcdatamodeld in Sources */,
@@ -582,6 +589,7 @@
 				575268C01F20464800F8D8B2 /* Twitter.swift in Sources */,
 				570FC1BA1F0BE9DB00FEAC03 /* ViewControllerForScreenManagerOfSearch.swift in Sources */,
 				575268BE1F2045FB00F8D8B2 /* TweetView.swift in Sources */,
+				579727B31F214E6C00C302E7 /* ExtensionForAlamofireImage.swift in Sources */,
 				576047F31F0AACC20066F1D0 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -60,14 +60,12 @@ class ViewControllerForScreenSearch: UIViewController
         search.delegate             = self
         search.text                 = ""
         
-        refresh.addTarget(self, action: #selector(SearchTableViewController.handleRefresh), for: UIControlEvents.valueChanged)
+        refresh.addTarget(self, action: #selector(ViewControllerForScreenSearch.handleRefresh), for: UIControlEvents.valueChanged)
         
         table.insertSubview(refresh, at: 0)
         
         table.delegate              = self
         table.dataSource            = self
-        
-        AppDelegate.searchTableViewController = self
     }
     
     
@@ -75,7 +73,7 @@ class ViewControllerForScreenSearch: UIViewController
     
     func handleRefresh()
     {
-        print("reloading... for \(search.text ?? nil)")
+        print("reloading... for \(search.text)")
         
         // "make a call to twitter to retrieve tweets matching search text"
         

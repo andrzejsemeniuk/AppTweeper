@@ -202,21 +202,21 @@ class Twitter
         }
         
         
-        let headers: [String : String] =
-            [
+        let headers                 : [String : String]  = [
                 "Authorization" : "Bearer " + access_token!
         ]
         
         let address = "https://api.twitter.com/1.1/search/tweets.json"
         
-        
-        Alamofire.request(address, method: .get, parameters: parameters, headers: headers).responseSwiftyJSON { response in
+        Alamofire.request(address, method: .get, parameters: parameters, headers: headers).responseJSON { response in
             
-            if let JSON = response.value
-            {
+            if let data = response.value as? Foundation.Data {
+                
+                let json = JSON(data:data)
+                
                 var tweets:[TweetModel] = [TweetModel]()
                 
-                for entry in JSON["statuses"]
+                for entry in json["statuses"]
                 {
                     let tweet = TweetModel(entry.1)
                     

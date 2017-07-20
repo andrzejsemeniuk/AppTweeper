@@ -7,8 +7,8 @@ target 'productTweeper' do
 
   # Pods for productTweeper
   pod 'Alamofire', '~> 4.4'
+  pod 'AlamofireImage', '~> 3.1'
   pod 'SwiftyJSON'
-  pod 'Alamofire-SwiftyJSON'
 
   target 'productTweeperTests' do
     inherit! :search_paths

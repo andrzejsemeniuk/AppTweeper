@@ -19,7 +19,7 @@ class ViewControllerForScreenManagerOfSearch : UIViewController {
 
     @IBOutlet var table         : UITableView!
     
-    var entries                 : [Data.SearchEntry] = []
+    var entries                 : [Search.Entry] = []
     
     var selected                : Int?
     
@@ -43,7 +43,7 @@ class ViewControllerForScreenManagerOfSearch : UIViewController {
         table.separatorStyle        = .singleLineEtched
         table.separatorColor        = Preferences.current.colorOfScreenSearchListSeparator
         
-        entries = Data.getAllSearchEntries()
+        entries = Search.getAllEntries()
     }
     
     override func didReceiveMemoryWarning() {
@@ -52,9 +52,9 @@ class ViewControllerForScreenManagerOfSearch : UIViewController {
     }
     
     @IBAction func tapOnButtonAdd(_ sender: UIBarButtonItem) {
-        let newEntry = Data.SearchEntry(title:"NEW")
-        Data.add(entry:newEntry)
-        entries = Data.getAllSearchEntries()
+        let newEntry = Search.Entry(title:"NEW")
+        Search.add(entry:newEntry)
+        entries = Search.getAllEntries()
         table.reloadData()
         
         if let search = self.storyboard?.instantiateViewController(withIdentifier: "ViewControllerForScreenSearch") as? ViewControllerForScreenSearch {
@@ -86,15 +86,15 @@ extension ViewControllerForScreenManagerOfSearch : UITableViewDelegate {
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         switch editingStyle {
         case .delete:
-            if 1 == Data.remove(entry:entries[indexPath.item]) {
-                entries = Data.getAllSearchEntries()
+            if 1 == Search.remove(entry:entries[indexPath.item]) {
+                entries = Search.getAllEntries()
                 tableView.deleteRows(at: [indexPath], with: .left)
             }
             else {
-                entries = Data.getAllSearchEntries()
+                entries = Search.getAllEntries()
             }
         case .insert:
-            self.entries.insert(Data.SearchEntry(title:"??"), at: indexPath.item)
+            self.entries.insert(Search.Entry(title:"??"), at: indexPath.item)
         case .none:
             break
         }
@@ -104,8 +104,8 @@ extension ViewControllerForScreenManagerOfSearch : UITableViewDelegate {
         if let entry = entries[safe:indexPath.item] {
             self.selected = indexPath.item
 //            entry.title += "?"
-//            Data.update(entry:entry)
-//            entries = Data.getAll()
+//            Search.update(entry:entry)
+//            entries = Search.getAll()
 //            table.reloadData()
         }
     }

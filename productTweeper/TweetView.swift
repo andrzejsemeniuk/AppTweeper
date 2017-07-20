@@ -27,7 +27,7 @@ class TweetView: UITableViewCell
     @IBOutlet weak var tweetTextView:       UITextView!
     @IBOutlet weak var tweetFlag:           UIButton!
     
-    
+    var refresh:(()->())?
     
     func formattedTime(_ created_at: String) -> String
     {
@@ -64,76 +64,77 @@ class TweetView: UITableViewCell
     {
         didSet
         {
-            let tweet = model!
-            
-            if true
-            {
-                // NOTE: iOS 9 wants secure connections unless you explicitly tell it not in info.plist file
-                if let url = NSURL(string:tweet.user.profile_image_url.replacingOccurrences(of: "http", with:"https")) {
-                    tweetImage.setImageWithUrl(url:url)
+            if let tweet = model {
+                
+                if true
+                {
+                    // NOTE: iOS 9 wants secure connections unless you explicitly tell it not in info.plist file
+                    if let url = NSURL(string:tweet.user.profile_image_url.replacingOccurrences(of: "http", with:"https")) {
+                        tweetImage.setImage(fromURL:url as URL)
+                    }
                 }
-            }
-            else
-            {
-                if let url = NSURL(string: tweet.user.profile_image_url) {
-                    tweetImage.setImageWithUrl(url:url)
+                else
+                {
+                    if let url = NSURL(string: tweet.user.profile_image_url) {
+                        tweetImage.setImage(fromURL:url as URL)
+                    }
                 }
-            }
-            
-            tweetImage.layer.cornerRadius       = 6.0
-            tweetImage.clipsToBounds            = true
-            
-            tweetName.text                      = tweet.user.name
-            tweetHandle.text                    = "@"+tweet.user.screen_name
-            
-            
-            //            tweetText.lineBreakMode             = .ByWordWrapping
-            //            tweetText.numberOfLines             = 0
-            tweetTextView.text                  = tweet.text
-            
-            tweetTime.text                      = formattedTime(tweet.created_at)
-            
-            tweetFavoriteCount.text             = "\(tweet.favorites)"
-            
-            tweetFavorite.setImage(UIImage(named: "image-highlighted-star"), for: UIControlState.selected)
-            
-            if tweet.favorited!
-            {
-                tweetFavorite.isSelected          = true
                 
-                tweetFavoriteCount.textColor    = UIColor(red: 1.0, green: 0.77, blue: 0.20, alpha: 1.0)
-            }
-            else
-            {
-                tweetFavorite.isSelected          = false
+                tweetImage.layer.cornerRadius       = 6.0
+                tweetImage.clipsToBounds            = true
                 
-                tweetFavoriteCount.textColor    = UIColor(red: 0.6, green: 0.6, blue: 0.6, alpha: 1.0)
-            }
-            
-            
-            tweetRetweet.setImage(UIImage(named: "image-highlighted-retweet"), for: UIControlState.selected)
-            
-            tweetRetweetCount.text              = "\(tweet.retweets)"
-            
-            if tweet.retweeted!
-            {
-                tweetRetweet.isSelected           = true
+                tweetName.text                      = tweet.user.name
+                tweetHandle.text                    = "@"+tweet.user.screen_name
                 
-                tweetRetweetCount.textColor     = UIColor(red: 0.4, green: 0.6, blue: 0.2, alpha: 1.0)
-            }
-            else
-            {
-                tweetRetweet.isSelected           = false
                 
-                tweetRetweetCount.textColor     = UIColor(red: 0.6, green: 0.6, blue: 0.6, alpha: 1.0)
+                //            tweetText.lineBreakMode             = .ByWordWrapping
+                //            tweetText.numberOfLines             = 0
+                tweetTextView.text                  = tweet.text
+                
+                tweetTime.text                      = formattedTime(tweet.created_at)
+                
+                tweetFavoriteCount.text             = "\(tweet.favorites)"
+                
+                tweetFavorite.setImage(UIImage(named: "image-highlighted-star"), for: UIControlState.selected)
+                
+                if tweet.favorited!
+                {
+                    tweetFavorite.isSelected          = true
+                    
+                    tweetFavoriteCount.textColor    = UIColor(red: 1.0, green: 0.77, blue: 0.20, alpha: 1.0)
+                }
+                else
+                {
+                    tweetFavorite.isSelected          = false
+                    
+                    tweetFavoriteCount.textColor    = UIColor(red: 0.6, green: 0.6, blue: 0.6, alpha: 1.0)
+                }
+                
+                
+                tweetRetweet.setImage(UIImage(named: "image-highlighted-retweet"), for: UIControlState.selected)
+                
+                tweetRetweetCount.text              = "\(tweet.retweets)"
+                
+                if tweet.retweeted!
+                {
+                    tweetRetweet.isSelected           = true
+                    
+                    tweetRetweetCount.textColor     = UIColor(red: 0.4, green: 0.6, blue: 0.2, alpha: 1.0)
+                }
+                else
+                {
+                    tweetRetweet.isSelected           = false
+                    
+                    tweetRetweetCount.textColor     = UIColor(red: 0.6, green: 0.6, blue: 0.6, alpha: 1.0)
+                }
+                
+                
+                tweetFlag.isSelected = tweet.blocked
+                
+                print("flag selected \(tweetFlag.isSelected)")
+                
+                self.layoutIfNeeded()
             }
-            
-            
-            tweetFlag.isSelected = tweet.blocked
-            
-            print("flag selected \(tweetFlag.isSelected)")
-            
-            self.layoutIfNeeded()
         }
     }
     
@@ -194,9 +195,7 @@ class TweetView: UITableViewCell
                 
                 // "refresh table view"
                 
-                if let c = AppDelegate.searchTableViewController {
-                    c.doRefresh()
-                }
+                self.refresh?()
             })
             
             let actionBlockTweet = UIAlertAction(title:"Block Tweet", style:.destructive, handler: {
@@ -233,9 +232,7 @@ class TweetView: UITableViewCell
                 
                 // "refresh table view"
                 
-                if let c = AppDelegate.searchTableViewController {
-                    c.doRefresh()
-                }
+                self.refresh?()
             })
             
             let actionCancel = UIAlertAction(title:"Cancel", style:.cancel, handler: {
@@ -246,7 +243,7 @@ class TweetView: UITableViewCell
             alert.addAction(actionBlockTweet)
             alert.addAction(actionCancel)
             
-            AppDelegate.rootViewController.present(alert, animated:true, completion: {
+            AppDelegate.instance?.window?.rootViewController?.present(alert, animated:true, completion: {
                 print("completed showing")
             })
             

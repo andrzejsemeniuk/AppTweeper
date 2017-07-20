@@ -1,5 +1,5 @@
 //
-//  Data.swift
+//  Search.swift
 //  productTweeper
 //
 //  Created by andrzej semeniuk on 7/18/17.
@@ -9,9 +9,9 @@
 import Foundation
 import CoreData
 
-class Data {
+class Search {
     
-    struct SearchEntry {
+    struct Entry {
         var title       : String
         var created     : String
         
@@ -28,11 +28,13 @@ class Data {
         }
     }
 
-    static func search(add entry:SearchEntry) {
+    static private let EntityName = "SearchEntry"
+    
+    static func add(entry:Entry) {
         do {
             let context = AppDelegate.instance.persistentContainer.viewContext
             
-            if let description = NSEntityDescription.entity(forEntityName: "SearchEntry", in: context) {
+            if let description = NSEntityDescription.entity(forEntityName: Search.EntityName, in: context) {
             
                 let item = NSManagedObject.init(entity: description, insertInto: context)
                 
@@ -47,10 +49,10 @@ class Data {
         }
     }
     
-    static func search(update entry:SearchEntry, save:Bool = true) {
+    static func update(entry:Entry, save:Bool = true) {
         let context = AppDelegate.instance.persistentContainer.viewContext
         
-        if let description = NSEntityDescription.entity(forEntityName: "SearchEntry", in: context) {
+        if let description = NSEntityDescription.entity(forEntityName: Search.EntityName, in: context) {
             
             let request         = NSFetchRequest<NSFetchRequestResult>()
             
@@ -78,10 +80,10 @@ class Data {
         }
     }
     
-    static func search(remove entry:SearchEntry, save:Bool = true) -> Int {
+    static func remove(entry:Entry, save:Bool = true) -> Int {
         let context = AppDelegate.instance.persistentContainer.viewContext
         
-        if let description = NSEntityDescription.entity(forEntityName: "SearchEntry", in: context) {
+        if let description = NSEntityDescription.entity(forEntityName: Search.EntityName, in: context) {
             
             let request         = NSFetchRequest<NSFetchRequestResult>()
             
@@ -117,15 +119,15 @@ class Data {
         return 0
     }
     
-    static func searchGetAllEntries() -> [SearchEntry] {
+    static func getAllEntries() -> [Entry] {
         
-        var results             : [SearchEntry] = []
+        var results             : [Entry] = []
         
         let context             = AppDelegate.instance.persistentContainer.viewContext
         
         let request             = NSFetchRequest<NSFetchRequestResult>()
         
-        let description         = NSEntityDescription.entity(forEntityName: "SearchEntry", in: context)
+        let description         = NSEntityDescription.entity(forEntityName: Search.EntityName, in: context)
         
         request.entity          = description
         
@@ -133,7 +135,7 @@ class Data {
             let result          = try context.fetch(request)
             //                    print(result)
             
-            var item            = SearchEntry(title:"")
+            var item            = Entry(title:"")
             
             for object in result {
                 let object      = object as AnyObject
