@@ -9,14 +9,12 @@
 import Foundation
 import UIKit
 
-class ViewControllerForScreenSearch: UIViewController
+class ViewControllerForScreenSearch: UITableViewController
 {
     
     var                 tweets:     [TweetModel]    = [TweetModel]()
     
     var                 tweet:      TweetModel?
-    
-    @IBOutlet weak var  table:      UITableView!
     
     var                 search:     UISearchBar     = UISearchBar()
     
@@ -47,20 +45,17 @@ class ViewControllerForScreenSearch: UIViewController
         
         // Do any additional setup after loading the view, typically from a nib.
         
-        table.rowHeight             = UITableViewAutomaticDimension
-        table.estimatedRowHeight    = 80
+        search.delegate                 = self
+        search.text                     = ""
         
-        search.delegate             = self
-        search.text                 = ""
+        tableView.rowHeight             = UITableViewAutomaticDimension
+        tableView.estimatedRowHeight    = 80
         
         refresh.addTarget(self, action: #selector(ViewControllerForScreenSearch.handleRefresh), for: UIControlEvents.valueChanged)
         
-        table.insertSubview(refresh, at: 0)
+        tableView.insertSubview(refresh, at: 0)
         
-        table.delegate              = self
-        table.dataSource            = self
-        
-        table.register(UINib(nibName: "TweetView", bundle: nil), forCellReuseIdentifier: "TweetView")
+        tableView.register(UINib(nibName: "TweetView", bundle: nil), forCellReuseIdentifier: "TweetView")
     }
     
     
@@ -68,6 +63,8 @@ class ViewControllerForScreenSearch: UIViewController
     
     func handleRefresh()
     {
+        self.title = "\"\(search.text)\""
+        
         print("reloading... for \(search.text)")
         
         // "make a call to twitter to retrieve tweets matching search text"
@@ -198,7 +195,7 @@ class ViewControllerForScreenSearch: UIViewController
         
         tweets      = tweets.subarray(length:maximumTweetsToDisplay)
         
-        table       .reloadData()
+        tableView   .reloadData()
         
         refresh     .endRefreshing()
     }
@@ -207,7 +204,7 @@ class ViewControllerForScreenSearch: UIViewController
     
     
     override func viewWillAppear(_ animated: Bool) {
-        table.reloadData()
+        tableView.reloadData()
     }
     
     
@@ -216,24 +213,24 @@ class ViewControllerForScreenSearch: UIViewController
         
         tweets      = []
         
-        table       .reloadData()
+        tableView   .reloadData()
         
         super.didReceiveMemoryWarning()
     }
     
 }
 
-extension ViewControllerForScreenSearch : UITableViewDataSource {
+extension ViewControllerForScreenSearch {
     
-    func numberOfSections  (in tableView: UITableView) -> Int {
+    override func numberOfSections  (in tableView: UITableView) -> Int {
         return 1
     }
     
-    func tableView         (_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView         (_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1+tweets.count
     }
     
-    func tableView         (_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    override func tableView         (_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         if indexPath.row == 0 {
             let cell = UITableViewCell()
@@ -244,7 +241,7 @@ extension ViewControllerForScreenSearch : UITableViewDataSource {
         
         let tweet = tweets[indexPath.row-1]
         
-        if let cell = table.dequeueReusableCell(withIdentifier: "TweetView") as? TweetView {
+        if let cell = tableView.dequeueReusableCell(withIdentifier: "TweetView") as? TweetView {
         
             cell.model = tweet
         
@@ -260,7 +257,7 @@ extension ViewControllerForScreenSearch : UITableViewDataSource {
     
 }
 
-extension ViewControllerForScreenSearch : UITableViewDelegate {
+extension ViewControllerForScreenSearch {
     
     /*
      // Override to support conditional editing of the table view.
