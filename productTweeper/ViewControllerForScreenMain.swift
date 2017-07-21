@@ -58,24 +58,24 @@ class ViewControllerForScreenMain: UIViewController {
             buttonForLIVESTREAM!, buttonForSEARCH!, buttonForFILTER!, buttonForPREFERENCES!
         ]
         
-        let fontSize:CGFloat = 32
+        let fontSize:CGFloat = 24
         let font = UIFont.init(name: "Gill Sans", size: fontSize) ?? UIFont.systemFont(ofSize: fontSize)
         
         for button in [buttonForLIVESTREAM!, buttonForFILTER!] {
             button.setAttributedTitle((button.title(for: .normal) ?? "?") | font | UIColor.white, for: .normal)
             button.setAttributedTitle((button.title(for: .disabled) ?? "?") | font | UIColor(white:1, alpha:0.6), for: .disabled)
             button.backgroundColor = UIColor(white: 1, alpha: 0.2)
-            button.sizeToFit()
         }
 
         for button in [buttonForSEARCH!, buttonForPREFERENCES!] {
             button.setAttributedTitle((button.title(for: .normal) ?? "?") | font | UIColor(white:1, alpha:0.90), for: .normal)
             button.setAttributedTitle((button.title(for: .disabled) ?? "?") | font | UIColor(white:1, alpha:0.6), for: .disabled)
             button.backgroundColor = UIColor(white: 1, alpha: 0.15)
-            button.sizeToFit()
         }
         
         for button in buttons {
+            button.sizeToFit()
+            button.contentEdgeInsets = UIEdgeInsets(all: 12)
             button.translatesAutoresizingMaskIntoConstraints=false
             button.widthAnchor.constraint(equalTo: self.view.widthAnchor).isActive=true
         }

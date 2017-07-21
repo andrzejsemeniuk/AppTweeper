@@ -9,6 +9,12 @@
 import Foundation
 import UIKit
 
+protocol ViewControllerForScreenSearchDelegate : class {
+    func searchPhraseWasUpdated         (to:String)
+    
+    var  searchPhrase           : String { get }
+}
+
 class ViewControllerForScreenSearch: UITableViewController
 {
     
@@ -24,10 +30,8 @@ class ViewControllerForScreenSearch: UITableViewController
     var                 maximumTweetsToDisplay: Int {
         return 120
     }
-    
-    
-    
-    
+
+    weak var            delegate    : ViewControllerForScreenSearchDelegate?
     
     
     
@@ -37,16 +41,9 @@ class ViewControllerForScreenSearch: UITableViewController
     {
         super.viewDidLoad()
         
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-        
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
-        
-        // Do any additional setup after loading the view, typically from a nib.
-        
         search.delegate                 = self
-        search.text                     = ""
+        search.text                     = self.delegate?.searchPhrase ?? ""
+        search.autocapitalizationType   = .none
         
         tableView.rowHeight             = UITableViewAutomaticDimension
         tableView.estimatedRowHeight    = 80
@@ -63,13 +60,33 @@ class ViewControllerForScreenSearch: UITableViewController
     
     func handleRefresh()
     {
-        self.title = "\"\(search.text)\""
+        let text = search.text ?? ""
         
-        print("reloading... for \(search.text)")
+        self.title = "\"\(text)\""
+        
+        self.delegate?.searchPhraseWasUpdated(to: text)
+        
+        // TODO: ADD ACTIVITY INDIATOR
+        print("reloading... for \(text)")
+        
+        let indicator = UIActivityIndicatorView(activityIndicatorStyle: .white)
+        
+        self.view.addSubview(indicator)
+        indicator.backgroundColor = UIColor.init(hsba: [0.6,1.0,1.0,0.5])
+        indicator.frame = self.view.frame
+        indicator.startAnimating()
         
         // "make a call to twitter to retrieve tweets matching search text"
         
-        Twitter.instance.tweetsFromSearch(search.text!, count:40, handler: { freshTweets in
+        // TODO: PARAMETERIZE COUNT
+        Twitter.instance.tweetsFromSearch(text, count:40, handler: { [weak self] freshTweets in
+            
+            guard let `self` = self else {
+                return
+            }
+            
+            indicator.stopAnimating()
+            indicator.removeFromSuperview()
             
             if let tweets = freshTweets {
                 self.tweets = tweets + self.tweets
@@ -202,9 +219,8 @@ class ViewControllerForScreenSearch: UITableViewController
     
     
     
-    
     override func viewWillAppear(_ animated: Bool) {
-        tableView.reloadData()
+        self.handleRefresh()
     }
     
     
@@ -316,7 +332,7 @@ extension ViewControllerForScreenSearch : UISearchBarDelegate
     }
     
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-        handleRefresh()
+//        handleRefresh()
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {

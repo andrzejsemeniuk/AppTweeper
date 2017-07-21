@@ -12,6 +12,7 @@ import ASToolkit
 class ViewControllerForScreenManagerOfSearch : UITableViewController {
     
     var entries                 : [Search.Entry] = []
+    var focusedEntry            : Search.Entry!
     
     var selected                : Int?
     
@@ -23,18 +24,17 @@ class ViewControllerForScreenManagerOfSearch : UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.title = "Search"
+        
         self.buttonForAdd = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(ViewControllerForScreenManagerOfSearch.tapOnButtonAdd(_:)))
         
-        self.buttonForEdit = UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(ViewControllerForScreenManagerOfSearch.tapOnButtonEdit(_:)))
+        self.buttonForEdit = UIBarButtonItem(title: "Edit", style: .plain, target: self, action: #selector(ViewControllerForScreenManagerOfSearch.tapOnButtonEdit(_:)))
         self.buttonForEdit.possibleTitles = ["Edit","Done"]
-        self.buttonForEdit.title = "Edit"
         
         self.navigationItem.rightBarButtonItems = [
-            self.buttonForAdd,
-            self.buttonForEdit
+            self.buttonForEdit,
+            self.buttonForAdd
         ]
-        
-        self.title = "Search"
         
         tableView.separatorStyle        = .singleLineEtched
         tableView.separatorColor        = Preferences.current.colorOfScreenSearchListSeparator
@@ -46,25 +46,48 @@ class ViewControllerForScreenManagerOfSearch : UITableViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.entries = Search.getAllEntries()
+        self.tableView.reloadData()
+    }
+    
+    
+    func update(from:Search.Entry, to:Search.Entry, refresh:Bool = true) {
+        _ = Search.remove(entry: from)
+        Search.add(entry: to)
+        if refresh {
+            self.entries = Search.getAllEntries()
+            self.tableView.reloadData()
+        }
+    }
+    
+    func openSearch(with entry:Search.Entry) {
+        if let search = self.storyboard?.instantiateViewController(withIdentifier: "ViewControllerForScreenSearch") as? ViewControllerForScreenSearch {
+            self.focusedEntry = entry
+            search.delegate = self
+            self.show(search, sender: nil)
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
+        if let entry = entries[safe:indexPath.item] {
+            self.selected = indexPath.item
+            self.openSearch(with: entry)
+        }
+    }
     
     func tapOnButtonAdd(_ sender: UIBarButtonItem) {
-        let newEntry = Search.Entry(title:"NEW")
-        Search.add(entry:newEntry)
-        entries = Search.getAllEntries()
-        tableView.reloadData()
-        
-        if let search = self.storyboard?.instantiateViewController(withIdentifier: "ViewControllerForScreenSearch") as? ViewControllerForScreenSearch {
-            self.show(search, sender: sender)
-            
-            search.search.text = newEntry.title
-            search.handleRefresh()
-        }
+        self.openSearch(with: Search.Entry(title:"Twitter"))
     }
     
     func tapOnButtonEdit(_ sender: UIBarButtonItem) {
         if tableView.isEditing {
             tableView.setEditing(false, animated: true)
             self.buttonForEdit.title = "Edit"
+            self.buttonForEdit.style = .plain
             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.75) {
                 self.tableView.reloadData()
             }
@@ -72,13 +95,11 @@ class ViewControllerForScreenManagerOfSearch : UITableViewController {
         else {
             tableView.setEditing(true, animated: true)
             self.buttonForEdit.title = "Done"
+            self.buttonForEdit.style = .done
         }
     }
 
-}
 
-extension ViewControllerForScreenManagerOfSearch {
-    
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         switch editingStyle {
         case .delete:
@@ -95,20 +116,6 @@ extension ViewControllerForScreenManagerOfSearch {
             break
         }
     }
-    
-    override func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
-        if let entry = entries[safe:indexPath.item] {
-            self.selected = indexPath.item
-            if let search = self.storyboard?.instantiateViewController(withIdentifier: "ViewControllerForScreenSearch") as? ViewControllerForScreenSearch {
-                self.show(search, sender: nil)
-                search.search.text = entry.title
-                search.handleRefresh()
-            }
-        }
-    }
-}
-
-extension ViewControllerForScreenManagerOfSearch {
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return entries.count
@@ -139,4 +146,21 @@ extension ViewControllerForScreenManagerOfSearch {
         
         return cell
     }
+}
+
+extension ViewControllerForScreenManagerOfSearch : ViewControllerForScreenSearchDelegate {
+    
+    func searchPhraseWasUpdated(to text: String) {
+        if self.focusedEntry.title != text {
+            let from = self.focusedEntry!
+            let to = Search.Entry(title:text)
+            self.update(from:from, to:to, refresh:false)
+            self.focusedEntry = to
+        }
+    }
+    
+    var searchPhrase : String {
+        return self.focusedEntry?.title ?? "?"
+    }
+    
 }
