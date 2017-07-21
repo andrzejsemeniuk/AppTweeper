@@ -101,6 +101,11 @@ class ViewControllerForScreenMain: UIViewController {
         super.viewWillAppear(animated)
 
         self.navigationController?.navigationBar.isHidden=true
+        
+        for button in buttons {
+            button.isSelected = false
+            button.isEnabled = true
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {

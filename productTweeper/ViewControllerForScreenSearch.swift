@@ -18,11 +18,11 @@ protocol ViewControllerForScreenSearchDelegate : class {
 class ViewControllerForScreenSearch: UITableViewController
 {
     
-    var                 tweets:     [TweetModel]    = [TweetModel]()
+    var                 tweets      : [TweetModel]  = [TweetModel]()
     
-    var                 tweet:      TweetModel?
+    var                 tweet       : TweetModel?
     
-    var                 search:     UISearchBar     = UISearchBar()
+    var                 search      : UISearchBar   = UISearchBar()
     
     var                 refresh                     = UIRefreshControl()
     
