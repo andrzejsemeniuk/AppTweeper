@@ -66,18 +66,9 @@ class TweetView: UITableViewCell
         {
             if let tweet = model {
                 
-                if true
-                {
-                    // NOTE: iOS 9 wants secure connections unless you explicitly tell it not in info.plist file
-                    if let url = NSURL(string:tweet.user.profile_image_url.replacingOccurrences(of: "http", with:"https")) {
-                        tweetImage.setImage(fromURL:url as URL)
-                    }
-                }
-                else
-                {
-                    if let url = NSURL(string: tweet.user.profile_image_url) {
-                        tweetImage.setImage(fromURL:url as URL)
-                    }
+                // NOTE: iOS 9 wants secure connections unless you explicitly tell it not in info.plist file
+                if let url = NSURL(string:tweet.user.profile_image_url.replacingOccurrences(of: "http", with:"https")) {
+                    tweetImage.setImage(fromURL:url as URL)
                 }
                 
                 tweetImage.layer.cornerRadius       = 6.0

@@ -16,16 +16,11 @@ class ViewControllerForScreenSearch: UIViewController
     
     var                 tweet:      TweetModel?
     
-    @IBOutlet weak var  label:      UILabel!
-    
     @IBOutlet weak var  table:      UITableView!
     
-    @IBOutlet weak var  search:     UISearchBar!
-    
+    var                 search:     UISearchBar     = UISearchBar()
     
     var                 refresh                     = UIRefreshControl()
-    
-    
     
     
     var                 maximumTweetsToDisplay: Int {
@@ -235,12 +230,19 @@ extension ViewControllerForScreenSearch : UITableViewDataSource {
     }
     
     func tableView         (_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return tweets.count
+        return 1+tweets.count
     }
     
     func tableView         (_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let tweet = tweets[indexPath.row]
+        if indexPath.row == 0 {
+            let cell = UITableViewCell()
+            search.frame.size = cell.contentView.frame.size
+            cell.contentView.addSubview(search)
+            return cell
+        }
+        
+        let tweet = tweets[indexPath.row-1]
         
         if let cell = table.dequeueReusableCell(withIdentifier: "TweetView") as? TweetView {
         
@@ -313,19 +315,15 @@ extension ViewControllerForScreenSearch : UISearchBarDelegate
 {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String)
     {
-        if searchBar==search
-        {
-            print("search text did change: \(searchText)")
-        }
+        print("search text did change: \(searchText)")
     }
     
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar)
-    {
-        if searchBar==search
-        {
-            print("search for text: \(search.text)")
-            handleRefresh()
-        }
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        handleRefresh()
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        handleRefresh()
     }
     
 }

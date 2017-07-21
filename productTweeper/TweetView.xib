@@ -51,33 +51,33 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZZ3-4K-nnF" userLabel="retweet">
-                        <rect key="frame" x="166" y="40" width="16" height="48.5"/>
-                        <state key="normal" image="image-gray-retweet">
+                        <rect key="frame" x="159" y="40" width="12" height="48.5"/>
+                        <state key="normal" image="image-retweet-gray">
                             <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </state>
                     </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="11" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cVD-j8-Qbe" userLabel="retweet count">
-                        <rect key="frame" x="198" y="56.5" width="12" height="16"/>
+                        <rect key="frame" x="187" y="56.5" width="12" height="16"/>
                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                         <color key="textColor" red="0.7812386751" green="0.78121525049999996" blue="0.78122854230000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AO0-JI-cb7" userLabel="favorite">
-                        <rect key="frame" x="234" y="40" width="16" height="48.5"/>
-                        <state key="normal" image="image-gray-star">
+                        <rect key="frame" x="223" y="40" width="11" height="48.5"/>
+                        <state key="normal" image="image-star-gray">
                             <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </state>
                     </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YaK-Oc-WgY" userLabel="favorite count">
-                        <rect key="frame" x="266" y="56.5" width="14" height="16"/>
+                        <rect key="frame" x="250" y="56.5" width="14" height="16"/>
                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                         <color key="textColor" red="0.80000001190000003" green="0.80000001190000003" blue="0.80000001190000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <button hidden="YES" opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="r4d-jC-AnS" userLabel="reply">
-                        <rect key="frame" x="93" y="40" width="16" height="48.5"/>
+                        <rect key="frame" x="93" y="40" width="9" height="48.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                        <state key="normal" image="image-gray-reply">
+                        <state key="normal" image="image-reply-gray">
                             <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </state>
                     </button>
@@ -88,8 +88,8 @@
                         <dataDetectorType key="dataDetectorTypes" link="YES"/>
                     </textView>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FZZ-uK-1AH" userLabel="flag">
-                        <rect key="frame" x="348.5" y="54" width="16" height="22"/>
-                        <state key="normal" image="image-gray-flag">
+                        <rect key="frame" x="352" y="54.5" width="9" height="22"/>
+                        <state key="normal" image="image-flag-gray">
                             <color key="titleShadowColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                         </state>
                         <state key="selected" image="image-highlighted-flag"/>
@@ -137,19 +137,19 @@
                 </constraints>
                 <variation key="default">
                     <mask key="constraints">
-                        <exclude reference="bz5-fL-8E6"/>
                         <exclude reference="YQQ-h9-Xv9"/>
+                        <exclude reference="bz5-fL-8E6"/>
                         <exclude reference="DOZ-lJ-3PS"/>
                         <exclude reference="Y2f-p0-BrV"/>
-                        <exclude reference="Cjg-mv-RNf"/>
                         <exclude reference="DSQ-M2-dmQ"/>
                         <exclude reference="wAV-90-gBH"/>
+                        <exclude reference="Cjg-mv-RNf"/>
                     </mask>
                 </variation>
                 <variation key="heightClass=regular-widthClass=compact">
                     <mask key="constraints">
-                        <include reference="Cjg-mv-RNf"/>
                         <include reference="DSQ-M2-dmQ"/>
+                        <include reference="Cjg-mv-RNf"/>
                     </mask>
                 </variation>
             </tableViewCellContentView>
@@ -172,10 +172,10 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="image-gray-flag" width="16" height="16"/>
-        <image name="image-gray-reply" width="16" height="16"/>
-        <image name="image-gray-retweet" width="16" height="16"/>
-        <image name="image-gray-star" width="16" height="16"/>
+        <image name="image-flag-gray" width="9" height="9"/>
         <image name="image-highlighted-flag" width="16" height="16"/>
+        <image name="image-reply-gray" width="9" height="9"/>
+        <image name="image-retweet-gray" width="12" height="9"/>
+        <image name="image-star-gray" width="11" height="11"/>
     </resources>
 </document>
