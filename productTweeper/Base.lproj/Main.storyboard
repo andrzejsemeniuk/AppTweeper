@@ -120,22 +120,11 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Cgb-Yl-mVs">
-                                <rect key="frame" x="136" y="273.5" width="108" height="128"/>
+                                <rect key="frame" x="136" y="273.5" width="105" height="96"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="COc-ya-r6e">
-                                        <rect key="frame" x="0.0" y="0.0" width="108" height="32"/>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
-                                        <state key="normal" title="LIVE STREAM">
-                                            <color key="titleColor" red="0.99659754639999998" green="1" blue="0.97176731949999995" alpha="1" colorSpace="calibratedRGB"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="tapOnButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ZVh-sR-05U"/>
-                                            <segue destination="2gn-r9-gQ3" kind="show" id="IyD-zE-tOP"/>
-                                        </connections>
-                                    </button>
                                     <button contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Szm-0V-Xn8">
-                                        <rect key="frame" x="0.0" y="32" width="108" height="32"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="105" height="32"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
                                         <state key="normal" title="SEARCH">
                                             <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -146,7 +135,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q2r-zD-bC7">
-                                        <rect key="frame" x="0.0" y="64" width="108" height="32"/>
+                                        <rect key="frame" x="0.0" y="32" width="105" height="32"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
                                         <state key="normal" title="FILTER">
                                             <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -157,7 +146,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6sL-JT-URQ">
-                                        <rect key="frame" x="0.0" y="96" width="108" height="32"/>
+                                        <rect key="frame" x="0.0" y="64" width="105" height="32"/>
                                         <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="17"/>
                                         <state key="normal" title="PREFERENCES">
                                             <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -177,7 +166,6 @@
                     <navigationItem key="navigationItem" id="cMd-F0-GpP"/>
                     <connections>
                         <outlet property="buttonForFILTER" destination="q2r-zD-bC7" id="SIg-5f-XqJ"/>
-                        <outlet property="buttonForLIVESTREAM" destination="COc-ya-r6e" id="K5f-r4-x9Q"/>
                         <outlet property="buttonForPREFERENCES" destination="6sL-JT-URQ" id="3Bp-h4-OUj"/>
                         <outlet property="buttonForSEARCH" destination="Szm-0V-Xn8" id="H5h-pb-bgu"/>
                         <outlet property="viewForImageBottom" destination="I0i-Ul-Tk5" id="ZdU-ba-N2Y"/>

@@ -15,7 +15,6 @@ class ViewControllerForScreenMain: UIViewController {
     @IBOutlet var viewForImageTop       : UIImageView!
     @IBOutlet var viewForImageBottom    : UIImageView!
     @IBOutlet var buttonForSEARCH       : UIButton!
-    @IBOutlet var buttonForLIVESTREAM   : UIButton!
     @IBOutlet var buttonForFILTER       : UIButton!
     @IBOutlet var buttonForPREFERENCES  : UIButton!
     
@@ -34,16 +33,9 @@ class ViewControllerForScreenMain: UIViewController {
         stack.centerYAnchor.constraint(equalTo: self.view.centerYAnchor).isActive = true
         stack.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
         
-        if false {
-            viewForImageTop.translatesAutoresizingMaskIntoConstraints=false
-            viewForImageTop.centerYAnchor.constraint(equalTo: self.view.centerYAnchor, constant: -self.view.frame.height/3.0).isActive=true
-            viewForImageTop.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive=true
-        }
-        else {
-            viewForImageTop.center.x = self.view.center.x
-            viewForImageTop.center.y = self.view.frame.top/5.0
-            viewForImageTop.translatesAutoresizingMaskIntoConstraints=true
-        }
+        viewForImageTop.translatesAutoresizingMaskIntoConstraints=false
+        viewForImageTop.centerYAnchor.constraint(equalTo: self.view.centerYAnchor, constant: -self.view.frame.height/3.5).isActive=true
+        viewForImageTop.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive=true
 
 //        viewForImageTop.align(above:viewForMenu, constant:16)
 //        viewForImageTop.alignCenterXWithParent(constant:0)
@@ -59,32 +51,36 @@ class ViewControllerForScreenMain: UIViewController {
         viewForMenu.centerYAnchor.constraint(equalTo: self.view.centerYAnchor).isActive=true
         viewForMenu.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive=true
         
-        self.buttons = [
-            buttonForLIVESTREAM!, buttonForSEARCH!, buttonForFILTER!, buttonForPREFERENCES!
-        ]
-        
         let fontSize:CGFloat = 24
         let font = UIFont.init(name: "Gill Sans", size: fontSize) ?? UIFont.systemFont(ofSize: fontSize)
         
-        for button in [buttonForLIVESTREAM!, buttonForFILTER!] {
-            button.setAttributedTitle((button.title(for: .normal) ?? "?") | font | UIColor.white, for: .normal)
-            button.setAttributedTitle((button.title(for: .disabled) ?? "?") | font | UIColor(white:1, alpha:0.6), for: .disabled)
-            button.backgroundColor = UIColor(white: 1, alpha: 0.2)
-        }
-
-        for button in [buttonForSEARCH!, buttonForPREFERENCES!] {
-            button.setAttributedTitle((button.title(for: .normal) ?? "?") | font | UIColor(white:1, alpha:0.90), for: .normal)
-            button.setAttributedTitle((button.title(for: .disabled) ?? "?") | font | UIColor(white:1, alpha:0.6), for: .disabled)
-            button.backgroundColor = UIColor(white: 1, alpha: 0.15)
-        }
+        self.buttons = [
+            buttonForSEARCH!, buttonForFILTER!, buttonForPREFERENCES!
+        ]
         
-        for button in buttons {
+        for (index,button) in buttons.enumerated() {
+            if index.isEven {
+                button.setAttributedTitle((button.title(for: .normal) ?? "?") | font | UIColor(white:1, alpha:0.90), for: .normal)
+//                button.setAttributedTitle((button.title(for: .disabled) ?? "?") | font | UIColor(white:1, alpha:0.6), for: .disabled)
+                button.backgroundColor = UIColor(white: 1, alpha: 0.15)
+            }
+            else {
+                button.setAttributedTitle((button.title(for: .normal) ?? "?") | font | UIColor.white, for: .normal)
+//                button.setAttributedTitle((button.title(for: .disabled) ?? "?") | font | UIColor(white:1, alpha:0.6), for: .disabled)
+                button.backgroundColor = UIColor(white: 1, alpha: 0.2)
+            }
+            
             button.sizeToFit()
             button.contentEdgeInsets = UIEdgeInsets(all: 12)
             button.translatesAutoresizingMaskIntoConstraints=false
             button.widthAnchor.constraint(equalTo: self.view.widthAnchor).isActive=true
         }
 
+        self.viewForImageTop.layer.shadowRadius = 5
+        self.viewForImageTop.layer.shadowColor = UIColor(hsb:[0.6,1.0,0.3]).cgColor // UIColor.black.cgColor
+        self.viewForImageTop.layer.shadowOffset = CGSize(side: 0)
+        self.viewForImageTop.layer.shadowOpacity = 0.4
+        
         // "background gradient"
 
         let gradientView = UIView(frame:self.view.frame)
@@ -107,7 +103,7 @@ class ViewControllerForScreenMain: UIViewController {
         
         // motion effect
         
-        let margin:CGFloat = 50
+        let margin:CGFloat = 15
         
         let motionX = UIInterpolatingMotionEffect.init(keyPath: "layer.transform.translation.x", type: .tiltAlongHorizontalAxis)
         motionX.minimumRelativeValue = -margin
@@ -132,6 +128,7 @@ class ViewControllerForScreenMain: UIViewController {
         for button in buttons {
             button.isSelected = false
             button.isEnabled = true
+            button.transform = CGAffineTransform.init(scaleX: 0.01, y: 0.01)
         }
         
         
@@ -140,12 +137,21 @@ class ViewControllerForScreenMain: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
+        // buttons
+        
+        for (index,button) in buttons.enumerated() {
+            UIView.animate(withDuration: 0.8, delay: Double(index)/8.0, options: [.curveEaseOut], animations: {
+                button.transform = CGAffineTransform.identity
+            }) { finished in
+            }
+        }
+        
         // radio effect
         
         let radius = self.view.frame.diagonal
         let diameter = radius * 2
         let count = 12
-        let duration = 24.0
+        let duration = 6.0
         for animation in 0..<count
         {
             let radioWaveView = UIView(frame:CGRect(origin : self.viewForImageTop.center - radius,
@@ -173,21 +179,24 @@ class ViewControllerForScreenMain: UIViewController {
             radioWaveView.layer.addSublayer(layer)
             
             radioWaveView.transform = CGAffineTransform.init(scaleX: 0.001, y: 0.001)
-            radioWaveView.alpha = 0.1
+            radioWaveView.alpha = 0.05
             
             let delay = Double(animation)/Double(count)*duration
             UIView.animate(withDuration: TimeInterval(duration), delay: delay, options: [.repeat, .curveLinear], animations: {
                 radioWaveView.transform = CGAffineTransform(scaleX: 1, y: 1)
-                radioWaveView.alpha = 0.02
+                radioWaveView.alpha = 0.01
             }) { finished in
-                print("finished=\(finished) @ \(delay)")
+                print("finished animation (\(animation)) for circle")
             }
-
         }
         
-        UIView.animate(withDuration: 1, delay: 0, options: [.repeat, .autoreverse], animations: {
-            self.viewForImageTop.transform = CGAffineTransform.init(scaleX: 1.04, y: 1.1)
-        })
+        if false {
+        UIView.animate(withDuration: duration/Double(count)/2, delay: 1, options: [.repeat, .autoreverse], animations: {
+            self.viewForImageTop.transform = CGAffineTransform.init(scaleX: 1.02, y: 1.04)
+        }) { finished in
+            print("finished title animation")
+        }
+        }
         
     }
     
@@ -195,6 +204,14 @@ class ViewControllerForScreenMain: UIViewController {
         super.viewWillDisappear(animated)
         
         self.navigationController?.navigationBar.isHidden=false
+        
+        for (index,button) in buttons.enumerated() {
+            UIView.animate(withDuration: 1, delay: (0.1+Double(index))/4.0, options: [], animations: {
+                button.transform = CGAffineTransform.init(scaleX: 0.01, y: 0.01)
+            }) { finished in
+            }
+        }
+        
     }
     
     override func didReceiveMemoryWarning() {
