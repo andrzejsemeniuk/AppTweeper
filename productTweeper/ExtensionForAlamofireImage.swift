@@ -15,8 +15,8 @@ extension UIImageView {
     public func setImage(fromURL url:URL) {
         Alamofire.request(url).responseImage { response in
             debugPrint(response)
-            print(response.request)
-            print(response.response)
+//            print(response.request)
+//            print(response.response)
             debugPrint(response.result)
             
             if let image = response.result.value {

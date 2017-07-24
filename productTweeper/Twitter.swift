@@ -81,6 +81,7 @@ class Twitter
                 let bearer  = JSON["token_type"].string,
                 let token   = JSON["access_token"].string
             {
+                print("bearer=\(bearer)")
                 self.access_token = token
                 handler(true)
             }

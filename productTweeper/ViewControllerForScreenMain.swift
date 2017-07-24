@@ -29,16 +29,12 @@ class ViewControllerForScreenMain: UIViewController {
         
         self.stack = buttonForSEARCH.superview as! UIStackView
         
-//        stack.translatesAutoresizingMaskIntoConstraints=false
         stack.centerYAnchor.constraint(equalTo: self.view.centerYAnchor).isActive = true
         stack.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
         
         viewForImageTop.translatesAutoresizingMaskIntoConstraints=false
         viewForImageTop.centerYAnchor.constraint(equalTo: self.view.centerYAnchor, constant: -self.view.frame.height/3.5).isActive=true
         viewForImageTop.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive=true
-
-//        viewForImageTop.align(above:viewForMenu, constant:16)
-//        viewForImageTop.alignCenterXWithParent(constant:0)
 
         viewForImageBottom.translatesAutoresizingMaskIntoConstraints=false
         viewForImageBottom.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -16).isActive=true //self.view.frame.height/2.5).isActive=true
@@ -61,12 +57,12 @@ class ViewControllerForScreenMain: UIViewController {
         for (index,button) in buttons.enumerated() {
             if index.isEven {
                 button.setAttributedTitle((button.title(for: .normal) ?? "?") | font | UIColor(white:1, alpha:0.90), for: .normal)
-//                button.setAttributedTitle((button.title(for: .disabled) ?? "?") | font | UIColor(white:1, alpha:0.6), for: .disabled)
+                button.setAttributedTitle((button.title(for: .selected) ?? "?") | font | UIColor(white:1, alpha:0.6), for: .disabled)
                 button.backgroundColor = UIColor(white: 1, alpha: 0.15)
             }
             else {
                 button.setAttributedTitle((button.title(for: .normal) ?? "?") | font | UIColor.white, for: .normal)
-//                button.setAttributedTitle((button.title(for: .disabled) ?? "?") | font | UIColor(white:1, alpha:0.6), for: .disabled)
+                button.setAttributedTitle((button.title(for: .selected) ?? "?") | font | UIColor(white:1, alpha:0.6), for: .disabled)
                 button.backgroundColor = UIColor(white: 1, alpha: 0.2)
             }
             
@@ -76,10 +72,10 @@ class ViewControllerForScreenMain: UIViewController {
             button.widthAnchor.constraint(equalTo: self.view.widthAnchor).isActive=true
         }
 
-        self.viewForImageTop.layer.shadowRadius = 5
-        self.viewForImageTop.layer.shadowColor = UIColor(hsb:[0.6,1.0,0.3]).cgColor // UIColor.black.cgColor
-        self.viewForImageTop.layer.shadowOffset = CGSize(side: 0)
-        self.viewForImageTop.layer.shadowOpacity = 0.4
+        self.viewForImageTop.layer.shadowRadius     = 5
+        self.viewForImageTop.layer.shadowColor      = UIColor(hsb:[0.6,1.0,0.3]).cgColor
+        self.viewForImageTop.layer.shadowOffset     = CGSize(side: 0)
+        self.viewForImageTop.layer.shadowOpacity    = 0.4
         
         // "background gradient"
 
@@ -117,7 +113,6 @@ class ViewControllerForScreenMain: UIViewController {
         motionEffect.motionEffects = [motionX,motionY]
         
         self.viewForImageTop.addMotionEffect(motionEffect)
-        
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -130,8 +125,6 @@ class ViewControllerForScreenMain: UIViewController {
             button.isEnabled = true
             button.transform = CGAffineTransform.init(scaleX: 0.01, y: 0.01)
         }
-        
-        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -148,10 +141,11 @@ class ViewControllerForScreenMain: UIViewController {
         
         // radio effect
         
-        let radius = self.view.frame.diagonal
-        let diameter = radius * 2
-        let count = 12
-        let duration = 6.0
+        let radius      = self.view.frame.diagonal
+        let diameter    = radius * 2
+        let count       = 6
+        let duration    = 6.0
+        
         for animation in 0..<count
         {
             let radioWaveView = UIView(frame:CGRect(origin : self.viewForImageTop.center - radius,
@@ -190,14 +184,12 @@ class ViewControllerForScreenMain: UIViewController {
             }
         }
         
-        if false {
+        // for some reason this animation finishes immediately on 2nd appearance of vc
         UIView.animate(withDuration: duration/Double(count)/2, delay: 1, options: [.repeat, .autoreverse], animations: {
             self.viewForImageTop.transform = CGAffineTransform.init(scaleX: 1.02, y: 1.04)
         }) { finished in
             print("finished title animation")
         }
-        }
-        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -206,7 +198,7 @@ class ViewControllerForScreenMain: UIViewController {
         self.navigationController?.navigationBar.isHidden=false
         
         for (index,button) in buttons.enumerated() {
-            UIView.animate(withDuration: 1, delay: (0.1+Double(index))/4.0, options: [], animations: {
+            UIView.animate(withDuration: 0.4, delay: Double(index)/8.0, options: [], animations: {
                 button.transform = CGAffineTransform.init(scaleX: 0.01, y: 0.01)
             }) { finished in
             }
@@ -237,49 +229,3 @@ class ViewControllerForScreenMain: UIViewController {
     }
 
 }
-
-open class CADrawLayer : CALayer {
-
-    public typealias Drawing = (CALayer, CGContext)->Void
-    
-    var drawings:[Drawing] = []
-    
-    override public init() {
-        super.init()
-        self.needsDisplayOnBoundsChange=true
-    }
-    
-    required public init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    public func add(drawing:@escaping Drawing) {
-        drawings.append(drawing)
-    }
-    
-    override open func draw(in context: CGContext) {
-        for drawing in Array<Drawing>(drawings) {
-            drawing(self, context)
-        }
-    }
-
-}
-
-open class UIDrawView : UIView {
-    
-    public typealias Drawing = (UIView,CGContext,CGRect)->Void
-    
-    var drawings:[Drawing] = []
-    
-    public func add(drawing:@escaping Drawing) {
-        drawings.append(drawing)
-    }
-
-    override open func draw(_ rect: CGRect) {
-        let context = UIGraphicsGetCurrentContext()!
-        for drawing in Array<Drawing>(drawings) {
-            drawing(self, context, rect)
-        }
-    }
-}
-

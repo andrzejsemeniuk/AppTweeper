@@ -10,7 +10,6 @@
 		33968990889B523C34F95371 /* Pods_productTweeperTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E132DB5AE238177CE3E463EF /* Pods_productTweeperTests.framework */; };
 		5376974F225AC8A841925B69 /* Pods_productTweeper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D05BC277EFEBA43E801A6BD7 /* Pods_productTweeper.framework */; };
 		570FC1BA1F0BE9DB00FEAC03 /* ViewControllerForScreenManagerOfSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570FC1B91F0BE9DB00FEAC03 /* ViewControllerForScreenManagerOfSearch.swift */; };
-		570FC1BC1F0BE9F900FEAC03 /* ViewControllerForScreenManagerOfLiveStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570FC1BB1F0BE9F900FEAC03 /* ViewControllerForScreenManagerOfLiveStream.swift */; };
 		570FC1BE1F0BEA1700FEAC03 /* ViewControllerForScreenFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570FC1BD1F0BEA1700FEAC03 /* ViewControllerForScreenFilter.swift */; };
 		570FC1C01F0BEA2900FEAC03 /* ViewControllerForScreenPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570FC1BF1F0BEA2900FEAC03 /* ViewControllerForScreenPreferences.swift */; };
 		5748C4931F21494C000D2111 /* AlamofireSwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5748C4921F21494C000D2111 /* AlamofireSwiftyJSON.swift */; };
@@ -96,7 +95,6 @@
 		4BD46DE72508FA3CA4EDDBF3 /* Pods_productTweeperUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_productTweeperUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4DBC16F76C479E2256870FDB /* Pods-productTweeperTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-productTweeperTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-productTweeperTests/Pods-productTweeperTests.debug.xcconfig"; sourceTree = "<group>"; };
 		570FC1B91F0BE9DB00FEAC03 /* ViewControllerForScreenManagerOfSearch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerForScreenManagerOfSearch.swift; sourceTree = "<group>"; };
-		570FC1BB1F0BE9F900FEAC03 /* ViewControllerForScreenManagerOfLiveStream.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerForScreenManagerOfLiveStream.swift; sourceTree = "<group>"; };
 		570FC1BD1F0BEA1700FEAC03 /* ViewControllerForScreenFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerForScreenFilter.swift; sourceTree = "<group>"; };
 		570FC1BF1F0BEA2900FEAC03 /* ViewControllerForScreenPreferences.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerForScreenPreferences.swift; sourceTree = "<group>"; };
 		5748C4921F21494C000D2111 /* AlamofireSwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlamofireSwiftyJSON.swift; sourceTree = "<group>"; };
@@ -200,7 +198,6 @@
 				575268C11F20466800F8D8B2 /* User.swift */,
 				570FC1BD1F0BEA1700FEAC03 /* ViewControllerForScreenFilter.swift */,
 				576047F41F0AACC20066F1D0 /* ViewControllerForScreenMain.swift */,
-				570FC1BB1F0BE9F900FEAC03 /* ViewControllerForScreenManagerOfLiveStream.swift */,
 				570FC1B91F0BE9DB00FEAC03 /* ViewControllerForScreenManagerOfSearch.swift */,
 				570FC1BF1F0BEA2900FEAC03 /* ViewControllerForScreenPreferences.swift */,
 				575268B91F20451800F8D8B2 /* ViewControllerForScreenSearch.swift */,
@@ -584,7 +581,6 @@
 				576047FB1F0AACC20066F1D0 /* productTweeper.xcdatamodeld in Sources */,
 				575268C21F20466800F8D8B2 /* User.swift in Sources */,
 				576047F51F0AACC20066F1D0 /* ViewControllerForScreenMain.swift in Sources */,
-				570FC1BC1F0BE9F900FEAC03 /* ViewControllerForScreenManagerOfLiveStream.swift in Sources */,
 				575268BC1F2045EB00F8D8B2 /* TweetModel.swift in Sources */,
 				575268C01F20464800F8D8B2 /* Twitter.swift in Sources */,
 				570FC1BA1F0BE9DB00FEAC03 /* ViewControllerForScreenManagerOfSearch.swift in Sources */,
