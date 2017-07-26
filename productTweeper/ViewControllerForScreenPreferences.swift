@@ -8,18 +8,212 @@
 
 import UIKit
 
-class ViewControllerForScreenPreferences : UIViewController {
+class ViewControllerForScreenPreferences : GenericControllerOfSettings {
     
-    override func viewDidLoad() {
+    override func viewDidLoad()
+    {
+        tableView               = UITableView(frame:tableView.frame,style:.grouped)
+        
+        tableView.dataSource    = self
+        
+        tableView.delegate      = self
+        
+        
+        tableView.separatorStyle = .none
+        
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-        
-        
     }
     
-    override func didReceiveMemoryWarning() {
+    override func didReceiveMemoryWarning()
+    {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
+    
+    
+    
+    
+    override func createRows() -> [[Any]]
+    {
+        return [
+            [
+                "SETTINGS",
+                
+                { (cell:UITableViewCell, indexPath:IndexPath) in
+                    if let label = cell.detailTextLabel {
+                        label.text = AppDelegate.instance.preferences.name.value
+                    }
+                    if let label = cell.textLabel {
+                        label.text          = "Save"
+                        cell.selectionStyle = .default
+                        self.registerCellSelection(indexPath: indexPath) {
+                            let alert = UIAlertController(title:"Save Settings", message:"Specify name for current settings.", preferredStyle:.alert)
+                            
+                            alert.addTextField() {
+                                field in
+                                // called to configure text field before displayed
+                                field.text = AppDelegate.instance.preferences.name.value
+                            }
+                            
+                            let actionSave = UIAlertAction(title:"Save", style:.default, handler: {
+                                action in
+                                
+                                if let fields = alert.textFields, let text = fields[0].text {
+                                    if 0 < text.length {
+                                        AppDelegate.instance.preferences.name.query = text
+                                        
+                                        print(UserDefaults.standard.dictionaryRepresentation())
+                                        
+                                        self.tableView.reloadRows(at: [
+                                            indexPath,
+                                            IndexPath(row:indexPath.row+1,section:indexPath.section) as IndexPath
+                                            ],
+                                                                  with: .left)
+                                    }
+                                }
+                            })
+                            
+                            let actionCancel = UIAlertAction(title:"Cancel", style:.cancel, handler: {
+                                action in
+                            })
+                            
+                            alert.addAction(actionSave)
+                            alert.addAction(actionCancel)
+                            
+                            UIApplication.rootViewController.present(alert, animated:true, completion: {
+                                print("completed showing add alert")
+                            })
+                        }
+                    }
+                },
+                
+                { (cell:UITableViewCell, indexPath:IndexPath) in
+                    if let label = cell.textLabel {
+                        label.text          = "Load"
+                        if AppDelegate.instance.preferences.styles.value.isEmpty {
+                            cell.selectionStyle = .none
+                            cell.accessoryType  = .none
+                        }
+                        else {
+                            cell.selectionStyle = .default
+                            cell.accessoryType  = .disclosureIndicator
+                        }
+                        self.registerCellSelection(indexPath: indexPath) {
+                            let list = AppDelegate.instance.preferences.styles.value
+                            
+                            print("settings list =\(list)")
+                            
+                            if 0 < list.count {
+                                let controller = GenericControllerOfList()
+/*
+                                controller.items = AppDelegate.instance.preferences.settingsList().sorted()
+                                controller.handlerForDidSelectRowAtIndexPath = { controller, indexPath in
+                                    let selected = controller.items[indexPath.row]
+                                    _ = AppDelegate.instance.preferences.settingsUse(selected)
+                                    UIApplication.rootViewController.view.backgroundColor = AppDelegate.instance.preferences.settingsGetBackgroundColor()
+                                    //                                    AppDelegate.controllerOfPages.view.backgroundColor  = AppDelegate.instance.preferences.settingsGetBackgroundColor()
+                                    controller.navigationController!.popViewController(animated: true)
+                                }
+                                controller.handlerForCommitEditingStyle = { controller, commitEditingStyle, indexPath in
+                                    if commitEditingStyle == .delete {
+                                        let selected = controller.items[indexPath.row]
+                                        _ = AppDelegate.instance.preferences.settingsRemove(selected)
+                                        return true
+                                    }
+                                    return false
+                                }
+                                */
+                                self.navigationController?.pushViewController(controller, animated:true)
+                            }
+                        }
+                    }
+                },
+                
+                "Save current settings, or load previously saved settings"
+            ],
+            
+            [
+                "TEST",
+                
+                createCellForUIFontName             (AppDelegate.instance.preferences.testFontName, title:"test font name"),
+                
+                createCellForUIFont                 (AppDelegate.instance.preferences.testFont, title:"test font"),
+                
+                createCellForUIColor                (AppDelegate.instance.preferences.testColor, title:"test color"),
 
+                createCellForUITextFieldAsString    (AppDelegate.instance.preferences.testString, count:15, title:"test String"),
+                
+                createCellForUITextFieldAsDouble    (AppDelegate.instance.preferences.testDouble, title:"test Double"),
+                
+                createCellForUITextFieldAsCGFloat   (AppDelegate.instance.preferences.testCGFloat, title:"test CGFloat"),
+                
+                createCellForUITextFieldAsInt       (AppDelegate.instance.preferences.testInt, title:"test Int"),
+                
+                createCellForBool                   (AppDelegate.instance.preferences.testBool, title:"test Bool"),
+                
+                
+                ""
+            ],
+            
+            [
+                "SELECTION",
+                
+                createCellForUIColor(AppDelegate.instance.preferences.colorOfTitleText,title:"Selection") {
+                },
+                
+                createCellForUISlider(AppDelegate.instance.preferences.testCGFloat, title:"Opacity"),
+                
+                "Set selection properties for rows on all tabs"
+            ],
+            
+            [
+                "APP",
+                
+                createCellForUIColor(AppDelegate.instance.preferences.colorOfBackground,name:"Background",title:"Background") {
+                    UIApplication.rootViewController.view.backgroundColor   = AppDelegate.instance.preferences.colorOfBackground.value
+                    self.view.backgroundColor                               = AppDelegate.instance.preferences.colorOfBackground.value
+                },
+                
+                createCellForBool(AppDelegate.instance.preferences.audio, title:"Audio"),
+                
+                
+                "Set app properties"
+            ],
+            
+            
+        ]
+    }
+    
+    
+    
+    
+    override func tableView                     (_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
+    {
+        let cell = super.tableView(tableView, cellForRowAt:indexPath)
+        
+        cell.selectedBackgroundView = UIView.createWithBackgroundColor(AppDelegate.instance.preferences.colorOfSelection.value ?? .red)
+        
+        return cell
+    }
+    
+    
+    
+    override func viewWillDisappear(_ animated: Bool)
+    {
+        AppDelegate.instance.preferences.synchronize()
+        
+        super.viewWillDisappear(animated)
+    }
+    
+    override func viewWillAppear(_ animated: Bool)
+    {
+        tableView.backgroundColor   = AppDelegate.instance.preferences.colorOfBackground.value
+        
+        colorForHeaderText          = AppDelegate.instance.preferences.colorOfHeaderText.value
+        colorForFooterText          = AppDelegate.instance.preferences.colorOfFooterText.value
+        
+        super.viewWillAppear(animated)
+    }
+    
+    
+    
 }

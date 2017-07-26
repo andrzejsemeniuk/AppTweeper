@@ -12,6 +12,10 @@
 		570FC1BA1F0BE9DB00FEAC03 /* ViewControllerForScreenManagerOfSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570FC1B91F0BE9DB00FEAC03 /* ViewControllerForScreenManagerOfSearch.swift */; };
 		570FC1BE1F0BEA1700FEAC03 /* ViewControllerForScreenFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570FC1BD1F0BEA1700FEAC03 /* ViewControllerForScreenFilter.swift */; };
 		570FC1C01F0BEA2900FEAC03 /* ViewControllerForScreenPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570FC1BF1F0BEA2900FEAC03 /* ViewControllerForScreenPreferences.swift */; };
+		571DDEA71F26775300FB5841 /* GenericControllerOfList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571DDEA31F26775300FB5841 /* GenericControllerOfList.swift */; };
+		571DDEA81F26775300FB5841 /* GenericControllerOfPickerOfColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571DDEA41F26775300FB5841 /* GenericControllerOfPickerOfColor.swift */; };
+		571DDEA91F26775300FB5841 /* GenericControllerOfPickerOfFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571DDEA51F26775300FB5841 /* GenericControllerOfPickerOfFont.swift */; };
+		571DDEAA1F26775300FB5841 /* GenericControllerOfSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571DDEA61F26775300FB5841 /* GenericControllerOfSettings.swift */; };
 		5748C4931F21494C000D2111 /* AlamofireSwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5748C4921F21494C000D2111 /* AlamofireSwiftyJSON.swift */; };
 		575268881F1E868800F8D8B2 /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 575268871F1E868800F8D8B2 /* Preferences.swift */; };
 		5752688C1F1EF3BA00F8D8B2 /* Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5752688B1F1EF3BA00F8D8B2 /* Search.swift */; };
@@ -29,6 +33,7 @@
 		576048001F0AACC20066F1D0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 576047FE1F0AACC20066F1D0 /* LaunchScreen.storyboard */; };
 		5760480B1F0AACC30066F1D0 /* productTweeperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5760480A1F0AACC30066F1D0 /* productTweeperTests.swift */; };
 		576048161F0AACC30066F1D0 /* productTweeperUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576048151F0AACC30066F1D0 /* productTweeperUITests.swift */; };
+		5790225D1F28F6E700F26BF2 /* GenericSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5790225C1F28F6E700F26BF2 /* GenericSetting.swift */; };
 		579727B31F214E6C00C302E7 /* ExtensionForAlamofireImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579727B21F214E6C00C302E7 /* ExtensionForAlamofireImage.swift */; };
 		57A5354F1F2055170048BA8F /* TweetView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 57A5354E1F2055170048BA8F /* TweetView.xib */; };
 		57F624B91F1E54F500211673 /* ASToolkit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 579713011F1E5432001C4AE3 /* ASToolkit.framework */; };
@@ -97,6 +102,10 @@
 		570FC1B91F0BE9DB00FEAC03 /* ViewControllerForScreenManagerOfSearch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerForScreenManagerOfSearch.swift; sourceTree = "<group>"; };
 		570FC1BD1F0BEA1700FEAC03 /* ViewControllerForScreenFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerForScreenFilter.swift; sourceTree = "<group>"; };
 		570FC1BF1F0BEA2900FEAC03 /* ViewControllerForScreenPreferences.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerForScreenPreferences.swift; sourceTree = "<group>"; };
+		571DDEA31F26775300FB5841 /* GenericControllerOfList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenericControllerOfList.swift; sourceTree = "<group>"; };
+		571DDEA41F26775300FB5841 /* GenericControllerOfPickerOfColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenericControllerOfPickerOfColor.swift; sourceTree = "<group>"; };
+		571DDEA51F26775300FB5841 /* GenericControllerOfPickerOfFont.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenericControllerOfPickerOfFont.swift; sourceTree = "<group>"; };
+		571DDEA61F26775300FB5841 /* GenericControllerOfSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenericControllerOfSettings.swift; sourceTree = "<group>"; };
 		5748C4921F21494C000D2111 /* AlamofireSwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlamofireSwiftyJSON.swift; sourceTree = "<group>"; };
 		575268871F1E868800F8D8B2 /* Preferences.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
 		5752688B1F1EF3BA00F8D8B2 /* Search.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Search.swift; sourceTree = "<group>"; };
@@ -121,6 +130,7 @@
 		576048111F0AACC30066F1D0 /* productTweeperUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = productTweeperUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		576048151F0AACC30066F1D0 /* productTweeperUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = productTweeperUITests.swift; sourceTree = "<group>"; };
 		576048171F0AACC30066F1D0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5790225C1F28F6E700F26BF2 /* GenericSetting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenericSetting.swift; sourceTree = "<group>"; };
 		579712FB1F1E5432001C4AE3 /* ASToolkit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ASToolkit.xcodeproj; path = ../ASToolkit/ASToolkit.xcodeproj; sourceTree = "<group>"; };
 		579727B21F214E6C00C302E7 /* ExtensionForAlamofireImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtensionForAlamofireImage.swift; sourceTree = "<group>"; };
 		57A5354E1F2055170048BA8F /* TweetView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TweetView.xib; sourceTree = "<group>"; };
@@ -185,11 +195,17 @@
 		576047F11F0AACC20066F1D0 /* productTweeper */ = {
 			isa = PBXGroup;
 			children = (
+				571DDEA31F26775300FB5841 /* GenericControllerOfList.swift */,
+				571DDEA41F26775300FB5841 /* GenericControllerOfPickerOfColor.swift */,
+				571DDEA51F26775300FB5841 /* GenericControllerOfPickerOfFont.swift */,
+				571DDEA61F26775300FB5841 /* GenericControllerOfSettings.swift */,
+				5790225C1F28F6E700F26BF2 /* GenericSetting.swift */,
 				575268C51F204BF200F8D8B2 /* Podfile */,
 				576048011F0AACC30066F1D0 /* Info.plist */,
 				5748C4921F21494C000D2111 /* AlamofireSwiftyJSON.swift */,
 				576047F21F0AACC20066F1D0 /* AppDelegate.swift */,
 				575268C31F20468400F8D8B2 /* Consumer.swift */,
+				579727B21F214E6C00C302E7 /* ExtensionForAlamofireImage.swift */,
 				575268871F1E868800F8D8B2 /* Preferences.swift */,
 				5752688B1F1EF3BA00F8D8B2 /* Search.swift */,
 				575268BB1F2045EB00F8D8B2 /* TweetModel.swift */,
@@ -201,7 +217,6 @@
 				570FC1B91F0BE9DB00FEAC03 /* ViewControllerForScreenManagerOfSearch.swift */,
 				570FC1BF1F0BEA2900FEAC03 /* ViewControllerForScreenPreferences.swift */,
 				575268B91F20451800F8D8B2 /* ViewControllerForScreenSearch.swift */,
-				579727B21F214E6C00C302E7 /* ExtensionForAlamofireImage.swift */,
 				576047FC1F0AACC20066F1D0 /* Assets.xcassets */,
 				57A5354E1F2055170048BA8F /* TweetView.xib */,
 				576047FE1F0AACC20066F1D0 /* LaunchScreen.storyboard */,
@@ -576,8 +591,11 @@
 				570FC1BE1F0BEA1700FEAC03 /* ViewControllerForScreenFilter.swift in Sources */,
 				5752688C1F1EF3BA00F8D8B2 /* Search.swift in Sources */,
 				5748C4931F21494C000D2111 /* AlamofireSwiftyJSON.swift in Sources */,
+				571DDEAA1F26775300FB5841 /* GenericControllerOfSettings.swift in Sources */,
 				570FC1C01F0BEA2900FEAC03 /* ViewControllerForScreenPreferences.swift in Sources */,
 				575268881F1E868800F8D8B2 /* Preferences.swift in Sources */,
+				5790225D1F28F6E700F26BF2 /* GenericSetting.swift in Sources */,
+				571DDEA81F26775300FB5841 /* GenericControllerOfPickerOfColor.swift in Sources */,
 				576047FB1F0AACC20066F1D0 /* productTweeper.xcdatamodeld in Sources */,
 				575268C21F20466800F8D8B2 /* User.swift in Sources */,
 				576047F51F0AACC20066F1D0 /* ViewControllerForScreenMain.swift in Sources */,
@@ -585,6 +603,8 @@
 				575268C01F20464800F8D8B2 /* Twitter.swift in Sources */,
 				570FC1BA1F0BE9DB00FEAC03 /* ViewControllerForScreenManagerOfSearch.swift in Sources */,
 				575268BE1F2045FB00F8D8B2 /* TweetView.swift in Sources */,
+				571DDEA71F26775300FB5841 /* GenericControllerOfList.swift in Sources */,
+				571DDEA91F26775300FB5841 /* GenericControllerOfPickerOfFont.swift in Sources */,
 				579727B31F214E6C00C302E7 /* ExtensionForAlamofireImage.swift in Sources */,
 				576047F31F0AACC20066F1D0 /* AppDelegate.swift in Sources */,
 			);

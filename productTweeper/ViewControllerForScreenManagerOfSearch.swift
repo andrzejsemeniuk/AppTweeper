@@ -37,7 +37,7 @@ class ViewControllerForScreenManagerOfSearch : UITableViewController {
         ]
         
         tableView.separatorStyle        = .singleLineEtched
-        tableView.separatorColor        = Preferences.current.colorOfScreenSearchListSeparator
+        tableView.separatorColor        = Preferences.current.colorOfScreenSearchListSeparator.value ?? UIColor.red
         
         entries = Search.getAllEntries()
     }
