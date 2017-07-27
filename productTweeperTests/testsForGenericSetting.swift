@@ -20,16 +20,51 @@ class testsForGenericSetting: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
     }
-    
-    func testForDouble() {
-        let value = 1.2345
-        let setting = GenericSetting<Double>(key:"test-for-double", first:value)
-        defer {
-            setting.remove()
+
+    let double0 = 1.2345
+    let double1 = 3.141
+
+    func testForPersistance1() {
+        let setting0 = GenericSetting<Double>(key:"test-for-persistance", first:double0)
+        if setting0.stored != nil {
+            setting0.remove()
         }
+        XCTAssertEqual(setting0.stored, nil)
         
-        XCTAssertEqual(setting.value, value)
-        XCTAssertEqual(setting.stored, value)
+        let setting = GenericSetting<Double>(key:"test-for-persistance", first:double0)
+        
+        XCTAssertEqual(setting.first, double0)
+        XCTAssertEqual(setting.value, double0)
+        XCTAssertEqual(setting.stored, double0)
+    }
+    
+    func testForPersistance2() {
+        let setting = GenericSetting<Double>(key:"test-for-persistance", first:double1)
+        
+        XCTAssertEqual(setting.stored, double0)
+        XCTAssertEqual(setting.value, double0)
+        
+        setting.remove()
+    }
+    
+    func testForRemove() {
+        let setting = GenericSetting<Double>(key:"test-for-remove", first:double0)
+        XCTAssertEqual(setting.stored, double0)
+        XCTAssertEqual(setting.value, double0)
+        setting.remove()
+        XCTAssertEqual(setting.stored, nil)
+    }
+    
+    func testForSetValue() {
+        let setting = GenericSetting<Double>(key:"test-for-setvalue", first:double1)
+        XCTAssertEqual(setting.stored, double1)
+        XCTAssertEqual(setting.value, double1)
+        XCTAssertNotEqual(double0, double1)
+        setting.value = double0
+        XCTAssertEqual(setting.stored, double0)
+        XCTAssertEqual(setting.value, double0)
+        setting.remove()
+        XCTAssertEqual(setting.stored, nil)
     }
     
     func testPerformanceExample() {

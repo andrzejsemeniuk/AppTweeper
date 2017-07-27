@@ -16,51 +16,9 @@ open class GenericSetting<TYPE> {
     public let key         : Key
     public let first       : TYPE
     public var value       : TYPE {
-        didSet (n) {
-            if let v = n as? String {
-                UserDefaults.standard.set(string: v, forKey: key)
-            }
-                //                else if let v = n as? Double {
-                //                    UserDefaults.standard.set(v, forKey: key)
-                //                }
-                //                else if let v = n as? Float {
-                //                    UserDefaults.standard.set(v, forKey: key)
-                //                }
-                //                else if let v = n as? CGFloat {
-                //                    UserDefaults.standard.set(v, forKey: key)
-                //                }
-                //                else if let v = n as? Int {
-                //                    UserDefaults.standard.set(v, forKey: key)
-                //                }
-                //                else if let v = n as? Bool {
-                //                    UserDefaults.standard.set(v, forKey: key)
-                //                }
-            else if let v = n as? UIColor {
-                UserDefaults.standard.set(color: v, forKey: key)
-            }
-            else if let v = n as? UIFont {
-                UserDefaults.standard.set(font: v, forKey: key)
-            }
-            else if let v = n as? URL {
-                UserDefaults.standard.set(v, forKey: key)
-            }
-            else if let v = n as? Date {
-                UserDefaults.standard.set(date: v, forKey: key)
-            }
-            else {
-                UserDefaults.standard.set(n, forKey: key)
-            }
+        willSet (newValue) {
+            self.store(newValue)
         }
-    }
-    
-    internal var stored:TYPE? {
-        if first is UIColor             { return UserDefaults.standard.color(forKey: key) as? TYPE }
-        if first is UIFont              { return UserDefaults.standard.font(forKey: key) as? TYPE }
-        if first is String              { return UserDefaults.standard.string(forKey: key) as? TYPE }
-        if first is Date                { return UserDefaults.standard.date(forKey: key) as? TYPE }
-        //        if first is Double              { return UserDefaults.standard.double(forKey: key) as? TYPE }
-        
-        return UserDefaults.standard.value(forKey: key) as? TYPE
     }
     
     public init(key:String, first:TYPE) {
@@ -70,6 +28,9 @@ open class GenericSetting<TYPE> {
         
         if let stored = self.stored {
             self.value = stored
+        }
+        else {
+            store(first)
         }
     }
     
@@ -81,5 +42,17 @@ open class GenericSetting<TYPE> {
         self.value = first
     }
     
+    private func store(_ n:TYPE) {
+        UserDefaults.standard.set(n, forKey: key)
+    }
+    
+    internal var stored:TYPE? {
+        if first is UIColor             { return UserDefaults.standard.color(forKey: key) as? TYPE }
+        if first is UIFont              { return UserDefaults.standard.font(forKey: key) as? TYPE }
+        
+        return UserDefaults.standard.value(forKey: key) as? TYPE
+    }
+    
+
 }
 
