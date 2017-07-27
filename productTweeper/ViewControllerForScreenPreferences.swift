@@ -54,7 +54,7 @@ class ViewControllerForScreenPreferences : GenericControllerOfSettings {
                                 
                                 if let fields = alert.textFields, let text = fields[0].text {
                                     if 0 < text.length {
-                                        AppDelegate.instance.preferences.name.query = text
+                                        AppDelegate.instance.preferences.name.value = text
                                         
                                         print(UserDefaults.standard.dictionaryRepresentation())
                                         
@@ -135,7 +135,7 @@ class ViewControllerForScreenPreferences : GenericControllerOfSettings {
                 
                 createCellForUIColor                (AppDelegate.instance.preferences.testColor, title:"test color"),
 
-                createCellForUITextFieldAsString    (AppDelegate.instance.preferences.testString, count:15, title:"test String"),
+                createCellForUITextFieldAsString    (AppDelegate.instance.preferences.testString, count:12, title:"test String"),
                 
                 createCellForUITextFieldAsDouble    (AppDelegate.instance.preferences.testDouble, title:"test Double"),
                 

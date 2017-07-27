@@ -25,12 +25,23 @@ class GenericControllerOfSettings : UITableViewController
         let footer                  : String
         let rows                    : [Row]
     }
-    
-    var rows                        : [[Any]] = []
-    
-    static var lastOffsetY          : [String:CGPoint] = [:]
+
     
     weak var manager                : GenericManagerOfSettings?
+    
+    
+    var rows                        : [[Any]]           = []
+    
+    var elementCornerRadius         : CGFloat           = 4
+    
+    var elementBackgroundColor      : UIColor           = UIColor(white:1,alpha:0.3)
+    
+    var colorForHeaderText:UIColor?
+    var colorForFooterText:UIColor?
+    
+
+    static var lastOffsetY          : [String:CGPoint]  = [:]
+    
     
     
     override func numberOfSections              (in: UITableView) -> Int
@@ -97,9 +108,6 @@ class GenericControllerOfSettings : UITableViewController
     
     
     
-    
-    var colorForHeaderText:UIColor?
-    var colorForFooterText:UIColor?
     
     
     
@@ -193,7 +201,7 @@ class GenericControllerOfSettings : UITableViewController
                 label.text          = title
                 setup?(cell,indexPath)
                 cell.accessoryView  = self.registerUISwitch(on: setting.value, update: { (myswitch:UISwitch) in
-                    setting.query = myswitch.isOn
+                    setting.value = myswitch.isOn
                     action?(setting.value)
                 })
             }
@@ -232,7 +240,7 @@ class GenericControllerOfSettings : UITableViewController
                 cell.accessoryType  = .none
                 cell.selectionStyle = .default
                 let view = self.registerUISlider(value: setting.value, update: { (myslider:UISlider) in
-                    setting.query = myslider.value
+                    setting.value = myslider.value
                     action?(setting.value)
                 })
                 cell.accessoryView  = view
@@ -248,7 +256,7 @@ class GenericControllerOfSettings : UITableViewController
                 cell.accessoryType  = .none
                 cell.selectionStyle = .default
                 let view = self.registerUISlider(value: Float(setting.value), update: { (myslider:UISlider) in
-                    setting.query = CGFloat(myslider.value)
+                    setting.value = CGFloat(myslider.value)
                     action?(setting.value)
                 })
                 cell.accessoryView  = view
@@ -268,13 +276,18 @@ class GenericControllerOfSettings : UITableViewController
     
     func registerUITextField(count:Int, value:String, animated:Bool = true, update:@escaping FunctionUpdateOnUITextField) -> UITextField {
         let view = UITextField()
-        view.layer.borderColor = UIColor.lightGray.cgColor
-        view.layer.borderWidth = 1
+        view.isEnabled = false
+//        view.delegate = self
+//        view.borderStyle = .line
+//        view.layer.borderColor = UIColor.init(white:0,alpha:0.02).cgColor
+//        view.layer.borderWidth = 1
+        view.backgroundColor = UIColor.init(white:1,alpha:0.2)
+        view.layer.cornerRadius = self.elementCornerRadius
         view.text = value
         view.textAlignment = .right
-        view.frame.size.width = (String.init(repeating:"m", count:count) as NSString).size(attributes: [
+        view.frame.size = (String.init(repeating:"m", count:count) as NSString).size(attributes: [
             NSFontAttributeName : view.font ?? UIFont.defaultFont
-            ]).width + 2
+            ])
         registeredUITextFields[view] = update
 //        view.addTarget(self,action:#selector(GenericControllerOfSettings.handleUITextField(control:)),for:[.allTouchEvents, .valueChanged])
         return view
@@ -313,7 +326,7 @@ class GenericControllerOfSettings : UITableViewController
                 cell.selectionStyle = .default
                 label.text          = title
                 let field = self.registerUITextField(count:count, value: setting.value, update: { (field:UITextField) in
-                    setting.query = field.text ?? ""
+                    setting.value = field.text ?? ""
                     action?(setting.value)
                 })
                 cell.accessoryView = field
@@ -321,7 +334,8 @@ class GenericControllerOfSettings : UITableViewController
                 
                 self.addAction(indexPath: indexPath) {
                     self.createAlertForUITextField(field, title:title, message:"Enter text") { text in
-                        setting.query = text
+                        setting.value = text
+                        action?(setting.value)
                         return true
                     }
                 }
@@ -336,8 +350,13 @@ class GenericControllerOfSettings : UITableViewController
                 cell.selectionStyle = .default
                 label.text          = title
                 let field = self.registerUITextField(count:count, value: String(setting.value), update: { (field:UITextField) in
-                    setting.query = Double(field.text ?? "0") ?? 0
-                    action?(setting.value)
+                    if let text = field.text, let number = Double(text) {
+                        setting.value = number
+                        action?(setting.value)
+                    }
+                    else {
+                        field.text = String(setting.value)
+                    }
                 })
                 cell.accessoryView = field
                 setup?(cell,indexPath,field)
@@ -345,7 +364,8 @@ class GenericControllerOfSettings : UITableViewController
                 self.addAction(indexPath: indexPath) {
                     self.createAlertForUITextField(field, title:title, message:"Enter a number") { text in
                         if let number = Double(text) {
-                            setting.query = number
+                            setting.value = number
+                            action?(setting.value)
                             return true
                         }
                         return false
@@ -362,7 +382,7 @@ class GenericControllerOfSettings : UITableViewController
                 cell.selectionStyle = .default
                 label.text          = title
                 let field = self.registerUITextField(count:count, value: String(describing: setting.value), update: { (field:UITextField) in
-                    setting.query = CGFloat(field.text ?? "0") ?? 0
+                    setting.value = CGFloat(field.text ?? "0") ?? 0
                     action?(setting.value)
                 })
                 cell.accessoryView = field
@@ -371,7 +391,8 @@ class GenericControllerOfSettings : UITableViewController
                 self.addAction(indexPath: indexPath) {
                     self.createAlertForUITextField(field, title:title, message:"Enter a number") { text in
                         if let number = CGFloat(text) {
-                            setting.query = number
+                            setting.value = number
+                            action?(setting.value)
                             return true
                         }
                         return false
@@ -388,7 +409,7 @@ class GenericControllerOfSettings : UITableViewController
                 cell.selectionStyle = .default
                 label.text          = title
                 let field = self.registerUITextField(count:count, value: String(describing: setting.value), update: { (field:UITextField) in
-                    setting.query = Float(field.text ?? "0") ?? 0
+                    setting.value = Float(field.text ?? "0") ?? 0
                     action?(setting.value)
                 })
                 cell.accessoryView = field
@@ -397,7 +418,8 @@ class GenericControllerOfSettings : UITableViewController
                 self.addAction(indexPath: indexPath) {
                     self.createAlertForUITextField(field, title:title, message:"Enter a number") { text in
                         if let number = Float(text) {
-                            setting.query = number
+                            setting.value = number
+                            action?(setting.value)
                             return true
                         }
                         return false
@@ -414,7 +436,7 @@ class GenericControllerOfSettings : UITableViewController
                 cell.selectionStyle = .default
                 label.text          = title
                 let field = self.registerUITextField(count:count, value: String(describing: setting.value), update: { (field:UITextField) in
-                    setting.query = Int(field.text ?? "0") ?? 0
+                    setting.value = Int(field.text ?? "0") ?? 0
                     action?(setting.value)
                 })
                 cell.accessoryView = field
@@ -423,7 +445,8 @@ class GenericControllerOfSettings : UITableViewController
                 self.addAction(indexPath: indexPath) {
                     self.createAlertForUITextField(field, title:title, message:"Enter an integer") { text in
                         if let number = Int(text) {
-                            setting.query = number
+                            setting.value = number
+                            action?(setting.value)
                             return true
                         }
                         return false
@@ -479,14 +502,16 @@ class GenericControllerOfSettings : UITableViewController
 
     func createCellForUIFontName(_ font0:GenericSetting<String>, name:String = "Font", title:String, setup:((UITableViewCell,IndexPath)->())? = nil, action:(()->())? = nil) -> FunctionOnCell {
         return createCellForUIFontName(font0.value, name:name, title:title, setup:setup, action: { name in
-            font0.query = name
+            font0.value = name
             action?()
         })
     }
 
     func createCellForUIFont(_ font0:GenericSetting<UIFont>, name:String = "Font", title:String, setup:((UITableViewCell,IndexPath)->())? = nil, action:(()->())? = nil) -> FunctionOnCell {
         return createCellForUIFontName(font0.value.fontName, name:name, title:title, setup:setup, action: { name in
-            font0.query = UIFont(name:name, size:font0.value.pointSize)
+            if let font = UIFont(name:name, size:font0.value.pointSize) {
+                font0.value = font
+            }
             action?()
         })
     }
@@ -511,6 +536,7 @@ class GenericControllerOfSettings : UITableViewController
                         let view = UIView()
                         
                         view.frame              = CGRect(x:-16,y:-2,width:24,height:24)
+                        view.layer.cornerRadius = self.elementCornerRadius
                         view.backgroundColor    = color0
                         
                         detail.addSubview(view)
@@ -537,7 +563,7 @@ class GenericControllerOfSettings : UITableViewController
     
     func createCellForUIColor(_ setting:GenericSetting<UIColor>, name:String = "Color", title:String, setup:((UITableViewCell,IndexPath)->())? = nil, action:(()->())? = nil) -> FunctionOnCell {
         return createCellForUIColor(setting.value, name:name, title:title, setup:setup, action:{ color in
-            setting.query = color
+            setting.value = color
             action?()
         })
     }
@@ -615,6 +641,17 @@ class GenericControllerOfSettings : UITableViewController
     
 }
 
+
+
+
+
+extension GenericControllerOfSettings : UITextFieldDelegate {
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        self.registeredUITextFields[textField]?(textField)
+    }
+    
+}
 
 
 
