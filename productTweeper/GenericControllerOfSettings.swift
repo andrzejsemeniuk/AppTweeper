@@ -268,12 +268,15 @@ class GenericControllerOfSettings : UITableViewController
     
     func registerUITextField(count:Int, value:String, animated:Bool = true, update:@escaping FunctionUpdateOnUITextField) -> UITextField {
         let view = UITextField()
+        view.layer.borderColor = UIColor.lightGray.cgColor
+        view.layer.borderWidth = 1
         view.text = value
-        view.frame.size.width = (value as NSString).size(attributes: [
+        view.textAlignment = .right
+        view.frame.size.width = (String.init(repeating:"m", count:count) as NSString).size(attributes: [
             NSFontAttributeName : view.font ?? UIFont.defaultFont
             ]).width + 2
         registeredUITextFields[view] = update
-        view.addTarget(self,action:#selector(GenericControllerOfSettings.handleUITextField(control:)),for:.valueChanged)
+//        view.addTarget(self,action:#selector(GenericControllerOfSettings.handleUITextField(control:)),for:[.allTouchEvents, .valueChanged])
         return view
     }
     
@@ -283,72 +286,150 @@ class GenericControllerOfSettings : UITableViewController
         }
     }
     
-    func createCellForUITextFieldAsString(_ setting:GenericSetting<String>, count:Int = 8, title:String, setup:((UITableViewCell,IndexPath)->())? = nil, action:((String)->())? = nil ) -> FunctionOnCell {
+    func createAlertForUITextField(_ field:UITextField, title:String, message:String, setter:@escaping (String)->Bool) {
+        let alert = UIAlertController.init(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
+        alert.addTextField { textfield in
+            textfield.text = field.text
+        }
+        let ok = UIAlertAction.init(title: "Ok", style: UIAlertActionStyle.default) { action in
+            if let text = alert.textFields?[safe:0]?.text, setter(text) {
+                field.text = text
+            }
+            alert.dismiss(animated: true) {
+            }
+        }
+        alert.addAction(ok)
+        let cancel = UIAlertAction.init(title: "Cancel", style: UIAlertActionStyle.cancel) { action in
+            alert.dismiss(animated: true) {
+            }
+        }
+        alert.addAction(cancel)
+        self.present(alert, animated: true)
+    }
+    
+    func createCellForUITextFieldAsString(_ setting:GenericSetting<String>, count:Int = 8, title:String, setup:((UITableViewCell,IndexPath,UITextField)->())? = nil, action:((String)->())? = nil ) -> FunctionOnCell {
         return { (cell:UITableViewCell, indexPath:IndexPath) in
             if let label = cell.textLabel {
                 cell.selectionStyle = .default
                 label.text          = title
-                setup?(cell,indexPath)
-                cell.accessoryView = self.registerUITextField(count:count, value: setting.value, update: { (field:UITextField) in
+                let field = self.registerUITextField(count:count, value: setting.value, update: { (field:UITextField) in
                     setting.query = field.text ?? ""
                     action?(setting.value)
                 })
+                cell.accessoryView = field
+                setup?(cell,indexPath,field)
+                
+                self.addAction(indexPath: indexPath) {
+                    self.createAlertForUITextField(field, title:title, message:"Enter text") { text in
+                        setting.query = text
+                        return true
+                    }
+                }
+                
             }
         }
     }
 
-    func createCellForUITextFieldAsDouble(_ setting:GenericSetting<Double>, count:Int = 8, title:String, setup:((UITableViewCell,IndexPath)->())? = nil, action:((Double)->())? = nil ) -> FunctionOnCell {
+    func createCellForUITextFieldAsDouble(_ setting:GenericSetting<Double>, count:Int = 8, title:String, setup:((UITableViewCell,IndexPath,UITextField)->())? = nil, action:((Double)->())? = nil ) -> FunctionOnCell {
         return { (cell:UITableViewCell, indexPath:IndexPath) in
             if let label = cell.textLabel {
                 cell.selectionStyle = .default
                 label.text          = title
-                setup?(cell,indexPath)
-                cell.accessoryView = self.registerUITextField(count:count, value: String(setting.value), update: { (field:UITextField) in
+                let field = self.registerUITextField(count:count, value: String(setting.value), update: { (field:UITextField) in
                     setting.query = Double(field.text ?? "0") ?? 0
                     action?(setting.value)
                 })
+                cell.accessoryView = field
+                setup?(cell,indexPath,field)
+                
+                self.addAction(indexPath: indexPath) {
+                    self.createAlertForUITextField(field, title:title, message:"Enter a number") { text in
+                        if let number = Double(text) {
+                            setting.query = number
+                            return true
+                        }
+                        return false
+                    }
+                }
+
             }
         }
     }
     
-    func createCellForUITextFieldAsCGFloat(_ setting:GenericSetting<CGFloat>, count:Int = 8, title:String, setup:((UITableViewCell,IndexPath)->())? = nil, action:((CGFloat)->())? = nil ) -> FunctionOnCell {
+    func createCellForUITextFieldAsCGFloat(_ setting:GenericSetting<CGFloat>, count:Int = 8, title:String, setup:((UITableViewCell,IndexPath,UITextField)->())? = nil, action:((CGFloat)->())? = nil ) -> FunctionOnCell {
         return { (cell:UITableViewCell, indexPath:IndexPath) in
             if let label = cell.textLabel {
                 cell.selectionStyle = .default
                 label.text          = title
-                setup?(cell,indexPath)
-                cell.accessoryView = self.registerUITextField(count:count, value: String(describing: setting.value), update: { (field:UITextField) in
+                let field = self.registerUITextField(count:count, value: String(describing: setting.value), update: { (field:UITextField) in
                     setting.query = CGFloat(field.text ?? "0") ?? 0
                     action?(setting.value)
                 })
+                cell.accessoryView = field
+                setup?(cell,indexPath,field)
+                
+                self.addAction(indexPath: indexPath) {
+                    self.createAlertForUITextField(field, title:title, message:"Enter a number") { text in
+                        if let number = CGFloat(text) {
+                            setting.query = number
+                            return true
+                        }
+                        return false
+                    }
+                }
+                
             }
         }
     }
     
-    func createCellForUITextFieldAsFloat(_ setting:GenericSetting<Float>, count:Int = 8, title:String, setup:((UITableViewCell,IndexPath)->())? = nil, action:((Float)->())? = nil ) -> FunctionOnCell {
+    func createCellForUITextFieldAsFloat(_ setting:GenericSetting<Float>, count:Int = 8, title:String, setup:((UITableViewCell,IndexPath,UITextField)->())? = nil, action:((Float)->())? = nil ) -> FunctionOnCell {
         return { (cell:UITableViewCell, indexPath:IndexPath) in
             if let label = cell.textLabel {
                 cell.selectionStyle = .default
                 label.text          = title
-                setup?(cell,indexPath)
-                cell.accessoryView = self.registerUITextField(count:count, value: String(describing: setting.value), update: { (field:UITextField) in
+                let field = self.registerUITextField(count:count, value: String(describing: setting.value), update: { (field:UITextField) in
                     setting.query = Float(field.text ?? "0") ?? 0
                     action?(setting.value)
                 })
+                cell.accessoryView = field
+                setup?(cell,indexPath,field)
+                
+                self.addAction(indexPath: indexPath) {
+                    self.createAlertForUITextField(field, title:title, message:"Enter a number") { text in
+                        if let number = Float(text) {
+                            setting.query = number
+                            return true
+                        }
+                        return false
+                    }
+                }
+                
             }
         }
     }
     
-    func createCellForUITextFieldAsInt(_ setting:GenericSetting<Int>, count:Int = 8, title:String, setup:((UITableViewCell,IndexPath)->())? = nil, action:((Int)->())? = nil ) -> FunctionOnCell {
+    func createCellForUITextFieldAsInt(_ setting:GenericSetting<Int>, count:Int = 8, title:String, setup:((UITableViewCell,IndexPath,UITextField)->())? = nil, action:((Int)->())? = nil ) -> FunctionOnCell {
         return { (cell:UITableViewCell, indexPath:IndexPath) in
             if let label = cell.textLabel {
                 cell.selectionStyle = .default
                 label.text          = title
-                setup?(cell,indexPath)
-                cell.accessoryView = self.registerUITextField(count:count, value: String(describing: setting.value), update: { (field:UITextField) in
+                let field = self.registerUITextField(count:count, value: String(describing: setting.value), update: { (field:UITextField) in
                     setting.query = Int(field.text ?? "0") ?? 0
                     action?(setting.value)
                 })
+                cell.accessoryView = field
+                setup?(cell,indexPath,field)
+                
+                self.addAction(indexPath: indexPath) {
+                    self.createAlertForUITextField(field, title:title, message:"Enter an integer") { text in
+                        if let number = Int(text) {
+                            setting.query = number
+                            return true
+                        }
+                        return false
+                    }
+                }
+                
             }
         }
     }
@@ -521,6 +602,8 @@ class GenericControllerOfSettings : UITableViewController
         
         actions.removeAll()
         
+        manager?.synchronize()
+        
         super.viewWillDisappear(animated)
     }
     
@@ -531,3 +614,9 @@ class GenericControllerOfSettings : UITableViewController
     
     
 }
+
+
+
+
+
+

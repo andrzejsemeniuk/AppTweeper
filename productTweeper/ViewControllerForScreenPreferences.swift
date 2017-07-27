@@ -12,14 +12,9 @@ class ViewControllerForScreenPreferences : GenericControllerOfSettings {
     
     override func viewDidLoad()
     {
-        tableView               = UITableView(frame:tableView.frame,style:.grouped)
-        
-        tableView.dataSource    = self
-        
-        tableView.delegate      = self
-        
-        
         tableView.separatorStyle = .none
+        
+        super.manager = AppDelegate.instance.preferences
         
         super.viewDidLoad()
     }
@@ -190,19 +185,12 @@ class ViewControllerForScreenPreferences : GenericControllerOfSettings {
     {
         let cell = super.tableView(tableView, cellForRowAt:indexPath)
         
-        cell.selectedBackgroundView = UIView.createWithBackgroundColor(AppDelegate.instance.preferences.colorOfSelection.value ?? .red)
+        cell.selectedBackgroundView = UIView.createWithBackgroundColor(AppDelegate.instance.preferences.colorOfSelection.value)
         
         return cell
     }
     
     
-    
-    override func viewWillDisappear(_ animated: Bool)
-    {
-        AppDelegate.instance.preferences.synchronize()
-        
-        super.viewWillDisappear(animated)
-    }
     
     override func viewWillAppear(_ animated: Bool)
     {

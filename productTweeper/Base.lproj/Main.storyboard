@@ -92,22 +92,22 @@
             <point key="canvasLocation" x="-44" y="401"/>
         </scene>
         <!--View Controller For Screen Preferences-->
-        <scene sceneID="CKM-bO-W97">
+        <scene sceneID="Sww-RQ-9fq">
             <objects>
-                <viewController id="Avt-4g-CgZ" customClass="ViewControllerForScreenPreferences" customModule="productTweeper" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="TQ3-kx-DaY"/>
-                        <viewControllerLayoutGuide type="bottom" id="ZnK-Ed-bSo"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="H6m-U8-8Nb">
+                <tableViewController id="Aac-zL-iKh" customClass="ViewControllerForScreenPreferences" customModule="productTweeper" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="6Dg-KL-n1U">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="27l-KJ-PUF" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <connections>
+                            <outlet property="dataSource" destination="Aac-zL-iKh" id="jrP-11-e3E"/>
+                            <outlet property="delegate" destination="Aac-zL-iKh" id="a1O-39-lg4"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="beg-xT-P6n" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-44" y="1280"/>
+            <point key="canvasLocation" x="-38" y="1303"/>
         </scene>
         <!--View Controller For Screen Main-->
         <scene sceneID="tne-QT-ifu">
@@ -162,9 +162,7 @@
                                         </state>
                                         <connections>
                                             <action selector="tapOnButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="vZN-Mt-3iV"/>
-                                            <segue destination="Avt-4g-CgZ" kind="popoverPresentation" popoverAnchorView="6sL-JT-URQ" id="i9C-i3-2aU">
-                                                <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
-                                            </segue>
+                                            <segue destination="Aac-zL-iKh" kind="show" id="mia-3N-VoU"/>
                                         </connections>
                                     </button>
                                 </subviews>

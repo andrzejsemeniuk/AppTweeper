@@ -73,7 +73,10 @@ open class GenericSetting<TYPE> {
     public init(key:String, first:TYPE) {
         self.key = key
         self.first = first
-        if self.stored == nil {
+        if let stored = self.stored {
+            self.query = stored
+        }
+        else {
             self.query = first
         }
     }
