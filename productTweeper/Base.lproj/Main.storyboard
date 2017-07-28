@@ -26,7 +26,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3hY-lo-UgC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-44" y="-524"/>
+            <point key="canvasLocation" x="833" y="-272"/>
         </scene>
         <!--View Controller For Screen Search-->
         <scene sceneID="aDC-e4-rPf">
@@ -44,12 +44,12 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="f5z-1w-kU3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="886" y="-525"/>
+            <point key="canvasLocation" x="-44" y="-588"/>
         </scene>
-        <!--Table View Controller-->
+        <!--View Controller For Screen Search Live-->
         <scene sceneID="zMm-t8-CgH">
             <objects>
-                <tableViewController id="qgM-Vh-rtg" sceneMemberID="viewController">
+                <tableViewController id="qgM-Vh-rtg" customClass="ViewControllerForScreenSearchLive" customModule="productTweeper" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="dia-6N-hBB">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -158,7 +158,7 @@
                                         </state>
                                         <connections>
                                             <action selector="tapOnButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="KrD-BY-GNU"/>
-                                            <segue destination="KIL-Ky-Agl" kind="show" id="y6L-19-jPk"/>
+                                            <segue destination="CNu-4F-R42" kind="show" id="0Yn-j7-txy"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w3u-C7-fxw">

@@ -36,6 +36,9 @@ class Preferences : GenericManagerOfSettings {
     var titleShadowColor                                = GenericSetting<UIColor>   (key:"titleShadowColor", first: UIColor.black)
     var titleShadowAlpha                                = GenericSetting<CGFloat>   (key:"titleShadowAlpha", first: 0.7)
 
+    var durationOfMainMenuDisplayInitially              = GenericSetting<Double>    (key:"durationOfMainMenuDisplayInitially", first: 0.8)
+    var durationOfMainMenuDisplay                       = GenericSetting<Double>    (key:"durationOfMainMenuDisplay", first: 0.3)
+
     var maximumTweetsToDisplay                          = GenericSetting<Int>       (key:"maximumTweetsToDisplay", first: 999)
     var searchResultsLimit                              = GenericSetting<Int>       (key:"searchResultsLimit", first: 40)
     var separateSearchResults                           = GenericSetting<Bool>      (key:"separateSearchResults", first: true)
@@ -61,6 +64,9 @@ class Preferences : GenericManagerOfSettings {
                 setting.to(&data)
             }
             else if let setting = child.value as? GenericSetting<String> {
+                setting.to(&data)
+            }
+            else if let setting = child.value as? GenericSetting<[String]> {
                 setting.to(&data)
             }
             else if let setting = child.value as? GenericSetting<Bool> {
@@ -90,31 +96,34 @@ class Preferences : GenericManagerOfSettings {
         }
         for child in Mirror(reflecting: self).children {
             if let setting = child.value as? GenericSetting<UIColor> {
-                setting.from(&data)
+                setting.from(data)
             }
             else if let setting = child.value as? GenericSetting<UIFont> {
-                setting.from(&data)
+                setting.from(data)
             }
             else if let setting = child.value as? GenericSetting<String> {
-                setting.from(&data)
+                setting.from(data)
+            }
+            else if let setting = child.value as? GenericSetting<[String]> {
+                setting.from(data)
             }
             else if let setting = child.value as? GenericSetting<Bool> {
-                setting.from(&data)
+                setting.from(data)
             }
             else if let setting = child.value as? GenericSetting<Int> {
-                setting.from(&data)
+                setting.from(data)
             }
             else if let setting = child.value as? GenericSetting<UInt> {
-                setting.from(&data)
+                setting.from(data)
             }
             else if let setting = child.value as? GenericSetting<Float> {
-                setting.from(&data)
+                setting.from(data)
             }
             else if let setting = child.value as? GenericSetting<CGFloat> {
-                setting.from(&data)
+                setting.from(data)
             }
             else if let setting = child.value as? GenericSetting<Double> {
-                setting.from(&data)
+                setting.from(data)
             }
         }
     }

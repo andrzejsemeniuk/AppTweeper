@@ -126,7 +126,7 @@ class ViewControllerForScreenPreferences : GenericControllerOfSettings {
                 
                 "Save current settings, or load previously saved settings"
             ],
-            
+            /*
             [
                 "TEST",
                 
@@ -148,6 +148,20 @@ class ViewControllerForScreenPreferences : GenericControllerOfSettings {
                 
                 
                 ""
+            ],
+            */
+            [
+                "MAIN MENU",
+                
+                createCellForUITextFieldAsDouble(AppDelegate.instance.preferences.durationOfMainMenuDisplay, title:"Duration") { value in
+                },
+
+                createCellForUITextFieldAsDouble(AppDelegate.instance.preferences.durationOfMainMenuDisplayInitially, title:"Initial Duration") { value in 
+                },
+                
+                createCellForUISlider(AppDelegate.instance.preferences.testCGFloat, title:"Opacity"),
+                
+                "Set selection properties for rows on all tabs"
             ],
             
             [

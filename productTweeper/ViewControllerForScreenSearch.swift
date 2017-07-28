@@ -28,7 +28,7 @@ class ViewControllerForScreenSearch: UITableViewController
     
     
     var                 maximumTweetsToDisplay: Int {
-        return AppDelegate.instance.preferences.maximumTweetsToDisplay
+        return AppDelegate.instance.preferences.maximumTweetsToDisplay.value
     }
 
     weak var            delegate    : ViewControllerForScreenSearchDelegate?

@@ -128,13 +128,26 @@ class ViewControllerForScreenMain: UIViewController {
         }
     }
     
+    private var appearance = 0
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+    
+        appearance += 1
         
         // buttons
         
+        let durationOfAppearance:Double
+        
+        if appearance > 1 {
+            durationOfAppearance = AppDelegate.instance.preferences.durationOfMainMenuDisplay.value
+        }
+        else {
+            durationOfAppearance = AppDelegate.instance.preferences.durationOfMainMenuDisplayInitially.value
+        }
+        
         for (index,button) in buttons.enumerated() {
-            UIView.animate(withDuration: 0.8, delay: Double(index)/8.0, options: [.curveEaseOut], animations: {
+            UIView.animate(withDuration: durationOfAppearance, delay:Double(index)/8.0, options: [.curveEaseOut], animations: {
                 button.transform = CGAffineTransform.identity
             }) { finished in
             }

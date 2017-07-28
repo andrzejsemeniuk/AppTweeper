@@ -36,6 +36,7 @@
 		5790225D1F28F6E700F26BF2 /* GenericSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5790225C1F28F6E700F26BF2 /* GenericSetting.swift */; };
 		579727B31F214E6C00C302E7 /* ExtensionForAlamofireImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579727B21F214E6C00C302E7 /* ExtensionForAlamofireImage.swift */; };
 		57A5354F1F2055170048BA8F /* TweetView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 57A5354E1F2055170048BA8F /* TweetView.xib */; };
+		57B0CE2E1F2BFE2A009B4520 /* ViewControllerForScreenSearchLive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B0CE2D1F2BFE2A009B4520 /* ViewControllerForScreenSearchLive.swift */; };
 		57F624B91F1E54F500211673 /* ASToolkit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 579713011F1E5432001C4AE3 /* ASToolkit.framework */; };
 		57F624BA1F1E54F500211673 /* ASToolkit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 579713011F1E5432001C4AE3 /* ASToolkit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		57FDFAF61F2A594F00B1BD14 /* testsForGenericSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FDFAF51F2A594F00B1BD14 /* testsForGenericSetting.swift */; };
@@ -135,6 +136,7 @@
 		579712FB1F1E5432001C4AE3 /* ASToolkit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ASToolkit.xcodeproj; path = ../ASToolkit/ASToolkit.xcodeproj; sourceTree = "<group>"; };
 		579727B21F214E6C00C302E7 /* ExtensionForAlamofireImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtensionForAlamofireImage.swift; sourceTree = "<group>"; };
 		57A5354E1F2055170048BA8F /* TweetView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TweetView.xib; sourceTree = "<group>"; };
+		57B0CE2D1F2BFE2A009B4520 /* ViewControllerForScreenSearchLive.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerForScreenSearchLive.swift; sourceTree = "<group>"; };
 		57FDFAF51F2A594F00B1BD14 /* testsForGenericSetting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = testsForGenericSetting.swift; sourceTree = "<group>"; };
 		C26E688D5DB409311CD6D148 /* Pods-productTweeperUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-productTweeperUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-productTweeperUITests/Pods-productTweeperUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		D022AD334CDEF5C8029F9060 /* Pods-productTweeper.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-productTweeper.release.xcconfig"; path = "Pods/Target Support Files/Pods-productTweeper/Pods-productTweeper.release.xcconfig"; sourceTree = "<group>"; };
@@ -197,17 +199,17 @@
 		576047F11F0AACC20066F1D0 /* productTweeper */ = {
 			isa = PBXGroup;
 			children = (
-				571DDEA31F26775300FB5841 /* GenericControllerOfList.swift */,
-				571DDEA41F26775300FB5841 /* GenericControllerOfPickerOfColor.swift */,
-				571DDEA51F26775300FB5841 /* GenericControllerOfPickerOfFont.swift */,
-				571DDEA61F26775300FB5841 /* GenericControllerOfSettings.swift */,
-				5790225C1F28F6E700F26BF2 /* GenericSetting.swift */,
 				575268C51F204BF200F8D8B2 /* Podfile */,
 				576048011F0AACC30066F1D0 /* Info.plist */,
 				5748C4921F21494C000D2111 /* AlamofireSwiftyJSON.swift */,
 				576047F21F0AACC20066F1D0 /* AppDelegate.swift */,
 				575268C31F20468400F8D8B2 /* Consumer.swift */,
 				579727B21F214E6C00C302E7 /* ExtensionForAlamofireImage.swift */,
+				571DDEA31F26775300FB5841 /* GenericControllerOfList.swift */,
+				571DDEA41F26775300FB5841 /* GenericControllerOfPickerOfColor.swift */,
+				571DDEA51F26775300FB5841 /* GenericControllerOfPickerOfFont.swift */,
+				571DDEA61F26775300FB5841 /* GenericControllerOfSettings.swift */,
+				5790225C1F28F6E700F26BF2 /* GenericSetting.swift */,
 				575268871F1E868800F8D8B2 /* Preferences.swift */,
 				5752688B1F1EF3BA00F8D8B2 /* Search.swift */,
 				575268BB1F2045EB00F8D8B2 /* TweetModel.swift */,
@@ -219,6 +221,7 @@
 				570FC1B91F0BE9DB00FEAC03 /* ViewControllerForScreenManagerOfSearch.swift */,
 				570FC1BF1F0BEA2900FEAC03 /* ViewControllerForScreenPreferences.swift */,
 				575268B91F20451800F8D8B2 /* ViewControllerForScreenSearch.swift */,
+				57B0CE2D1F2BFE2A009B4520 /* ViewControllerForScreenSearchLive.swift */,
 				576047FC1F0AACC20066F1D0 /* Assets.xcassets */,
 				57A5354E1F2055170048BA8F /* TweetView.xib */,
 				576047FE1F0AACC20066F1D0 /* LaunchScreen.storyboard */,
@@ -599,6 +602,7 @@
 				575268881F1E868800F8D8B2 /* Preferences.swift in Sources */,
 				5790225D1F28F6E700F26BF2 /* GenericSetting.swift in Sources */,
 				571DDEA81F26775300FB5841 /* GenericControllerOfPickerOfColor.swift in Sources */,
+				57B0CE2E1F2BFE2A009B4520 /* ViewControllerForScreenSearchLive.swift in Sources */,
 				576047FB1F0AACC20066F1D0 /* productTweeper.xcdatamodeld in Sources */,
 				575268C21F20466800F8D8B2 /* User.swift in Sources */,
 				576047F51F0AACC20066F1D0 /* ViewControllerForScreenMain.swift in Sources */,
