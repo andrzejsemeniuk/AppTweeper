@@ -46,6 +46,24 @@
             </objects>
             <point key="canvasLocation" x="886" y="-525"/>
         </scene>
+        <!--Table View Controller-->
+        <scene sceneID="zMm-t8-CgH">
+            <objects>
+                <tableViewController id="qgM-Vh-rtg" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="dia-6N-hBB">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <connections>
+                            <outlet property="dataSource" destination="qgM-Vh-rtg" id="D8z-Ss-E5b"/>
+                            <outlet property="delegate" destination="qgM-Vh-rtg" id="rWb-wn-8kk"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="mPw-gQ-m8k" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-44" y="138"/>
+        </scene>
         <!--View Controller For Screen Filter-->
         <scene sceneID="bJc-GR-881">
             <objects>
@@ -89,7 +107,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ysz-eX-DIP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-44" y="401"/>
+            <point key="canvasLocation" x="-44" y="798"/>
         </scene>
         <!--View Controller For Screen Preferences-->
         <scene sceneID="Sww-RQ-9fq">
@@ -107,7 +125,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="beg-xT-P6n" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-38" y="1303"/>
+            <point key="canvasLocation" x="-44" y="1684"/>
         </scene>
         <!--View Controller For Screen Main-->
         <scene sceneID="tne-QT-ifu">
@@ -130,7 +148,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Cgb-Yl-mVs">
-                                <rect key="frame" x="135" y="285.5" width="105" height="96"/>
+                                <rect key="frame" x="135" y="270.5" width="105" height="126"/>
                                 <subviews>
                                     <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Szm-0V-Xn8">
                                         <rect key="frame" x="0.0" y="0.0" width="105" height="32"/>
@@ -143,8 +161,17 @@
                                             <segue destination="KIL-Ky-Agl" kind="show" id="y6L-19-jPk"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w3u-C7-fxw">
+                                        <rect key="frame" x="0.0" y="32" width="105" height="30"/>
+                                        <state key="normal" title="LIVE SEARCH">
+                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <connections>
+                                            <segue destination="qgM-Vh-rtg" kind="show" id="TQV-Vo-P64"/>
+                                        </connections>
+                                    </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q2r-zD-bC7">
-                                        <rect key="frame" x="0.0" y="32" width="105" height="32"/>
+                                        <rect key="frame" x="0.0" y="62" width="105" height="32"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
                                         <state key="normal" title="FILTER">
                                             <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -155,7 +182,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6sL-JT-URQ">
-                                        <rect key="frame" x="0.0" y="64" width="105" height="32"/>
+                                        <rect key="frame" x="0.0" y="94" width="105" height="32"/>
                                         <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="17"/>
                                         <state key="normal" title="PREFERENCES">
                                             <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -177,6 +204,7 @@
                     <navigationItem key="navigationItem" id="cMd-F0-GpP"/>
                     <connections>
                         <outlet property="buttonForFILTER" destination="q2r-zD-bC7" id="SIg-5f-XqJ"/>
+                        <outlet property="buttonForLIVESEARCH" destination="w3u-C7-fxw" id="z3A-YK-4Ca"/>
                         <outlet property="buttonForPREFERENCES" destination="6sL-JT-URQ" id="3Bp-h4-OUj"/>
                         <outlet property="buttonForSEARCH" destination="Szm-0V-Xn8" id="H5h-pb-bgu"/>
                         <outlet property="viewForImageBottom" destination="I0i-Ul-Tk5" id="ZdU-ba-N2Y"/>

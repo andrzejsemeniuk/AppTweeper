@@ -285,6 +285,7 @@ class GenericControllerOfSettings : UITableViewController
         view.layer.cornerRadius = self.elementCornerRadius
         view.text = value
         view.textAlignment = .right
+        view.textColor = .gray
         view.frame.size = (String.init(repeating:"m", count:count) as NSString).size(attributes: [
             NSFontAttributeName : view.font ?? UIFont.defaultFont
             ])
@@ -299,14 +300,14 @@ class GenericControllerOfSettings : UITableViewController
         }
     }
     
-    func createAlertForUITextField(_ field:UITextField, title:String, message:String, setter:@escaping (String)->Bool) {
+    func createAlertForUITextField(_ field:UITextField, title:String, message:String, setter:@escaping (String)->(String?)) {
         let alert = UIAlertController.init(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
         alert.addTextField { textfield in
             textfield.text = field.text
         }
         let ok = UIAlertAction.init(title: "Ok", style: UIAlertActionStyle.default) { action in
-            if let text = alert.textFields?[safe:0]?.text, setter(text) {
-                field.text = text
+            if let text0 = alert.textFields?[safe:0]?.text, let text1 = setter(text0) {
+                field.text = text1
             }
             alert.dismiss(animated: true) {
             }
@@ -336,7 +337,7 @@ class GenericControllerOfSettings : UITableViewController
                     self.createAlertForUITextField(field, title:title, message:"Enter text") { text in
                         setting.value = text
                         action?(setting.value)
-                        return true
+                        return setting.value
                     }
                 }
                 
@@ -366,9 +367,9 @@ class GenericControllerOfSettings : UITableViewController
                         if let number = Double(text) {
                             setting.value = number
                             action?(setting.value)
-                            return true
+                            return String(setting.value)
                         }
-                        return false
+                        return nil
                     }
                 }
 
@@ -393,9 +394,9 @@ class GenericControllerOfSettings : UITableViewController
                         if let number = CGFloat(text) {
                             setting.value = number
                             action?(setting.value)
-                            return true
+                            return String(Double(setting.value))
                         }
-                        return false
+                        return nil
                     }
                 }
                 
@@ -420,9 +421,9 @@ class GenericControllerOfSettings : UITableViewController
                         if let number = Float(text) {
                             setting.value = number
                             action?(setting.value)
-                            return true
+                            return String(setting.value)
                         }
-                        return false
+                        return nil
                     }
                 }
                 
@@ -447,9 +448,9 @@ class GenericControllerOfSettings : UITableViewController
                         if let number = Int(text) {
                             setting.value = number
                             action?(setting.value)
-                            return true
+                            return String(setting.value)
                         }
-                        return false
+                        return nil
                     }
                 }
                 

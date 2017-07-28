@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import ASToolkit
 
 open class GenericSetting<TYPE> {
     
@@ -33,6 +34,22 @@ open class GenericSetting<TYPE> {
             store(first)
         }
     }
+
+    public func assign(_ value:TYPE?) {
+        if value != nil {
+            self.value = value!
+        }
+    }
+    
+    public func from(_ data:[String:Any]) {
+        if let value = data[key] as? TYPE {
+            self.value = value
+        }
+    }
+
+    public func to(_ data:inout [String:Any]) {
+        data[key] = self.value
+    }
     
     public func remove() {
         UserDefaults.standard.removeObject(forKey: key)
@@ -43,7 +60,15 @@ open class GenericSetting<TYPE> {
     }
     
     private func store(_ n:TYPE) {
-        UserDefaults.standard.set(n, forKey: key)
+        if n is UIColor {
+            UserDefaults.standard.set(n as! UIColor, forKey: key)
+        }
+        else if n is UIFont {
+            UserDefaults.standard.set(n as! UIFont, forKey: key)
+        }
+        else {
+            UserDefaults.standard.set(n, forKey: key)
+        }
     }
     
     internal var stored:TYPE? {

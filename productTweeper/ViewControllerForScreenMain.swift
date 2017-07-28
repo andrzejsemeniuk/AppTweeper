@@ -14,6 +14,7 @@ class ViewControllerForScreenMain: UIViewController {
     
     @IBOutlet var viewForImageTop       : UIImageView!
     @IBOutlet var viewForImageBottom    : UIImageView!
+    @IBOutlet var buttonForLIVESEARCH   : UIButton!
     @IBOutlet var buttonForSEARCH       : UIButton!
     @IBOutlet var buttonForFILTER       : UIButton!
     @IBOutlet var buttonForPREFERENCES  : UIButton!
@@ -51,7 +52,7 @@ class ViewControllerForScreenMain: UIViewController {
         let font = UIFont.init(name: "Gill Sans", size: fontSize) ?? UIFont.systemFont(ofSize: fontSize)
         
         self.buttons = [
-            buttonForSEARCH!, buttonForFILTER!, buttonForPREFERENCES!
+            buttonForSEARCH!, buttonForLIVESEARCH!, buttonForFILTER!, buttonForPREFERENCES!
         ]
         
         for (index,button) in buttons.enumerated() {

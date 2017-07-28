@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import ASToolkit
 
 class Preferences : GenericManagerOfSettings {
     
@@ -20,8 +21,8 @@ class Preferences : GenericManagerOfSettings {
     var audio                                           = GenericSetting<Bool>      (key:"audio", first: false)
 
     var colorOfBackground                               = GenericSetting<UIColor>   (key:"colorOfBackground", first: UIColor(hsb:[0.6,1.0,1.0]))
-    var colorOfSelection                                = GenericSetting<UIColor>   (key:"colorOfSelection", first: .orange)
     var colorOfTitleText                                = GenericSetting<UIColor>   (key:"colorOfTitleText", first: .white)
+    var colorOfSelection                                = GenericSetting<UIColor>   (key:"colorOfSelection", first: .orange)
     var colorOfHeaderText                               = GenericSetting<UIColor>   (key:"colorOfHeaderText", first: .gray)
     var colorOfFooterText                               = GenericSetting<UIColor>   (key:"colorOfFooterText", first: .gray)
 
@@ -35,7 +36,7 @@ class Preferences : GenericManagerOfSettings {
     var titleShadowColor                                = GenericSetting<UIColor>   (key:"titleShadowColor", first: UIColor.black)
     var titleShadowAlpha                                = GenericSetting<CGFloat>   (key:"titleShadowAlpha", first: 0.7)
 
-    var tweetLimitOfDisplayCount                        = GenericSetting<Int>       (key:"tweetLimitOfDisplayCount", first: 120)
+    var maximumTweetsToDisplay                          = GenericSetting<Int>       (key:"maximumTweetsToDisplay", first: 999)
     var searchResultsLimit                              = GenericSetting<Int>       (key:"searchResultsLimit", first: 40)
     var separateSearchResults                           = GenericSetting<Bool>      (key:"separateSearchResults", first: true)
     var colorOfScreenSearchListSeparator                = GenericSetting<UIColor>   (key:"colorOfScreenSearchListSeparator", first: UIColor(white:220.0/255.0))
@@ -49,10 +50,72 @@ class Preferences : GenericManagerOfSettings {
     var testBool                                        = GenericSetting<Bool>      (key:"testBool", first: false)
     var testInt                                         = GenericSetting<Int>       (key:"testInt", first: 131)
     
-
-    static private var all:[Preferences]                = [Preferences()]
+    func encode(_ data:inout [String:Any]) {
+        data["version"] = 20170727
+        
+        for child in Mirror(reflecting: self).children {
+            if let setting = child.value as? GenericSetting<UIColor> {
+                setting.to(&data)
+            }
+            else if let setting = child.value as? GenericSetting<UIFont> {
+                setting.to(&data)
+            }
+            else if let setting = child.value as? GenericSetting<String> {
+                setting.to(&data)
+            }
+            else if let setting = child.value as? GenericSetting<Bool> {
+                setting.to(&data)
+            }
+            else if let setting = child.value as? GenericSetting<Int> {
+                setting.to(&data)
+            }
+            else if let setting = child.value as? GenericSetting<UInt> {
+                setting.to(&data)
+            }
+            else if let setting = child.value as? GenericSetting<Float> {
+                setting.to(&data)
+            }
+            else if let setting = child.value as? GenericSetting<CGFloat> {
+                setting.to(&data)
+            }
+            else if let setting = child.value as? GenericSetting<Double> {
+                setting.to(&data)
+            }
+        }
+    }
     
-    static var current:Preferences {
-        return all.first!
+    func decode(_ data:[String:Any]) {
+        if let version = data["version"] as? String {
+            
+        }
+        for child in Mirror(reflecting: self).children {
+            if let setting = child.value as? GenericSetting<UIColor> {
+                setting.from(&data)
+            }
+            else if let setting = child.value as? GenericSetting<UIFont> {
+                setting.from(&data)
+            }
+            else if let setting = child.value as? GenericSetting<String> {
+                setting.from(&data)
+            }
+            else if let setting = child.value as? GenericSetting<Bool> {
+                setting.from(&data)
+            }
+            else if let setting = child.value as? GenericSetting<Int> {
+                setting.from(&data)
+            }
+            else if let setting = child.value as? GenericSetting<UInt> {
+                setting.from(&data)
+            }
+            else if let setting = child.value as? GenericSetting<Float> {
+                setting.from(&data)
+            }
+            else if let setting = child.value as? GenericSetting<CGFloat> {
+                setting.from(&data)
+            }
+            else if let setting = child.value as? GenericSetting<Double> {
+                setting.from(&data)
+            }
+        }
     }
 }
