@@ -17,6 +17,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     lazy var preferences: Preferences = {
         return Preferences()
     }()
+    
+    lazy var storeForSearch: StoreForSearch = {
+        let result = StoreForSearch()
+        _ = result.removeTooMany()
+        return result
+    }()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.

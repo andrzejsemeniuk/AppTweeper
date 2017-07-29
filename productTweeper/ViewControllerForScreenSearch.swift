@@ -9,14 +9,7 @@
 import Foundation
 import UIKit
 
-protocol ViewControllerForScreenSearchDelegate : class {
-    func searchPhraseWasUpdated         (to:String)
-    
-    var  searchPhrase           : String { get }
-}
-
-class ViewControllerForScreenSearch: UITableViewController
-{
+class ViewControllerForScreenSearch: UITableViewController {
     
     var                 tweets      : [TweetModel]  = [TweetModel]()
     
@@ -30,9 +23,6 @@ class ViewControllerForScreenSearch: UITableViewController
     var                 maximumTweetsToDisplay: Int {
         return AppDelegate.instance.preferences.maximumTweetsToDisplay.value
     }
-
-    weak var            delegate    : ViewControllerForScreenSearchDelegate?
-    
     
     var buttonForManager            : UIBarButtonItem!
     
@@ -42,7 +32,7 @@ class ViewControllerForScreenSearch: UITableViewController
         super.viewDidLoad()
         
         search.delegate                 = self
-        search.text                     = self.delegate?.searchPhrase ?? ""
+        search.text                     = self.lastSearchText
         search.autocapitalizationType   = .none
         
         tableView.rowHeight             = UITableViewAutomaticDimension
@@ -57,7 +47,7 @@ class ViewControllerForScreenSearch: UITableViewController
         
         
         
-        self.buttonForManager = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(ViewControllerForScreenSearch.tapOnButtonManager(_:)))
+        self.buttonForManager = UIBarButtonItem(barButtonSystemItem: .bookmarks, target: self, action: #selector(ViewControllerForScreenSearch.tapOnButtonManager(_:)))
         
         self.navigationItem.rightBarButtonItems = [
             self.buttonForManager
@@ -69,8 +59,8 @@ class ViewControllerForScreenSearch: UITableViewController
     
     
     func tapOnButtonManager(_ sender: UIBarButtonItem) {
-        let vc = ViewControllerForScreenManagerOfSearch()
-        
+        let vc = ViewControllerForScreenHistory()
+        vc.searchController = self
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -80,11 +70,11 @@ class ViewControllerForScreenSearch: UITableViewController
     
     func handleRefresh()
     {
-        let text = search.text ?? ""
+        let text = self.lastSearchText
         
         self.title = "\"\(text)\""
         
-        self.delegate?.searchPhraseWasUpdated(to: text)
+        self.search.text = text
         
         // TODO: ADD ACTIVITY INDIATOR
         print("reloading... for \(text)")
@@ -92,7 +82,7 @@ class ViewControllerForScreenSearch: UITableViewController
         let indicator = UIActivityIndicatorView(activityIndicatorStyle: .white)
         
         self.view.addSubview(indicator)
-        indicator.backgroundColor = UIColor.init(hsba: [0.6,1.0,1.0,0.5])
+        indicator.backgroundColor = UIColor.init(hsba: [0.6,1.0,1.0,0.5]) // TODO: PREFERENCE
         indicator.frame = self.view.frame
         indicator.startAnimating()
         
@@ -254,6 +244,22 @@ class ViewControllerForScreenSearch: UITableViewController
         super.didReceiveMemoryWarning()
     }
     
+    
+    
+    
+    var lastSearchText:String {
+        get {
+            return AppDelegate.instance.preferences.lastSearchText.value
+        }
+        set (newValue) {
+            AppDelegate.instance.preferences.lastSearchText.value = newValue
+        }
+    }
+    
+    var storeForSearch:StoreForSearch {
+        return AppDelegate.instance.storeForSearch
+    }
+
 }
 
 extension ViewControllerForScreenSearch {
@@ -293,61 +299,10 @@ extension ViewControllerForScreenSearch {
     
 }
 
-extension ViewControllerForScreenSearch {
-    
-    /*
-     // Override to support conditional editing of the table view.
-     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-     // Return NO if you do not want the specified item to be editable.
-     return true
-     }
-     */
-    
-    /*
-     // Override to support editing the table view.
-     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-     if editingStyle == .Delete {
-     // Delete the row from the data source
-     tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-     } else if editingStyle == .Insert {
-     // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-     }
-     }
-     */
-    
-    /*
-     // Override to support rearranging the table view.
-     override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-     
-     }
-     */
-    
-    /*
-     // Override to support conditional rearranging of the table view.
-     override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-     // Return NO if you do not want the item to be re-orderable.
-     return true
-     }
-     */
-    
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-     // Get the new view controller using [segue destinationViewController].
-     // Pass the selected object to the new view controller.
-     }
-     */
-    
-}
-
-
 
 extension ViewControllerForScreenSearch : UISearchBarDelegate
 {
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String)
-    {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         print("search text did change: \(searchText)")
     }
     
@@ -356,7 +311,10 @@ extension ViewControllerForScreenSearch : UISearchBarDelegate
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        self.lastSearchText = searchBar.text ?? "?"
+        _ = storeForSearch.addIfUnique(title:self.lastSearchText)
         handleRefresh()
     }
     
 }
+

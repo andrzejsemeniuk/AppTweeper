@@ -73,11 +73,6 @@ class ViewControllerForScreenMain: UIViewController {
             button.widthAnchor.constraint(equalTo: self.view.widthAnchor).isActive=true
         }
 
-        self.viewForImageTop.layer.shadowRadius     = 5
-        self.viewForImageTop.layer.shadowColor      = UIColor(hsb:[0.6,1.0,0.3]).cgColor
-        self.viewForImageTop.layer.shadowOffset     = CGSize(side: 0)
-        self.viewForImageTop.layer.shadowOpacity    = 0.4
-        
         // "background gradient"
 
         let gradientView = UIView(frame:self.view.frame)
@@ -126,6 +121,12 @@ class ViewControllerForScreenMain: UIViewController {
             button.isEnabled = true
             button.transform = CGAffineTransform.init(scaleX: 0.01, y: 0.01)
         }
+        
+        self.viewForImageTop.layer.shadowRadius     = AppDelegate.instance.preferences.titleShadowRadius.value
+        self.viewForImageTop.layer.shadowColor      = AppDelegate.instance.preferences.titleShadowColor.value.cgColor // UIColor(hsb:[0.6,1.0,0.3]).cgColor
+        self.viewForImageTop.layer.shadowOffset     = CGSize(side: AppDelegate.instance.preferences.titleShadowOffset.value)
+        self.viewForImageTop.layer.shadowOpacity    = AppDelegate.instance.preferences.titleShadowAlpha.value // 0.4
+        
     }
     
     private var appearance = 0
@@ -155,19 +156,37 @@ class ViewControllerForScreenMain: UIViewController {
         
         // radio effect
         
-        let radius      = self.view.frame.diagonal
+        let radioWaveTag = 999
+        
+        // remove previous signals
+        if true {
+            let previous = self.view.subviews.filter {
+                $0.tag == radioWaveTag
+            }
+            for subview in previous {
+                UIView.animate(withDuration: 3.0) {
+                    subview.alpha = 0
+                    subview.removeFromSuperview()
+                }
+            }
+        }
+        
+        let radius      = max(1.0,self.view.frame.diagonal * AppDelegate.instance.preferences.signalRadius.value)
         let diameter    = radius * 2
-        let count       = 6
-        let duration    = 6.0
+        let count       = AppDelegate.instance.preferences.signalCount.value
+        let duration    = max(1.0,AppDelegate.instance.preferences.signalDuration.value)
         
         for animation in 0..<count
         {
             let radioWaveView = UIView(frame:CGRect(origin : self.viewForImageTop.center - radius,
                                                     size   : CGSize(side:diameter)))
             
+            radioWaveView.tag = radioWaveTag
+            
             self.view.insertSubview(radioWaveView, at: 1)
             
             radioWaveView.backgroundColor = .clear
+            radioWaveView.alpha = AppDelegate.instance.preferences.signalAlpha.value
             
             let circle = UIBezierPath()
             circle.addArc(withCenter : CGPoint(xy:radius),
@@ -179,15 +198,18 @@ class ViewControllerForScreenMain: UIViewController {
             
             let layer = CAShapeLayer()
             
-            layer.strokeColor   = UIColor.white.cgColor
-            layer.fillColor     = UIColor(hsba:[0,0,0,0.0]).cgColor
-            layer.lineWidth     = 30
+            layer.strokeColor   = AppDelegate.instance.preferences.signalColor.value.cgColor
+            layer.fillColor     =
+                AppDelegate.instance.preferences.signalBackgroundColor.value.withAlphaComponent(
+                    AppDelegate.instance.preferences.signalBackgroundAlpha.value).cgColor
+//                UIColor(hsba:[0,0,0,0.0]).cgColor
+            layer.lineWidth     = AppDelegate.instance.preferences.signalThickness.value
             layer.path          = circle.cgPath
             
             radioWaveView.layer.addSublayer(layer)
             
             radioWaveView.transform = CGAffineTransform.init(scaleX: 0.001, y: 0.001)
-            radioWaveView.alpha = 0.05
+//            radioWaveView.alpha = 0.05
             
             let delay = Double(animation)/Double(count)*duration
             UIView.animate(withDuration: TimeInterval(duration), delay: delay, options: [.repeat, .curveLinear], animations: {

@@ -10,10 +10,6 @@ import Foundation
 import UIKit
 import ASToolkit
 
-protocol GenericManagerOfSettings : class {
-    func synchronize()
-}
-
 class GenericControllerOfSettings : UITableViewController
 {
     struct Row {
@@ -150,8 +146,7 @@ class GenericControllerOfSettings : UITableViewController
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
     {
-        if let action = actions[indexPath]
-        {
+        if let action = actions[indexPath] {
             action()
         }
     }
@@ -173,6 +168,61 @@ class GenericControllerOfSettings : UITableViewController
     
     
     
+    func createCellForTap(title:String, setup:((UITableViewCell,IndexPath)->())? = nil, action:Action? = nil ) -> FunctionOnCell {
+        
+        return { (cell:UITableViewCell, indexPath:IndexPath) in
+            if let label = cell.textLabel {
+                cell.selectionStyle = .default
+                label.text          = title
+                setup?(cell,indexPath)
+                if let action = action {
+                    self.addAction(indexPath: indexPath, action: action)
+                }
+            }
+        }
+        
+    }
+    
+
+    func createCellForTapOnQuestion(title:String, message:String, ok:String = "Ok", cancel:String = "Cancel", setup:((UITableViewCell,IndexPath)->())? = nil, action:Action? = nil) -> FunctionOnCell {
+        
+        return { (cell:UITableViewCell, indexPath:IndexPath) in
+            if let label = cell.textLabel {
+                cell.selectionStyle = .default
+                label.text          = title
+                setup?(cell,indexPath)
+                self.addAction(indexPath: indexPath) { [weak self] in
+                    self?.createAlertForQuestion(title: title, message: message, ok:ok, cancel:cancel) {
+                        action?()
+                    }
+                }
+            }
+        }
+        
+    }
+    
+
+    
+    func createAlertForQuestion(title:String, message:String, ok:String = "Ok", cancel:String = "Cancel", handler:@escaping Action) {
+        let alert = UIAlertController.init(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
+        let ok = UIAlertAction.init(title: ok, style: UIAlertActionStyle.default) { action in
+            handler()
+            alert.dismiss(animated: true) {
+            }
+        }
+        alert.addAction(ok)
+        let cancel = UIAlertAction.init(title: cancel, style: UIAlertActionStyle.cancel) { action in
+            alert.dismiss(animated: true) {
+            }
+        }
+        alert.addAction(cancel)
+        self.present(alert, animated: true)
+    }
+    
+
+    
+    
+    
     
     
     typealias FunctionUpdateOnUISwitch = (UISwitch) -> ()
@@ -183,7 +233,7 @@ class GenericControllerOfSettings : UITableViewController
         let view = UISwitch()
         view.setOn(on, animated:animated)
         registeredUISwitches[view] = update
-        view.addTarget(self,action:#selector(GenericControllerOfSettings.handleUISwitch(control:)),for:.valueChanged)
+        view.addTarget(self, action:#selector(GenericControllerOfSettings.handleUISwitch(control:)),for:.valueChanged)
         return view
     }
     
@@ -193,7 +243,7 @@ class GenericControllerOfSettings : UITableViewController
         }
     }
     
-    func createCellForBool(_ setting:GenericSetting<Bool>, title:String, setup:((UITableViewCell,IndexPath)->())? = nil, action:((Bool)->())? = nil ) -> FunctionOnCell {
+    func createCellForUISwitch(_ setting:GenericSetting<Bool>, title:String, setup:((UITableViewCell,IndexPath)->())? = nil, action:((Bool)->())? = nil ) -> FunctionOnCell {
         
         return { (cell:UITableViewCell, indexPath:IndexPath) in
             if let label = cell.textLabel {
@@ -223,7 +273,7 @@ class GenericControllerOfSettings : UITableViewController
         view.isContinuous   = continuous
         view.value          = value
         registeredUISliders[view] = update
-        view.addTarget(self,action:#selector(GenericControllerOfSettings.handleUISlider(control:)),for:.valueChanged)
+        view.addTarget(self, action:#selector(GenericControllerOfSettings.handleUISlider(control:)),for:.valueChanged)
         return view
     }
     
@@ -233,15 +283,15 @@ class GenericControllerOfSettings : UITableViewController
         }
     }
     
-    func createCellForUISlider(_ setting:GenericSetting<Float>, title:String, setup:((UITableViewCell,IndexPath,UISlider)->())? = nil, action:((Float)->())? = nil ) -> FunctionOnCell {
+    func createCellForUISlider(_ setting:GenericSetting<Float>, title:String, minimum:Float = 0, maximum:Float = 1, continuous:Bool = false, setup:((UITableViewCell,IndexPath,UISlider)->())? = nil, action:Action? = nil ) -> FunctionOnCell {
         return { (cell:UITableViewCell, indexPath:IndexPath) in
             if let label = cell.textLabel {
                 label.text          = title
                 cell.accessoryType  = .none
                 cell.selectionStyle = .default
-                let view = self.registerUISlider(value: setting.value, update: { (myslider:UISlider) in
+                let view = self.registerUISlider(value: setting.value, minimum:minimum, maximum:maximum, continuous:continuous, update: { (myslider:UISlider) in
                     setting.value = myslider.value
-                    action?(setting.value)
+                    action?()
                 })
                 cell.accessoryView  = view
                 setup?(cell,indexPath,view)
@@ -249,15 +299,15 @@ class GenericControllerOfSettings : UITableViewController
         }
     }
 
-    func createCellForUISlider(_ setting:GenericSetting<CGFloat>, title:String, setup:((UITableViewCell,IndexPath,UISlider)->())? = nil, action:((CGFloat)->())? = nil ) -> FunctionOnCell {
+    func createCellForUISlider(_ setting:GenericSetting<CGFloat>, title:String, minimum:Float = 0, maximum:Float = 1, continuous:Bool = false, setup:((UITableViewCell,IndexPath,UISlider)->())? = nil, action:Action? = nil ) -> FunctionOnCell {
         return { (cell:UITableViewCell, indexPath:IndexPath) in
             if let label = cell.textLabel {
                 label.text          = title
                 cell.accessoryType  = .none
                 cell.selectionStyle = .default
-                let view = self.registerUISlider(value: Float(setting.value), update: { (myslider:UISlider) in
+                let view = self.registerUISlider(value: Float(setting.value), minimum:minimum, maximum:maximum, continuous:continuous, update: { (myslider:UISlider) in
                     setting.value = CGFloat(myslider.value)
-                    action?(setting.value)
+                    action?()
                 })
                 cell.accessoryView  = view
                 setup?(cell,indexPath,view)
@@ -274,7 +324,7 @@ class GenericControllerOfSettings : UITableViewController
     
     var registeredUITextFields:[UITextField:FunctionUpdateOnUITextField] = [:]
     
-    func registerUITextField(count:Int, value:String, animated:Bool = true, update:@escaping FunctionUpdateOnUITextField) -> UITextField {
+    func registerUITextField(count:Int, value:String, animated:Bool = true) -> UITextField {
         let view = UITextField()
         view.isEnabled = false
 //        view.delegate = self
@@ -289,26 +339,16 @@ class GenericControllerOfSettings : UITableViewController
         view.frame.size = (String.init(repeating:"m", count:count) as NSString).size(attributes: [
             NSFontAttributeName : view.font ?? UIFont.defaultFont
             ])
-        registeredUITextFields[view] = update
-//        view.addTarget(self,action:#selector(GenericControllerOfSettings.handleUITextField(control:)),for:[.allTouchEvents, .valueChanged])
         return view
     }
     
-    func handleUITextField(control:UITextField?) {
-        if let control = control, let update = registeredUITextFields[control] {
-            update(control)
-        }
-    }
-    
-    func createAlertForUITextField(_ field:UITextField, title:String, message:String, setter:@escaping (String)->(String?)) {
+    func createAlertForUITextField(_ field:UITextField, title:String, message:String, setter:@escaping (String)->()) {
         let alert = UIAlertController.init(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
         alert.addTextField { textfield in
             textfield.text = field.text
         }
         let ok = UIAlertAction.init(title: "Ok", style: UIAlertActionStyle.default) { action in
-            if let text0 = alert.textFields?[safe:0]?.text, let text1 = setter(text0) {
-                field.text = text1
-            }
+            setter(alert.textFields?[safe:0]?.text ?? "")
             alert.dismiss(animated: true) {
             }
         }
@@ -321,23 +361,20 @@ class GenericControllerOfSettings : UITableViewController
         self.present(alert, animated: true)
     }
     
-    func createCellForUITextFieldAsString(_ setting:GenericSetting<String>, count:Int = 8, title:String, setup:((UITableViewCell,IndexPath,UITextField)->())? = nil, action:((String)->())? = nil ) -> FunctionOnCell {
+    func createCellForUITextFieldAsString(_ setting:GenericSetting<String>, count:Int = 8, title:String, message:String = "Enter text", setup:((UITableViewCell,IndexPath,UITextField)->())? = nil, action:Action? = nil ) -> FunctionOnCell {
         return { (cell:UITableViewCell, indexPath:IndexPath) in
             if let label = cell.textLabel {
                 cell.selectionStyle = .default
                 label.text          = title
-                let field = self.registerUITextField(count:count, value: setting.value, update: { (field:UITextField) in
-                    setting.value = field.text ?? ""
-                    action?(setting.value)
-                })
+                let field = self.registerUITextField(count:count, value: setting.value)
                 cell.accessoryView = field
                 setup?(cell,indexPath,field)
                 
-                self.addAction(indexPath: indexPath) {
-                    self.createAlertForUITextField(field, title:title, message:"Enter text") { text in
+                self.addAction(indexPath: indexPath) { [weak self] in
+                    self?.createAlertForUITextField(field, title:title, message:message) { text in
                         setting.value = text
-                        action?(setting.value)
-                        return setting.value
+                        action?()
+                        field.text = setting.value
                     }
                 }
                 
@@ -345,31 +382,28 @@ class GenericControllerOfSettings : UITableViewController
         }
     }
 
-    func createCellForUITextFieldAsDouble(_ setting:GenericSetting<Double>, count:Int = 8, title:String, setup:((UITableViewCell,IndexPath,UITextField)->())? = nil, action:((Double)->())? = nil ) -> FunctionOnCell {
+    func createCellForUITextFieldAsDouble(_ setting:GenericSetting<Double>, count:Int = 8, title:String, message:String = "Enter a number", minimum:Double? = nil, maximum:Double? = nil, setup:((UITableViewCell,IndexPath,UITextField)->())? = nil, action:Action? = nil ) -> FunctionOnCell {
         return { (cell:UITableViewCell, indexPath:IndexPath) in
             if let label = cell.textLabel {
                 cell.selectionStyle = .default
                 label.text          = title
-                let field = self.registerUITextField(count:count, value: String(setting.value), update: { (field:UITextField) in
-                    if let text = field.text, let number = Double(text) {
-                        setting.value = number
-                        action?(setting.value)
-                    }
-                    else {
-                        field.text = String(setting.value)
-                    }
-                })
+                let field = self.registerUITextField(count:count, value: String(setting.value))
                 cell.accessoryView = field
                 setup?(cell,indexPath,field)
                 
                 self.addAction(indexPath: indexPath) {
-                    self.createAlertForUITextField(field, title:title, message:"Enter a number") { text in
-                        if let number = Double(text) {
+                    self.createAlertForUITextField(field, title:title, message:message) { [weak field] text in
+                        if var number = Double(text) {
+                            if let minimum = minimum {
+                                number = max(minimum,number)
+                            }
+                            if let maximum = maximum {
+                                number = min(maximum,number)
+                            }
                             setting.value = number
-                            action?(setting.value)
-                            return String(setting.value)
+                            action?()
+                            field?.text = String(setting.value)
                         }
-                        return nil
                     }
                 }
 
@@ -377,26 +411,28 @@ class GenericControllerOfSettings : UITableViewController
         }
     }
     
-    func createCellForUITextFieldAsCGFloat(_ setting:GenericSetting<CGFloat>, count:Int = 8, title:String, setup:((UITableViewCell,IndexPath,UITextField)->())? = nil, action:((CGFloat)->())? = nil ) -> FunctionOnCell {
+    func createCellForUITextFieldAsCGFloat(_ setting:GenericSetting<CGFloat>, count:Int = 8, title:String, message:String = "Enter a number", minimum:CGFloat? = nil, maximum:CGFloat? = nil, setup:((UITableViewCell,IndexPath,UITextField)->())? = nil, action:Action? = nil ) -> FunctionOnCell {
         return { (cell:UITableViewCell, indexPath:IndexPath) in
             if let label = cell.textLabel {
                 cell.selectionStyle = .default
                 label.text          = title
-                let field = self.registerUITextField(count:count, value: String(describing: setting.value), update: { (field:UITextField) in
-                    setting.value = CGFloat(field.text ?? "0") ?? 0
-                    action?(setting.value)
-                })
+                let field = self.registerUITextField(count:count, value: String(describing: setting.value))
                 cell.accessoryView = field
                 setup?(cell,indexPath,field)
                 
                 self.addAction(indexPath: indexPath) {
-                    self.createAlertForUITextField(field, title:title, message:"Enter a number") { text in
-                        if let number = CGFloat(text) {
+                    self.createAlertForUITextField(field, title:title, message:message) { [weak field] text in
+                        if var number = CGFloat(text) {
+                            if let minimum = minimum {
+                                number = max(minimum,number)
+                            }
+                            if let maximum = maximum {
+                                number = min(maximum,number)
+                            }
                             setting.value = number
-                            action?(setting.value)
-                            return String(Double(setting.value))
+                            action?()
+                            field?.text = String(describing: setting.value)
                         }
-                        return nil
                     }
                 }
                 
@@ -404,26 +440,28 @@ class GenericControllerOfSettings : UITableViewController
         }
     }
     
-    func createCellForUITextFieldAsFloat(_ setting:GenericSetting<Float>, count:Int = 8, title:String, setup:((UITableViewCell,IndexPath,UITextField)->())? = nil, action:((Float)->())? = nil ) -> FunctionOnCell {
+    func createCellForUITextFieldAsFloat(_ setting:GenericSetting<Float>, count:Int = 8, title:String, message:String = "Enter a number", minimum:Float? = nil, maximum:Float? = nil, setup:((UITableViewCell,IndexPath,UITextField)->())? = nil, action:Action? = nil ) -> FunctionOnCell {
         return { (cell:UITableViewCell, indexPath:IndexPath) in
             if let label = cell.textLabel {
                 cell.selectionStyle = .default
                 label.text          = title
-                let field = self.registerUITextField(count:count, value: String(describing: setting.value), update: { (field:UITextField) in
-                    setting.value = Float(field.text ?? "0") ?? 0
-                    action?(setting.value)
-                })
+                let field = self.registerUITextField(count:count, value: String(describing: setting.value))
                 cell.accessoryView = field
                 setup?(cell,indexPath,field)
                 
                 self.addAction(indexPath: indexPath) {
-                    self.createAlertForUITextField(field, title:title, message:"Enter a number") { text in
-                        if let number = Float(text) {
+                    self.createAlertForUITextField(field, title:title, message:message) { [weak field] text in
+                        if var number = Float(text) {
+                            if let minimum = minimum {
+                                number = max(minimum,number)
+                            }
+                            if let maximum = maximum {
+                                number = min(maximum,number)
+                            }
                             setting.value = number
-                            action?(setting.value)
-                            return String(setting.value)
+                            action?()
+                            field?.text = String(describing: setting.value)
                         }
-                        return nil
                     }
                 }
                 
@@ -431,26 +469,28 @@ class GenericControllerOfSettings : UITableViewController
         }
     }
     
-    func createCellForUITextFieldAsInt(_ setting:GenericSetting<Int>, count:Int = 8, title:String, setup:((UITableViewCell,IndexPath,UITextField)->())? = nil, action:((Int)->())? = nil ) -> FunctionOnCell {
+    func createCellForUITextFieldAsInt(_ setting:GenericSetting<Int>, count:Int = 8, title:String, message:String = "Enter an integer value", minimum:Int? = nil, maximum:Int? = nil, setup:((UITableViewCell,IndexPath,UITextField)->())? = nil, action:Action? = nil ) -> FunctionOnCell {
         return { (cell:UITableViewCell, indexPath:IndexPath) in
             if let label = cell.textLabel {
                 cell.selectionStyle = .default
                 label.text          = title
-                let field = self.registerUITextField(count:count, value: String(describing: setting.value), update: { (field:UITextField) in
-                    setting.value = Int(field.text ?? "0") ?? 0
-                    action?(setting.value)
-                })
+                let field = self.registerUITextField(count:count, value: String(describing: setting.value))
                 cell.accessoryView = field
                 setup?(cell,indexPath,field)
                 
                 self.addAction(indexPath: indexPath) {
-                    self.createAlertForUITextField(field, title:title, message:"Enter an integer") { text in
-                        if let number = Int(text) {
+                    self.createAlertForUITextField(field, title:title, message:message) { [weak field] text in
+                        if var number = Int(text) {
+                            if let minimum = minimum {
+                                number = max(minimum,number)
+                            }
+                            if let maximum = maximum {
+                                number = min(maximum,number)
+                            }
                             setting.value = number
-                            action?(setting.value)
-                            return String(setting.value)
+                            action?()
+                            field?.text = String(describing: setting.value)
                         }
-                        return nil
                     }
                 }
                 
@@ -486,7 +526,7 @@ class GenericControllerOfSettings : UITableViewController
                     
                     setup?(cell,indexPath)
                     
-                    self.addAction(indexPath: indexPath) {
+                    self.addAction(indexPath: indexPath) { [weak self] in
                         
                         let fonts       = GenericControllerOfPickerOfFont()
                         fonts.title     = title+" Font"
@@ -495,7 +535,7 @@ class GenericControllerOfSettings : UITableViewController
                             action?(fonts.selected)
                         }
                         
-                        self.navigationController?.pushViewController(fonts, animated:true)
+                        self?.navigationController?.pushViewController(fonts, animated:true)
                     }
                 }
         }
@@ -524,13 +564,13 @@ class GenericControllerOfSettings : UITableViewController
     
     
     
-    func createCellForUIColor(_ color0:UIColor, name:String = "Color", title:String, setup:((UITableViewCell,IndexPath)->())? = nil, action:((UIColor)->())? = nil) -> FunctionOnCell
+    func createCellForUIColor(_ color0:UIColor, title:String, setup:((UITableViewCell,IndexPath)->())? = nil, action:((UIColor)->())? = nil) -> FunctionOnCell
     {
         return
             { (cell:UITableViewCell, indexPath:IndexPath) in
                 if let label = cell.textLabel {
                     
-                    label.text          = name
+                    label.text          = title
                     if let detail = cell.detailTextLabel {
                         detail.text     = "  "
                         
@@ -547,23 +587,23 @@ class GenericControllerOfSettings : UITableViewController
                     
                     setup?(cell,indexPath)
                     
-                    self.addAction(indexPath: indexPath) {
+                    self.addAction(indexPath: indexPath) { [weak self] in
                         
                         let colors      = GenericControllerOfPickerOfColor()
-                        colors.title    = title + " Color"
+                        colors.title    = title
                         colors.selected = color0
                         colors.update   = {
                             action?(colors.selected)
                         }
                         
-                        self.navigationController?.pushViewController(colors, animated:true)
+                        self?.navigationController?.pushViewController(colors, animated:true)
                     }
                 }
         }
     }
     
-    func createCellForUIColor(_ setting:GenericSetting<UIColor>, name:String = "Color", title:String, setup:((UITableViewCell,IndexPath)->())? = nil, action:(()->())? = nil) -> FunctionOnCell {
-        return createCellForUIColor(setting.value, name:name, title:title, setup:setup, action:{ color in
+    func createCellForUIColor(_ setting:GenericSetting<UIColor>, title:String, setup:((UITableViewCell,IndexPath)->())? = nil, action:(()->())? = nil) -> FunctionOnCell {
+        return createCellForUIColor(setting.value, title:title, setup:setup, action:{ color in
             setting.value = color
             action?()
         })

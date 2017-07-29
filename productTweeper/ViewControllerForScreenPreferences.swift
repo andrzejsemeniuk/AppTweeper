@@ -36,7 +36,7 @@ class ViewControllerForScreenPreferences : GenericControllerOfSettings {
                 
                 { (cell:UITableViewCell, indexPath:IndexPath) in
                     if let label = cell.detailTextLabel {
-                        label.text = AppDelegate.instance.preferences.name.value
+                        label.text = AppDelegate.instance.preferences.style.value
                     }
                     if let label = cell.textLabel {
                         label.text          = "Save"
@@ -47,7 +47,7 @@ class ViewControllerForScreenPreferences : GenericControllerOfSettings {
                             alert.addTextField() {
                                 field in
                                 // called to configure text field before displayed
-                                field.text = AppDelegate.instance.preferences.name.value
+                                field.text = AppDelegate.instance.preferences.style.value
                             }
                             
                             let actionSave = UIAlertAction(title:"Save", style:.default, handler: {
@@ -55,7 +55,7 @@ class ViewControllerForScreenPreferences : GenericControllerOfSettings {
                                 
                                 if let fields = alert.textFields, let text = fields[0].text {
                                     if 0 < text.length {
-                                        AppDelegate.instance.preferences.name.value = text
+                                        AppDelegate.instance.preferences.style.value = text
                                         
                                         print(UserDefaults.standard.dictionaryRepresentation())
                                         
@@ -126,6 +126,7 @@ class ViewControllerForScreenPreferences : GenericControllerOfSettings {
                 
                 "Save current settings, or load previously saved settings"
             ],
+            
             /*
             [
                 "TEST",
@@ -144,24 +145,97 @@ class ViewControllerForScreenPreferences : GenericControllerOfSettings {
                 
                 createCellForUITextFieldAsInt       (AppDelegate.instance.preferences.testInt, title:"test Int"),
                 
-                createCellForBool                   (AppDelegate.instance.preferences.testBool, title:"test Bool"),
+                createCellForUISwitch               (AppDelegate.instance.preferences.testBool, title:"test Bool"),
                 
                 
                 ""
             ],
             */
+            
             [
-                "MAIN MENU",
+                "HOME MENU",
                 
-                createCellForUITextFieldAsDouble(AppDelegate.instance.preferences.durationOfMainMenuDisplay, title:"Duration") { value in
+                createCellForUITextFieldAsDouble(AppDelegate.instance.preferences.durationOfMainMenuDisplay, title:"Duration") {
+                    if AppDelegate.instance.preferences.durationOfMainMenuDisplay.value <= 0.0 {
+                       AppDelegate.instance.preferences.durationOfMainMenuDisplay.value = 0.1
+                    }
+                    else if AppDelegate.instance.preferences.durationOfMainMenuDisplay.value > 9.0 {
+                            AppDelegate.instance.preferences.durationOfMainMenuDisplay.value = 9.0
+                    }
                 },
 
-                createCellForUITextFieldAsDouble(AppDelegate.instance.preferences.durationOfMainMenuDisplayInitially, title:"Initial Duration") { value in 
+                createCellForUITextFieldAsDouble(AppDelegate.instance.preferences.durationOfMainMenuDisplayInitially, title:"Initial Duration") {
+                    if AppDelegate.instance.preferences.durationOfMainMenuDisplayInitially.value <= 0.0 {
+                        AppDelegate.instance.preferences.durationOfMainMenuDisplayInitially.value = 0.1
+                    }
+                    else if AppDelegate.instance.preferences.durationOfMainMenuDisplayInitially.value > 9.0 {
+                        AppDelegate.instance.preferences.durationOfMainMenuDisplayInitially.value = 9.0
+                    }
                 },
                 
-                createCellForUISlider(AppDelegate.instance.preferences.testCGFloat, title:"Opacity"),
+                "Properties related to home screen menu"
+            ],
+            
+            [
+                "HOME SIGNAL",
                 
-                "Set selection properties for rows on all tabs"
+                createCellForUISlider(AppDelegate.instance.preferences.signalAlpha, title:"Opacity"),
+                
+                createCellForUITextFieldAsInt(AppDelegate.instance.preferences.signalCount, title:"Count", message:"Enter an integer between 1 and 24", minimum:1, maximum:24),
+                
+                createCellForUITextFieldAsDouble(AppDelegate.instance.preferences.signalDuration, title:"Duration", message:"Enter a value between 1 and 60", minimum:1, maximum:60),
+                
+                createCellForUISlider(AppDelegate.instance.preferences.signalRadius, title:"Radius"),
+                
+                createCellForUISlider(AppDelegate.instance.preferences.signalThickness, title:"Thickness", minimum:1, maximum:240),
+                
+                createCellForUIColor(AppDelegate.instance.preferences.signalColor, title:"Rim Color"),
+                
+                createCellForUIColor(AppDelegate.instance.preferences.signalBackgroundColor, title:"Fill Color"),
+                
+                createCellForUISlider(AppDelegate.instance.preferences.signalBackgroundAlpha, title:"Fill Opacity"),
+                
+                
+                "Properties related to home screen signal wave"
+            ],
+            
+            [
+                "HOME TITLE",
+                
+                // TODO: ADD MESSAGE TO UITEXTFIELD ALERT
+                // TODO: ADD VALIDATOR CLOSURE INSIDE A GENERICSETTING?
+                
+                createCellForUIColor(AppDelegate.instance.preferences.titleShadowColor, title:"Shadow Color"),
+                
+                createCellForUISlider(AppDelegate.instance.preferences.titleShadowAlpha, title:"Shadow Opacity"),
+                
+                createCellForUISlider(AppDelegate.instance.preferences.titleShadowRadius, title:"Shadow Radius", maximum:50.0),
+                
+                createCellForUISlider(AppDelegate.instance.preferences.titleShadowOffset, title:"Shadow Offset", maximum:9.0),
+                
+                "Properties related to home screen title"
+            ],
+            
+            [
+                "HISTORY",
+                
+                createCellForUISwitch(AppDelegate.instance.preferences.enableHistory, title: "Enabled"),
+                
+                createCellForTapOnQuestion(title: "Clear", message:"Remove all entries from search history?", ok:"Yes", cancel:"No") {
+                    AppDelegate.instance.storeForSearch.removeAll()
+                    AppDelegate.instance.preferences.lastSearchText.reset()
+                },
+                
+                createCellForUITextFieldAsInt(AppDelegate.instance.preferences.maximumHistory, title:"Limit") {
+                    if AppDelegate.instance.preferences.maximumHistory.value < 0 {
+                        AppDelegate.instance.preferences.maximumHistory.value = 0
+                    }
+                    if AppDelegate.instance.preferences.maximumHistory.value > 99 {
+                        AppDelegate.instance.preferences.maximumHistory.value = 99
+                    }
+                },
+                
+                "Properties related to search history"
             ],
             
             [
@@ -178,12 +252,12 @@ class ViewControllerForScreenPreferences : GenericControllerOfSettings {
             [
                 "APP",
                 
-                createCellForUIColor(AppDelegate.instance.preferences.colorOfBackground,name:"Background",title:"Background") {
+                createCellForUIColor(AppDelegate.instance.preferences.colorOfBackground, title:"Background") {
                     UIApplication.rootViewController.view.backgroundColor   = AppDelegate.instance.preferences.colorOfBackground.value
                     self.view.backgroundColor                               = AppDelegate.instance.preferences.colorOfBackground.value
                 },
                 
-                createCellForBool(AppDelegate.instance.preferences.audio, title:"Audio"),
+                createCellForUISwitch(AppDelegate.instance.preferences.audio, title:"Audio"),
                 
                 
                 "Set app properties"
