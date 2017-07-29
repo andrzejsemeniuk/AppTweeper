@@ -34,7 +34,7 @@ class ViewControllerForScreenSearch: UITableViewController
     weak var            delegate    : ViewControllerForScreenSearchDelegate?
     
     
-    
+    var buttonForManager            : UIBarButtonItem!
     
     
     override func viewDidLoad()
@@ -53,8 +53,28 @@ class ViewControllerForScreenSearch: UITableViewController
         tableView.insertSubview(refresh, at: 0)
         
         tableView.register(UINib(nibName: "TweetView", bundle: nil), forCellReuseIdentifier: "TweetView")
+        
+        
+        
+        
+        self.buttonForManager = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(ViewControllerForScreenSearch.tapOnButtonManager(_:)))
+        
+        self.navigationItem.rightBarButtonItems = [
+            self.buttonForManager
+        ]
+        
+
     }
     
+    
+    
+    func tapOnButtonManager(_ sender: UIBarButtonItem) {
+        let vc = ViewControllerForScreenManagerOfSearch()
+        
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+
     
     
     
