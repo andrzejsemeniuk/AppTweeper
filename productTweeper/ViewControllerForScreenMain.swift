@@ -22,6 +22,7 @@ class ViewControllerForScreenMain: UIViewController {
     private var buttons                 : [UIButton] = []
     private var gradient                : CAGradientRadialLayer!
     private var stack                   : UIStackView!
+    private var gradientView            : UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -75,23 +76,9 @@ class ViewControllerForScreenMain: UIViewController {
 
         // "background gradient"
 
-        let gradientView = UIView(frame:self.view.frame)
+        self.gradientView = UIView(frame:self.view.frame)
         
         self.view.insertSubview(gradientView, at: 0)
-        
-        gradient = CAGradientRadialLayer()
-        
-        gradient.bounds = self.view.bounds
-        gradient.colors = [
-            UIColor.init(hue:0.58, saturation:1.0, brightness:1.0, alpha:1.0).cgColor,
-            UIColor.white.cgColor
-        ]
-        gradient.radius = self.view.bounds.height
-        gradient.center = CGPoint(x:self.view.frame.width/2, y:self.view.frame.height/2)
-        //        gradient.frame.origin = CGPoint(x:0,y:0)
-        gradient.anchorPoint = CGPoint(x:0,y:0)
-        
-        gradientView.layer.insertSublayer(gradient, at: 0)
         
         // motion effect
         
@@ -121,6 +108,26 @@ class ViewControllerForScreenMain: UIViewController {
             button.isEnabled = true
             button.transform = CGAffineTransform.init(scaleX: 0.01, y: 0.01)
         }
+        
+        // gradient
+        
+        self.gradient?.removeFromSuperlayer()
+        
+        self.gradient = CAGradientRadialLayer()
+        
+        gradient.bounds = self.view.bounds
+        gradient.colors = [
+            AppDelegate.instance.preferences.colorOfBackground.value.cgColor,
+            UIColor.white.cgColor
+        ]
+        gradient.radius = self.view.bounds.height
+        gradient.center = CGPoint(x:self.view.frame.width/2, y:self.view.frame.height/2)
+        //        gradient.frame.origin = CGPoint(x:0,y:0)
+        gradient.anchorPoint = CGPoint(x:0,y:0)
+        
+        self.gradientView.layer.insertSublayer(gradient, at: 0)
+
+        // logo
         
         self.viewForImageTop.layer.shadowRadius     = AppDelegate.instance.preferences.titleShadowRadius.value
         self.viewForImageTop.layer.shadowColor      = AppDelegate.instance.preferences.titleShadowColor.value.cgColor // UIColor(hsb:[0.6,1.0,0.3]).cgColor

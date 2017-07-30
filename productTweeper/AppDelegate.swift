@@ -14,13 +14,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     
-    lazy var preferences: Preferences = {
-        return Preferences()
+    lazy var preferences            : Preferences               = {
+        let result = Preferences()
+        return result
     }()
     
-    lazy var storeForSearch: StoreForSearch = {
-        let result = StoreForSearch()
-        _ = result.removeTooMany()
+    lazy var storeForSearch         : StoreForSearch            = {
+        let result = StoreForSearch(removeTooMany:true)
         return result
     }()
 

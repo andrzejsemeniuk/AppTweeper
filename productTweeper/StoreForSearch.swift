@@ -30,6 +30,12 @@ class StoreForSearch {
     
     static private let EntityName = "SearchEntry"
     
+    init(removeTooMany:Bool = false) {
+        if removeTooMany {
+            _ = self.removeTooMany()
+        }
+    }
+    
     func add(entry:Entry) {
         
         if !AppDelegate.instance.preferences.enableHistory.value {

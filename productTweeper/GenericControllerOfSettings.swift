@@ -331,7 +331,7 @@ class GenericControllerOfSettings : UITableViewController
 //        view.borderStyle = .line
 //        view.layer.borderColor = UIColor.init(white:0,alpha:0.02).cgColor
 //        view.layer.borderWidth = 1
-        view.backgroundColor = UIColor.init(white:1,alpha:0.2)
+//        view.backgroundColor = UIColor.init(white:1,alpha:0.2)
         view.layer.cornerRadius = self.elementCornerRadius
         view.text = value
         view.textAlignment = .right

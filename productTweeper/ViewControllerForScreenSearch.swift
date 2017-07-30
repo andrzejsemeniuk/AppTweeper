@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import ASToolkit
 
 class ViewControllerForScreenSearch: UITableViewController {
     
@@ -89,7 +90,7 @@ class ViewControllerForScreenSearch: UITableViewController {
         // "make a call to twitter to retrieve tweets matching search text"
         
         // TODO: PARAMETERIZE COUNT
-        Twitter.instance.tweetsFromSearch(text, count:40, handler: { [weak self] freshTweets in
+        Twitter.instance.requestTweetsFromSearch(text, count:40, handler: { [weak self] freshTweets in
             
             guard let `self` = self else {
                 return
@@ -276,8 +277,13 @@ extension ViewControllerForScreenSearch {
         
         if indexPath.row == 0 {
             let cell = UITableViewCell()
-            search.frame.size = cell.contentView.frame.size
             cell.contentView.addSubview(search)
+            search.frame.size = cell.contentView.frame.size
+            
+//            search.removeAllConstraints()
+//            search.translatesAutoresizingMaskIntoConstraints=false
+//            search.widthAnchor.constraint(equalTo: cell.contentView.widthAnchor).isActive = true
+//            
             return cell
         }
         

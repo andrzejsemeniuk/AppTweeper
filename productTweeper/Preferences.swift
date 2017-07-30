@@ -16,6 +16,9 @@ class Preferences : GenericManagerOfSettings {
         UserDefaults.standard.synchronize()
     }
 
+    init() {
+    }
+    
     var style                                           = GenericSetting<String>    (key:"style", first: "default")
     var styles                                          = GenericSetting<[String]>  (key:"styles", first: [])
     var audio                                           = GenericSetting<Bool>      (key:"audio", first: false)
@@ -23,9 +26,9 @@ class Preferences : GenericManagerOfSettings {
     var lastSearchText                                  = GenericSetting<String>    (key:"lastSearchText", first: "?")
 
 
-    var colorOfBackground                               = GenericSetting<UIColor>   (key:"colorOfBackground", first: UIColor(hsb:[0.6,1.0,1.0]))
+    var colorOfBackground                               = GenericSetting<UIColor>   (key:"colorOfBackground", first: UIColor(hue:0.58))
+    var colorOfSelection                                = GenericSetting<UIColor>   (key:"colorOfSelection", first: .white)
     var colorOfTitleText                                = GenericSetting<UIColor>   (key:"colorOfTitleText", first: .white)
-    var colorOfSelection                                = GenericSetting<UIColor>   (key:"colorOfSelection", first: .orange)
     var colorOfHeaderText                               = GenericSetting<UIColor>   (key:"colorOfHeaderText", first: .gray)
     var colorOfFooterText                               = GenericSetting<UIColor>   (key:"colorOfFooterText", first: .gray)
 

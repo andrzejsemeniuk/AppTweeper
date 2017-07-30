@@ -31,6 +31,8 @@ class ViewControllerForScreenPreferences : GenericControllerOfSettings {
     override func createRows() -> [[Any]]
     {
         return [
+            
+            /*
             [
                 "SETTINGS",
                 
@@ -126,7 +128,30 @@ class ViewControllerForScreenPreferences : GenericControllerOfSettings {
                 
                 "Save current settings, or load previously saved settings"
             ],
+            */
             
+            [
+                "HISTORY",
+                
+                createCellForUISwitch(AppDelegate.instance.preferences.enableHistory, title: "Enabled"),
+                
+                createCellForTapOnQuestion(title: "Clear", message:"Remove all entries from search history?", ok:"Yes", cancel:"No") {
+                    AppDelegate.instance.storeForSearch.removeAll()
+                    AppDelegate.instance.preferences.lastSearchText.reset()
+                },
+                
+                createCellForUITextFieldAsInt(AppDelegate.instance.preferences.maximumHistory, title:"Limit") {
+                    if AppDelegate.instance.preferences.maximumHistory.value < 0 {
+                        AppDelegate.instance.preferences.maximumHistory.value = 0
+                    }
+                    if AppDelegate.instance.preferences.maximumHistory.value > 99 {
+                        AppDelegate.instance.preferences.maximumHistory.value = 99
+                    }
+                },
+                
+                "Properties related to search history"
+            ],
+
             /*
             [
                 "TEST",
@@ -215,29 +240,7 @@ class ViewControllerForScreenPreferences : GenericControllerOfSettings {
                 
                 "Properties related to home screen title"
             ],
-            
-            [
-                "HISTORY",
-                
-                createCellForUISwitch(AppDelegate.instance.preferences.enableHistory, title: "Enabled"),
-                
-                createCellForTapOnQuestion(title: "Clear", message:"Remove all entries from search history?", ok:"Yes", cancel:"No") {
-                    AppDelegate.instance.storeForSearch.removeAll()
-                    AppDelegate.instance.preferences.lastSearchText.reset()
-                },
-                
-                createCellForUITextFieldAsInt(AppDelegate.instance.preferences.maximumHistory, title:"Limit") {
-                    if AppDelegate.instance.preferences.maximumHistory.value < 0 {
-                        AppDelegate.instance.preferences.maximumHistory.value = 0
-                    }
-                    if AppDelegate.instance.preferences.maximumHistory.value > 99 {
-                        AppDelegate.instance.preferences.maximumHistory.value = 99
-                    }
-                },
-                
-                "Properties related to search history"
-            ],
-            
+            /*
             [
                 "SELECTION",
                 
@@ -248,21 +251,20 @@ class ViewControllerForScreenPreferences : GenericControllerOfSettings {
                 
                 "Set selection properties for rows on all tabs"
             ],
-            
+            */
             [
                 "APP",
                 
                 createCellForUIColor(AppDelegate.instance.preferences.colorOfBackground, title:"Background") {
-                    UIApplication.rootViewController.view.backgroundColor   = AppDelegate.instance.preferences.colorOfBackground.value
-                    self.view.backgroundColor                               = AppDelegate.instance.preferences.colorOfBackground.value
+//                    UIApplication.rootViewController.view.backgroundColor   = AppDelegate.instance.preferences.colorOfBackground.value
+//                    self.view.backgroundColor                               = AppDelegate.instance.preferences.colorOfBackground.value
                 },
                 
-                createCellForUISwitch(AppDelegate.instance.preferences.audio, title:"Audio"),
+//                createCellForUISwitch(AppDelegate.instance.preferences.audio, title:"Sounds"),
                 
                 
                 "Set app properties"
             ],
-            
             
         ]
     }
@@ -274,16 +276,18 @@ class ViewControllerForScreenPreferences : GenericControllerOfSettings {
     {
         let cell = super.tableView(tableView, cellForRowAt:indexPath)
         
-        cell.selectedBackgroundView = UIView.createWithBackgroundColor(AppDelegate.instance.preferences.colorOfSelection.value)
+        cell.selectedBackgroundView = UIView.createWithBackgroundColor(
+            AppDelegate.instance.preferences.colorOfSelection.value.withAlphaComponent(0.6)
+        )
         
         return cell
     }
     
     
     
-    override func viewWillAppear(_ animated: Bool)
+    override func viewWillAppear                (_ animated: Bool)
     {
-        tableView.backgroundColor   = AppDelegate.instance.preferences.colorOfBackground.value
+        tableView.backgroundColor   = AppDelegate.instance.preferences.colorOfBackground.value.multiply(byRatio:1.6).higher(byRatio: 0.6)
         
         colorForHeaderText          = AppDelegate.instance.preferences.colorOfHeaderText.value
         colorForFooterText          = AppDelegate.instance.preferences.colorOfFooterText.value
@@ -294,3 +298,10 @@ class ViewControllerForScreenPreferences : GenericControllerOfSettings {
     
     
 }
+
+
+// TODO: ADD HIERARCHICAL ENTRIES THAT OPEN A NEW VIEW CONTROLLER
+// TODO: ADD ENABLED STATUS OF A PREFERENCES
+// TODO: ADD STYLE SAVE/RESTORE
+// TODO: ADD FLAG TO MANAGER TO SYNCHRONIZE ON EVERY CHANGE
+// TODO: EXTRACT INTERFACE TO GENERICSETTING, ADD IMPLEMENTATION FOR USER-DEFAULTS AND CORE-DATA

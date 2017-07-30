@@ -13,45 +13,99 @@ import UIKit
 
 class Twitter
 {
+    // MARK: - TYPES
     
-    fileprivate init()
-    {
+    struct Request {
+        
+        struct Credentials
+        {
+            let name:       String
+            let password:   String
+            
+            init(name:String, password:String)
+            {
+                assert(0 < name.length, "name must be non-empty")
+                assert(0 < password.length, "password must be non-empty")
+                self.name       = name
+                self.password   = password
+            }
+        }
+        
+        struct Search
+        {
+            struct GeoCode {
+                let latitude:Double
+                let longitude:Double
+                let radius:Double
+            }
+            
+            enum ResultType {
+                case mixed
+                case recent
+                case popular
+                
+                var code: String {
+                    switch(self)
+                    {
+                    case .mixed:    return "mixed"
+                    case .recent:   return "recent"
+                    case .popular:  return "popular"
+                    }
+                }
+            }
+        }
+        
+        
+        
     }
     
-    static let instance                     = Twitter()
-    
-    static func consumerKey() -> String     { return Consumer.consumerKey }
-    static func consumerSecret() -> String  { return Consumer.consumerSecret }
-    
-    static let url                          = URL(string: "https://api.twitter.com/1.1/")!
-    
     typealias   Handler                     = (Bool)->Void
-    
     typealias   HandlerForTweets            = ([TweetModel]?)->Void
     typealias   HandlerForGeo               = (JSON?)->Void
     
+
     
+    // MARK: - STATIC PROPERTIES
     
+    static let instance                     = Twitter()
     
-    struct Credentials
-    {
-        let name:       String
-        let password:   String
-        
-        init(name:String, password:String)
-        {
-            assert(0 < name.length, "name must be non-empty")
-            assert(0 < password.length, "password must be non-empty")
-            self.name       = name
-            self.password   = password
-        }
+
+    
+    // MARK: - INSTANCE PROPERTIES
+    
+    private var access_token                : String?
+    
+    private var isConntected                : Bool {
+        return access_token != nil
     }
     
+    private var consumerKey                 : String {
+        return Consumer.consumerKey
+    }
     
-    fileprivate var access_token:String?
+    private var consumerSecret              : String {
+        return Consumer.consumerSecret
+    }
     
+    private var isStreaming                 = false
     
-    func loginForApplicationOnly        (_ handler:@escaping Handler)
+    private var url                         : String {
+        if isStreaming {
+            return "https://stream.twitter.com/1.1"
+        }
+        return "https://api.twitter.com/1.1"
+    }
+    
+
+    // MARK: - PRIVATE METHODS
+    
+    private init()
+    {
+    }
+    
+    // MARK: - PUBLIC METHODS
+    
+    func loginForApplicationOnly            (streaming:Bool = false, _ handler:@escaping Handler)
     {
         // note: see https://dev.twitter.com/oauth/application-only
         
@@ -59,7 +113,7 @@ class Twitter
         //       using a colon (:), then the resulting string must be base64 encoded, and
         //       appended to a "Basic " string
         
-        let authorization   = Twitter.consumerKey().urlEncoded + ":" + Twitter.consumerSecret().urlEncoded
+        let authorization   = consumerKey.urlEncoded + ":" + consumerSecret.urlEncoded
         
         let parameters: [String : AnyObject] =
             [
@@ -83,17 +137,19 @@ class Twitter
             {
                 print("bearer=\(bearer)")
                 self.access_token = token
+                self.isStreaming = streaming
                 handler(true)
             }
             else
             {
+                self.access_token = nil
                 handler(false)
             }
         }
     }
     
     
-    func tweetsFromGeo   (_ lat:Double? = 0, lng:Double? = 0, query:String? = nil, limit:UInt? = 3, handler:@escaping HandlerForGeo)
+    func requestTweetsFromGeo               (_ lat:Double? = 0, lng:Double? = 0, query:String? = nil, limit:UInt? = 3, handler:@escaping HandlerForGeo)
     {
         if access_token==nil
         {
@@ -101,9 +157,7 @@ class Twitter
             return
         }
         
-        
-        var parameters: [String : AnyObject] = [String : AnyObject]()
-        
+        var parameters                      = [String : AnyObject]()
         
         if query != nil {
             parameters["query"]             = query! as AnyObject
@@ -113,72 +167,43 @@ class Twitter
         }
         
         
-        let headers: [String : String] =
-            [
+        let headers: [String : String]      = [
                 "Authorization" : "Bearer " + access_token!
         ]
         
-        let address = "https://api.twitter.com/1.1/geo/search.json"
+        let address = url + "/geo/search.json"
         
         Alamofire.request(address, method: .get, parameters: parameters, headers: headers).responseSwiftyJSON { response in
             handler(response.value)
         }
     }
     
-    func tweetsForUser              (_ limit:UInt8, handler:HandlerForTweets)
+    func requestTweetsForUser               (_ limit:UInt8, handler:HandlerForTweets)
     {
         
     }
     
-    func tweetDetail         ()
+    func requestTweetDetail                 ()
     {
         
     }
     
-    func notifications       ()
+    func notifications                      ()
     {
         
     }
     
-    func mentions            ()
+    func mentions                           ()
     {
         
     }
     
-    
-    
-    struct Search
-    {
-        struct GeoCode {
-            let latitude:Double
-            let longitude:Double
-            let radius:Double
-        }
-        
-        enum ResultType {
-            case mixed
-            case recent
-            case popular
-            
-            var code: String {
-                switch(self)
-                {
-                case .mixed:    return "mixed"
-                case .recent:   return "recent"
-                case .popular:  return "popular"
-                }
-            }
-        }
-    }
-    
-    
-    
-    func tweetsFromSearch       (_ query:          String,
-                                 geocode:        Search.GeoCode? = nil,
-                                 lang:           String? = nil,
-                                 locale:         String? = nil,
-                                 result_type:    Search.ResultType? = .recent,
-                                 //        until:      NSDate? = nil,
+    func requestTweetsFromSearch            (_ query:       String,
+                                             geocode:       Request.Search.GeoCode?         = nil,
+                                             lang:          String?                         = nil,
+                                             locale:        String?                         = nil,
+                                             result_type:   Request.Search.ResultType?      = .recent,
+                                             //        until:      NSDate? = nil,
         //        since_id:   Int64? = nil,
         //        max_id:     Int64? = nil,
         //        include_entities:   Bool? = true,
@@ -238,10 +263,17 @@ class Twitter
     }
     
     
-    func userProfile             ()
+    func userProfile                        ()
     {
         
     }
     
     
+    func requestStreamingTweetsFromSearch   ()
+    {
+        
+    }
+    
 }
+
+// TODO: ADD STREAM SEARCH API
