@@ -255,11 +255,10 @@ class ViewControllerForScreenPreferences : GenericControllerOfSettings {
             [
                 "APP",
                 
-                createCellForUIColor(AppDelegate.instance.preferences.colorOfBackground, title:"Background") {
-//                    UIApplication.rootViewController.view.backgroundColor   = AppDelegate.instance.preferences.colorOfBackground.value
-//                    self.view.backgroundColor                               = AppDelegate.instance.preferences.colorOfBackground.value
-                },
-                
+                createCellForUIColor(AppDelegate.instance.preferences.colorOfBackground, title:"Background"),
+
+                createCellForUIColor(AppDelegate.instance.preferences.colorOfBackgroundOfActivityIndicator, title:"Activity"),
+
 //                createCellForUISwitch(AppDelegate.instance.preferences.audio, title:"Sounds"),
                 
                 

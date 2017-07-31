@@ -14,6 +14,7 @@ protocol GenericManagerOfSettings : class {
     func synchronize    ()
     func encode         (data:inout [String:Any], withPrefix prefix:String?, withSuffix suffix:String?)
     func decode         (data:[String:Any], withPrefix prefix:String?, withSuffix suffix:String?)
+    func reset          (withPrefix prefix:String?, withSuffix suffix:String?)
 }
 
 extension GenericManagerOfSettings {
@@ -28,35 +29,8 @@ extension GenericManagerOfSettings {
                     continue
                 }
             }
-            if let setting = child.value as? GenericSetting<UIColor> {
-                setting.to(&data)
-            }
-            else if let setting = child.value as? GenericSetting<UIFont> {
-                setting.to(&data)
-            }
-            else if let setting = child.value as? GenericSetting<String> {
-                setting.to(&data)
-            }
-            else if let setting = child.value as? GenericSetting<[String]> {
-                setting.to(&data)
-            }
-            else if let setting = child.value as? GenericSetting<Bool> {
-                setting.to(&data)
-            }
-            else if let setting = child.value as? GenericSetting<Int> {
-                setting.to(&data)
-            }
-            else if let setting = child.value as? GenericSetting<UInt> {
-                setting.to(&data)
-            }
-            else if let setting = child.value as? GenericSetting<Float> {
-                setting.to(&data)
-            }
-            else if let setting = child.value as? GenericSetting<CGFloat> {
-                setting.to(&data)
-            }
-            else if let setting = child.value as? GenericSetting<Double> {
-                setting.to(&data)
+            if let setting = child.value as? ToDictionary {
+                setting.to(dictionary:&data)
             }
         }
     }
@@ -71,35 +45,24 @@ extension GenericManagerOfSettings {
                     continue
                 }
             }
-            if let setting = child.value as? GenericSetting<UIColor> {
-                setting.from(data)
+            if let setting = child.value as? FromDictionary {
+                setting.from(dictionary:data)
             }
-            else if let setting = child.value as? GenericSetting<UIFont> {
-                setting.from(data)
+        }
+    }
+    
+    func reset(withPrefix prefix:String? = nil, withSuffix suffix:String? = nil) {
+        for child in Mirror(reflecting: self).children {
+            if let label = child.label {
+                if let prefix = prefix, !label.hasPrefix(prefix) {
+                    continue
+                }
+                if let suffix = suffix, !label.hasSuffix(suffix) {
+                    continue
+                }
             }
-            else if let setting = child.value as? GenericSetting<String> {
-                setting.from(data)
-            }
-            else if let setting = child.value as? GenericSetting<[String]> {
-                setting.from(data)
-            }
-            else if let setting = child.value as? GenericSetting<Bool> {
-                setting.from(data)
-            }
-            else if let setting = child.value as? GenericSetting<Int> {
-                setting.from(data)
-            }
-            else if let setting = child.value as? GenericSetting<UInt> {
-                setting.from(data)
-            }
-            else if let setting = child.value as? GenericSetting<Float> {
-                setting.from(data)
-            }
-            else if let setting = child.value as? GenericSetting<CGFloat> {
-                setting.from(data)
-            }
-            else if let setting = child.value as? GenericSetting<Double> {
-                setting.from(data)
+            if let setting = child.value as? Resettable {
+                setting.reset()
             }
         }
     }

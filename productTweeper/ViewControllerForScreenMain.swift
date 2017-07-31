@@ -29,6 +29,8 @@ class ViewControllerForScreenMain: UIViewController {
         
         self.title = "Main"
         
+        self.buttonForLIVESEARCH.isHidden = true
+        
         self.stack = buttonForSEARCH.superview as! UIStackView
         
         stack.centerYAnchor.constraint(equalTo: self.view.centerYAnchor).isActive = true
@@ -228,10 +230,12 @@ class ViewControllerForScreenMain: UIViewController {
         }
         
         // for some reason this animation finishes immediately on 2nd appearance of vc
-        UIView.animate(withDuration: duration/Double(count)/2, delay: 1, options: [.repeat, .autoreverse], animations: {
-            self.viewForImageTop.transform = CGAffineTransform.init(scaleX: 1.02, y: 1.04)
-        }) { finished in
-            print("finished title animation")
+        if false {
+            UIView.animate(withDuration: duration/Double(count)/2, delay: 1, options: [.repeat, .autoreverse], animations: {
+                self.viewForImageTop.transform = CGAffineTransform.init(scaleX: 1.02, y: 1.04)
+            }) { finished in
+                print("finished title animation")
+            }
         }
     }
     

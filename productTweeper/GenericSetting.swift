@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import ASToolkit
 
-open class GenericSetting<TYPE> {
+open class GenericSetting<TYPE> : Removable, Resettable, FromDictionary, ToDictionary {
     
     public typealias Key = String
     
@@ -41,14 +41,14 @@ open class GenericSetting<TYPE> {
         }
     }
     
-    public func from(_ data:[String:Any]) {
-        if let value = data[key] as? TYPE {
+    public func from(dictionary:[String:Any]) {
+        if let value = dictionary[key] as? TYPE {
             self.value = value
         }
     }
 
-    public func to(_ data:inout [String:Any]) {
-        data[key] = self.value
+    public func to(dictionary:inout [String:Any]) {
+        dictionary[key] = self.value
     }
     
     public func remove() {

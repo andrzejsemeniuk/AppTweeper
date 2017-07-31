@@ -279,11 +279,7 @@ extension ViewControllerForScreenSearch {
             let cell = UITableViewCell()
             cell.contentView.addSubview(search)
             search.frame.size = cell.contentView.frame.size
-            
-//            search.removeAllConstraints()
-//            search.translatesAutoresizingMaskIntoConstraints=false
-//            search.widthAnchor.constraint(equalTo: cell.contentView.widthAnchor).isActive = true
-//            
+            search.frame.size.width = tableView.frame.width
             return cell
         }
         
