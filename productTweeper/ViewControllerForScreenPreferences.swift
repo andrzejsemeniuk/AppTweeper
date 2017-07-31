@@ -131,6 +131,18 @@ class ViewControllerForScreenPreferences : GenericControllerOfSettings {
             */
             
             [
+                "SEARCH",
+                
+                createCellForUITextFieldAsInt(AppDelegate.instance.preferences.maximumResultsPerSearch, title: "Max Hits", message:"Enter a number between 10 and 200", minimum:10, maximum:200),
+                
+                createCellForUITextFieldAsInt(AppDelegate.instance.preferences.maximumTweetsToDisplay, title: "Max Tweets", message:"Enter a number between 10 and 400", minimum:10, maximum:400),
+                
+                createCellForUIColor(AppDelegate.instance.preferences.colorOfBackgroundOfActivityIndicator, title:"Activity Background"),
+                
+                "Properties related to search screen"
+            ],
+            
+            [
                 "HISTORY",
                 
                 createCellForUISwitch(AppDelegate.instance.preferences.enableHistory, title: "Enabled"),
@@ -151,7 +163,7 @@ class ViewControllerForScreenPreferences : GenericControllerOfSettings {
                 
                 "Properties related to search history"
             ],
-
+            
             /*
             [
                 "TEST",
@@ -256,8 +268,6 @@ class ViewControllerForScreenPreferences : GenericControllerOfSettings {
                 "APP",
                 
                 createCellForUIColor(AppDelegate.instance.preferences.colorOfBackground, title:"Background"),
-
-                createCellForUIColor(AppDelegate.instance.preferences.colorOfBackgroundOfActivityIndicator, title:"Activity"),
 
 //                createCellForUISwitch(AppDelegate.instance.preferences.audio, title:"Sounds"),
                 

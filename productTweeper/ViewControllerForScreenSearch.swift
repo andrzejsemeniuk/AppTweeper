@@ -77,32 +77,32 @@ class ViewControllerForScreenSearch: UITableViewController {
         
         self.search.text = text
         
-        // TODO: ADD ACTIVITY INDIATOR
-        print("reloading... for \(text)")
+        // activity indicator
         
         let indicator = UIActivityIndicatorView(activityIndicatorStyle: .white)
         
         self.view.addSubview(indicator)
-        indicator.backgroundColor = UIColor.init(hsba: [0.6,1.0,1.0,0.5]) // TODO: PREFERENCE
+        indicator.backgroundColor = AppDelegate.instance.preferences.colorOfBackgroundOfActivityIndicator.value.withAlphaComponent(0.5)
         indicator.frame = self.view.frame
         indicator.startAnimating()
         
         // "make a call to twitter to retrieve tweets matching search text"
         
-        // TODO: PARAMETERIZE COUNT
-        Twitter.instance.requestTweetsFromSearch(text, count:40, handler: { [weak self] freshTweets in
+        let limit = UInt(AppDelegate.instance.preferences.maximumResultsPerSearch.value)
+        
+        Twitter.instance.requestTweetsFromSearch(text, count:limit, handler: { [weak self] freshTweets in
             
             guard let `self` = self else {
                 return
             }
             
-            indicator.stopAnimating()
-            indicator.removeFromSuperview()
-            
             if let tweets = freshTweets {
                 self.tweets = tweets + self.tweets
                 self.doRefresh()
             }
+            
+            indicator.stopAnimating()
+            indicator.removeFromSuperview()
         })
         
         search.resignFirstResponder()
@@ -221,7 +221,7 @@ class ViewControllerForScreenSearch: UITableViewController {
         
         // "trim array of tweets if it is too long"
         
-        tweets      = tweets.subarray(length:maximumTweetsToDisplay)
+        tweets.trim(to:maximumTweetsToDisplay)
         
         tableView   .reloadData()
         
@@ -288,6 +288,10 @@ extension ViewControllerForScreenSearch {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "TweetView") as? TweetView {
         
             cell.model = tweet
+            
+            cell.refresh = { [weak self] in
+                self?.handleRefresh()
+            }
         
             return cell
         }

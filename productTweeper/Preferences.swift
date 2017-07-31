@@ -48,9 +48,9 @@ class Preferences : GenericManagerOfSettings {
     var titleShadowAlpha                                = GenericSetting<Float>     (key:"titleShadowAlpha", first: 0.5)
 
     var durationOfMainMenuDisplayInitially              = GenericSetting<Double>    (key:"durationOfMainMenuDisplayInitially", first: 0.8)
-    var durationOfMainMenuDisplay                       = GenericSetting<Double>    (key:"durationOfMainMenuDisplay", first: 0.3)
+    var durationOfMainMenuDisplay                       = GenericSetting<Double>    (key:"durationOfMainMenuDisplay", first: 0.4)
 
-    var maximumTweetsToDisplay                          = GenericSetting<Int>       (key:"maximumTweetsToDisplay", first: 999)
+    var maximumTweetsToDisplay                          = GenericSetting<Int>       (key:"maximumTweetsToDisplay", first: 200)
     var maximumResultsPerSearch                         = GenericSetting<Int>       (key:"maximumResultsPerSearch", first: 40)
 
     var maximumHistory                                  = GenericSetting<Int>       (key:"maximumHistory", first: 3)
