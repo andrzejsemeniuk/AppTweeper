@@ -13,6 +13,8 @@ class ViewControllerForScreenPreferences : GenericControllerOfSettings {
     
     override func viewDidLoad()
     {
+        self.title = "Preferences"
+        
         tableView.separatorStyle = .none
         
         super.manager = AppDelegate.instance.preferences
