@@ -267,14 +267,26 @@ class ViewControllerForScreenPreferences : GenericControllerOfSettings {
             [
                 "APP",
                 
-                createCellForUIColor(AppDelegate.instance.preferences.colorOfBackground, title:"Background"),
+                createCellForUIColor(AppDelegate.instance.preferences.colorOfBackground, title:"Background") { [weak self] in
+                    self?.viewWillAppear(false)
+                },
 
 //                createCellForUISwitch(AppDelegate.instance.preferences.audio, title:"Sounds"),
                 
-                
                 "Set app properties"
             ],
-            
+
+            [
+                "PREFERENCES",
+                
+                createCellForTapOnQuestion(title: "Reset", message: "Reset all preferences to defaults") { [weak self] in
+                    AppDelegate.instance.preferences.reset()
+                    self?.navigationController?.popViewController(animated: true)
+                },
+                
+                ""
+            ],
+
         ]
     }
     

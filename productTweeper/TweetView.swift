@@ -256,20 +256,37 @@ class TweetView: UITableViewCell
     {
         super.awakeFromNib()
         
-        // Initialization code
-        
-        //        tweetTextView.textContainerInset = UIEdgeInsetsMake(0,0,0,0)
-        
         layoutMarginsDidChange()
+        
+//        self.tweetTextView.delegate = self
     }
     
     override func setSelected(_ selected: Bool, animated: Bool)
     {
         super.setSelected(selected, animated: animated)
         
-        // Configure the view for the selected state
+        // TODO: ENABLE SELECTION VISUAL FEEDBACK
     }
     
+}
+
+/*
+extension TweetView : UITextViewDelegate {
     
+    func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
+        
+        let request = URLRequest.init(url:URL)
+        
+        let vc = UIViewController()
+        
+        let wv = UIWebView()
+        
+        wv.loadRequest(request)
+        
+        AppDelegate.instance?.window?.rootViewController?.navigationController?.pushViewController(vc, animated: true)
+        
+        return false
+    }
     
 }
+*/

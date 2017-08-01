@@ -53,7 +53,7 @@ class Preferences : GenericManagerOfSettings {
     var maximumTweetsToDisplay                          = GenericSetting<Int>       (key:"maximumTweetsToDisplay", first: 200)
     var maximumResultsPerSearch                         = GenericSetting<Int>       (key:"maximumResultsPerSearch", first: 40)
 
-    var maximumHistory                                  = GenericSetting<Int>       (key:"maximumHistory", first: 3)
+    var maximumHistory                                  = GenericSetting<Int>       (key:"maximumHistory", first: 99)
     var enableHistory                                   = GenericSetting<Bool>      (key:"enableHistory", first: true)
 
     
