@@ -1,14 +1,17 @@
 {
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "FB719B5CFF6A7DCC36E969D60C66760FBD4BD15D",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
 
   },
   "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
     "B61467CADB1DD4CAD9EAF83768F805F9000E2788" : 9223372036854775807,
+    "FB719B5CFF6A7DCC36E969D60C66760FBD4BD15D" : 9223372036854775807,
     "35453BFA2261476D3F394C70DE44A8C33A5C12BF" : 9223372036854775807
   },
   "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "31BD6916-4B8B-46CE-9B15-6518461B097F",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
     "B61467CADB1DD4CAD9EAF83768F805F9000E2788" : "TGF\/",
+    "FB719B5CFF6A7DCC36E969D60C66760FBD4BD15D" : "AppTweeper\/",
     "35453BFA2261476D3F394C70DE44A8C33A5C12BF" : "ASToolkit\/"
   },
   "DVTSourceControlWorkspaceBlueprintNameKey" : "productTweeper",
@@ -24,6 +27,11 @@
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/andrzejsemeniuk\/TGFSwift.git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "B61467CADB1DD4CAD9EAF83768F805F9000E2788"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/andrzejsemeniuk\/Tweeper.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "FB719B5CFF6A7DCC36E969D60C66760FBD4BD15D"
     }
   ]
 }

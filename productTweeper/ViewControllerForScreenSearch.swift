@@ -324,3 +324,4 @@ extension ViewControllerForScreenSearch : UISearchBarDelegate
     
 }
 
+// TODO: INTRODUCE SECTIONS PER SEARCH TERMS

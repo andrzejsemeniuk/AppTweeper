@@ -43,7 +43,7 @@ class ViewControllerForScreenMain: UIViewController {
         viewForImageBottom.translatesAutoresizingMaskIntoConstraints=false
         viewForImageBottom.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -16).isActive=true //self.view.frame.height/2.5).isActive=true
         viewForImageBottom.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive=true
-        viewForImageBottom.alpha = 0.6
+        viewForImageBottom.alpha = 0.7
 
         let viewForMenu = buttonForSEARCH.superview!
         
@@ -51,7 +51,7 @@ class ViewControllerForScreenMain: UIViewController {
         viewForMenu.centerYAnchor.constraint(equalTo: self.view.centerYAnchor).isActive=true
         viewForMenu.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive=true
         
-        let fontSize:CGFloat = 24
+        let fontSize:CGFloat = 36
         let font = UIFont.init(name: "Gill Sans", size: fontSize) ?? UIFont.systemFont(ofSize: fontSize)
         
         self.buttons = [
@@ -62,12 +62,12 @@ class ViewControllerForScreenMain: UIViewController {
             if index.isEven {
                 button.setAttributedTitle((button.title(for: .normal) ?? "?") | font | UIColor(white:1, alpha:0.90), for: .normal)
                 button.setAttributedTitle((button.title(for: .selected) ?? "?") | font | UIColor(white:1, alpha:0.6), for: .disabled)
-                button.backgroundColor = UIColor(white: 1, alpha: 0.15)
+                button.backgroundColor = UIColor(white: 1, alpha: 0.25)
             }
             else {
                 button.setAttributedTitle((button.title(for: .normal) ?? "?") | font | UIColor.white, for: .normal)
                 button.setAttributedTitle((button.title(for: .selected) ?? "?") | font | UIColor(white:1, alpha:0.6), for: .disabled)
-                button.backgroundColor = UIColor(white: 1, alpha: 0.2)
+                button.backgroundColor = UIColor(white: 1, alpha: 0.3)
             }
             
             button.sizeToFit()

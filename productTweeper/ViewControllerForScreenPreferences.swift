@@ -137,7 +137,7 @@ class ViewControllerForScreenPreferences : GenericControllerOfSettings {
                 
                 createCellForUITextFieldAsInt(AppDelegate.instance.preferences.maximumResultsPerSearch, title: "Max Hits", message:"Enter a number between 10 and 200", minimum:10, maximum:200),
                 
-                createCellForUITextFieldAsInt(AppDelegate.instance.preferences.maximumTweetsToDisplay, title: "Max Tweets", message:"Enter a number between 10 and 400", minimum:10, maximum:400),
+                createCellForUITextFieldAsInt(AppDelegate.instance.preferences.maximumTweetsToDisplay, title: "Max Entries", message:"Enter a number between 10 and 400", minimum:10, maximum:400),
                 
                 createCellForUIColor(AppDelegate.instance.preferences.colorOfBackgroundOfActivityIndicator, title:"Activity Background"),
                 

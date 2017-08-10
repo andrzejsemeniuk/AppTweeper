@@ -70,3 +70,6 @@ class Preferences : GenericManagerOfSettings {
     var testInt                                         = GenericSetting<Int>       (key:"testInt", first: 131)
     
 }
+
+// TODO: TWEET TEXT FONT, FONT-SIZE?
+// TODO: USER VIEW: HANDLE, PICTURE, TWEETS
